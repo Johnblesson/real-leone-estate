@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="./css/login.css">
+    <style>
+        @media only screen and (max-width: 600px) {
+            /* Adjustments for mobile devices */
+            .form-container {
+                width: 100%;
+            }
+            .toggle-container {
+                display: none; /* Hide the toggle container on mobile */
+            }
+            .form-container.sign-in {
+                display: block; /* Show only the sign-in form initially */
+            }
+            .form-container.sign-up {
+                display: none; /* Hide the sign-up form initially */
+            }
+        }
+    </style>
+    <title>Login</title>
+</head>
+
+<body>
+
+    <div class="container" id="container">
+        <div class="form-container sign-up" id="sign-up">
+            <form action="/signup" method="post" enctype="multipart/form-data">
+                <h1>Create Account</h1>
+                <div class="social-icons">
+                    <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+                    <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+                    <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+                </div>
+                <span>or use your email for registration</span>
+                <input type="text" name="fullname" placeholder="Full Name" required>
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" id="password" name="password" placeholder="Password" required>
+                <!-- Add the file input for photo upload -->
+                <input type="file" name="photo" accept="image/*">
+                <button>Sign Up</button>
+                <p>Already have an account? <a href="#sign-in" class="switch-form">Login</a></p>
+            </form>
+        </div>
+        <div class="form-container sign-in" id="sign-in">
+            <form action="/login" method="post">
+                <h1>Login</h1>
+                <div class="social-icons">
+                    <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+                    <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+                    <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+                </div>
+                <span>or use your email password</span>
+                <input type="username" name="username" placeholder="Username">
+                <input type="password" name="password" placeholder="Password">
+                <a href="#">Forget Your Password?</a>
+                <button>Login</button>
+                <p>Don't have an account? <a href="#sign-up" class="switch-form">Sign Up</a></p>
+            </form>
+        </div>
+        <div class="toggle-container">
+            <div class="toggle">
+                <div class="toggle-panel toggle-left">
+                    <h1>Welcome Back!</h1>
+                    <p>Enter your personal details to use all of site features</p>
+                    <button class="hidden" id="login">Login</button>
+                </div>
+                <div class="toggle-panel toggle-right">
+                    <h1>Hello, Friend!</h1>
+                    <p>Register with your personal details to use all of site features</p>
+                    <button class="hidden" id="register">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/login.js"></script>
+    <script>
+        // JavaScript to toggle between signup and login forms
+        const signUpForm = document.querySelector('.sign-up');
+        const signInForm = document.querySelector('.sign-in');
+        const switchForms = document.querySelectorAll('.switch-form');
+
+        switchForms.forEach(switchForm => {
+            switchForm.addEventListener('click', function (event) {
+                event.preventDefault(); // Prevent default anchor behavior
+                if (signUpForm.style.display === 'block') {
+                    signUpForm.style.display = 'none';
+                    signInForm.style.display = 'block';
+                } else {
+                    signUpForm.style.display = 'block';
+                    signInForm.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
