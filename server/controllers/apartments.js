@@ -3,13 +3,39 @@ import Apartments from '../models/apartments.js';
 // Controller function to create a new apartment
 const createApartment = async (req, res) => {
   try {
-    const newApartment = new Apartments(req.body);
-    const savedApartment = await newApartment.save();
-    res.status(201).json(savedApartment);
+    // Check if req.file exists and has a value
+    if (!req.file) {
+      // Handle the case where no file was uploaded
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+
+    // Create a new Apartments object with form data
+    const apartmentData = new Apartments({
+      title: req.body.title,
+      location: req.body.location,
+      price: req.body.price,
+      typeOfProperty: req.body.typeOfProperty,
+      status: req.body.status,
+      bedrooms: req.body.bedrooms,
+      bathrooms: req.body.bathrooms,
+      description: req.body.description,
+      apartmentsPhoto: req.file.path,
+      phone: req.body.phone,
+      area: req.body.area,
+      address: req.body.address,
+      address2: req.body.address2,
+      createdAt: new Date(), // Assuming createdAt and updatedAt are Date objects
+      updatedAt: new Date()
+    });
+
+    const savedApartment = await apartmentData.save();
+    res.status(201).render('success/apartment');
+    console.log(savedApartment);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
+
 
 // Controller function to get all apartments
 const getAllApartments = async (req, res) => {
@@ -67,10 +93,40 @@ const deleteApartmentById = async (req, res) => {
   }
 };
 
+ // Controller function to get all apartments
+
+const apartmentDisplay = async (req, res) => {
+  try {
+    const apartments = await Apartments.find();
+    let relativePath = ''; // Declare relativePath outside the if block
+
+    // Transform the photo path to match the URL served by Express
+    if (apartments && apartments.apartmentsPhoto) {
+      const photoPath = apartments.apartmentsPhoto.replace(/\\/g, '/'); // Replace backslashes with forward slashes
+      relativePath = photoPath.replace('public/assets/', '/assets/'); // Remove "public/assets/" prefix and add "/assets/" route prefix
+    }
+
+    const locals = {
+      title: "All Properties",
+      description: "This is the all properties page.",
+    };
+
+    res.render("/all-properties", {
+      locals,
+      apartments, // Pass the transformed users data to the EJS template
+      relativePath, // Pass the transformed photo path to the EJS template
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("An error occurred while fetching users profile.");
+  }
+};
+
 export {
   createApartment,
   getAllApartments,
   getApartmentById,
   updateApartmentById,
   deleteApartmentById,
+  apartmentDisplay,
 };

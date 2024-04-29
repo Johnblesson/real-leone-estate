@@ -1,7 +1,7 @@
 import { Router } from "express";
 const router = Router();
 
-import { about, service, features, blog, allProperties } from "../render/render.js";
+import { about, service, features, blog, allProperties, getPostApartment } from "../render/render.js";
 import ensureAuthenticated from "../middlewares/auth.js";
 import { isAdmin } from "../middlewares/isAdmin.js";
 
@@ -20,5 +20,7 @@ router.get("/features", ensureAuthenticated, features);
 router.get("/service", ensureAuthenticated, service);
 
 router.get("/blog", ensureAuthenticated, blog);
+
+router.get('/create-apartment', ensureAuthenticated, getPostApartment)
 
 export default router;

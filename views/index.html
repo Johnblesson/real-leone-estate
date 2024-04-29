@@ -1,91 +1,222 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Social Media Profile</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        .profile-header {
-            text-align: center;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #ccc;
-        }
-        .profile-header img {
-            width: 150px;
-            border-radius: 50%;
-            margin-bottom: 10px;
-        }
-        .profile-header h1 {
-            margin: 0;
-            font-size: 24px;
-        }
-        .profile-header p {
-            margin: 5px 0;
-            color: #666;
-        }
-        .profile-body {
-            padding-top: 20px;
-        }
-        .profile-body p {
-            margin: 5px 0;
-            line-height: 1.5;
-        }
-        .profile-footer {
-            text-align: center;
-            padding-top: 20px;
-        }
-        .profile-footer button {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-    </style>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible"
+		content="IE=edge">
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1.0">
+	<title>
+		Build a Survey Form using HTML and CSS
+	</title>
+
+	<style>
+		/* Styling the Body element 
+		i.e. Color, Font, Alignment */
+		body {
+			background-color: #05c46b;
+			font-family: Verdana;
+			text-align: center;
+		}
+
+		/* Styling the Form (Color, Padding, Shadow) */
+		form {
+			background-color: #fff;
+			max-width: 500px;
+			margin: 50px auto;
+			padding: 30px 20px;
+			box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.5);
+		}
+
+		/* Styling form-control Class */
+		.form-control {
+			text-align: left;
+			margin-bottom: 25px;
+		}
+
+		/* Styling form-control Label */
+		.form-control label {
+			display: block;
+			margin-bottom: 10px;
+		}
+
+		/* Styling form-control input, 
+		select, textarea */
+		.form-control input,
+		.form-control select,
+		.form-control textarea {
+			border: 1px solid #777;
+			border-radius: 2px;
+			font-family: inherit;
+			padding: 10px;
+			display: block;
+			width: 95%;
+		}
+
+		/* Styling form-control Radio 
+		button and Checkbox */
+		.form-control input[type="radio"],
+		.form-control input[type="checkbox"] {
+			display: inline-block;
+			width: auto;
+		}
+
+		/* Styling Button */
+		button {
+			background-color: #05c46b;
+			border: 1px solid #777;
+			border-radius: 2px;
+			font-family: inherit;
+			font-size: 21px;
+			display: block;
+			width: 100%;
+			margin-top: 50px;
+			margin-bottom: 20px;
+		}
+	</style>
 </head>
+
 <body>
+	<h1>GeeksforGeeks Survey Form</h1>
 
-<div class="container">
-    <div class="profile-header">
-        <img src="profile-pic.jpg" alt="Profile Picture">
-        <h1>John Doe</h1>
-        <p>@johndoe</p>
-    </div>
-    <div class="profile-body">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi.</p>
-        <p>Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta.</p>
-        <p>Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
-    </div>
-    <div class="profile-footer">
-        <button>Edit Profile</button>
-    </div>
-</div>
+	<!-- Create Form -->
+	<form id="form">
 
-<script>
-    // JavaScript functionality can be added here if needed
-</script>
+		<!-- Details -->
+		<div class="form-control">
+			<label for="name" id="label-name">
+				Name
+			</label>
 
+			<!-- Input Type Text -->
+			<input type="text" id="name"
+				placeholder="Enter your name" />
+		</div>
+
+		<div class="form-control">
+			<label for="email" id="label-email">
+				Email
+			</label>
+
+			<!-- Input Type Email-->
+			<input type="email" id="email"
+				placeholder="Enter your email" />
+		</div>
+
+		<div class="form-control">
+			<label for="age" id="label-age">
+				Age
+			</label>
+
+			<!-- Input Type Text -->
+			<input type="text" id="age"
+				placeholder="Enter your age" />
+		</div>
+
+		<div class="form-control">
+			<label for="role" id="label-role">
+				Which option best describes you?
+			</label>
+
+			<!-- Dropdown options -->
+			<select name="role" id="role">
+				<option value="student">Student</option>
+				<option value="intern">Intern</option>
+				<option value="professional">
+					Professional
+				</option>
+				<option value="other">Other</option>
+			</select>
+		</div>
+
+		<div class="form-control">
+			<label>
+				Would you recommend GeeksforGeeks
+				to a friend?
+			</label>
+
+			<!-- Input Type Radio Button -->
+			<label for="recommed-1">
+				<input type="radio" id="recommed-1"
+					name="recommed">Yes
+				</input>
+			</label>
+			<label for="recommed-2">
+				<input type="radio" id="recommed-2"
+					name="recommed">No
+				</input>
+			</label>
+			<label for="recommed-3">
+				<input type="radio" id="recommed-3"
+					name="recommed">Maybe
+				</input>
+			</label>
+		</div>
+
+		<div class="form-control">
+			<label>Languages and Frameworks known
+				<small>(Check all that apply)</small>
+			</label>
+			<!-- Input Type Checkbox -->
+			<label for="inp-1">
+				<input type="checkbox" name="inp">C
+				</input>
+			</label>
+			<label for="inp-2">
+				<input type="checkbox" name="inp">C++
+				</input>
+			</label>
+			<label for="inp-3">
+				<input type="checkbox" name="inp">C#
+				</input>
+			</label>
+			<label for="inp-4">
+				<input type="checkbox" name="inp">Java
+				</input>
+			</label>
+			<label for="inp-5">
+				<input type="checkbox" name="inp">Python
+				</input>
+			</label>
+			<label for="inp-6">
+				<input type="checkbox" name="inp">JavaScript
+				</input>
+			</label>
+			<label for="inp-7">
+				<input type="checkbox" name="inp">React
+				</input>
+			</label>
+			<label for="inp-7">
+				<input type="checkbox" name="inp">Angular
+				</input>
+			</label>
+			<label for="inp-7">
+				<input type="checkbox" name="inp">Django
+				</input>
+			</label>
+			<label for="inp-7">
+				<input type="checkbox" name="inp">Spring
+				</input>
+			</label>
+		</div>
+
+		<div class="form-control">
+			<label for="comment">
+				Any comments or suggestions
+			</label>
+
+			<!-- multi-line text input control -->
+			<textarea name="comment" id="comment"
+					placeholder="Enter your comment here">
+			</textarea>
+		</div>
+
+		<!-- Multi-line Text Input Control -->
+		<button type="submit" value="submit">
+			Submit
+		</button>
+	</form>
 </body>
+
 </html>
-
-
-<div class="img__container">
-    <img src="" alt="profile" />
-    <span></span>
-  </div>
-  <h2><%= users.fullname %></h2>
-  <p><%= '@' + users.username %></p>
-  <p><%= users.email %></p>
-  <p><%= users.role %> || <%= users.status %></p>
-    <p><%= users.createdAt %></p>

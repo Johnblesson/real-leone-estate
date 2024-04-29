@@ -13,6 +13,10 @@ const apartmentSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    status: {
+        type: String,
+        required: true,
+    },
     price: {
         type: String,
         required: true,
@@ -24,7 +28,6 @@ const apartmentSchema = new mongoose.Schema({
     apartmentsPhoto: {
         type: String, // Or Buffer if storing Base64 data
     },
-    bio: String, // Bio is not required by default, so no need to specify required property
     bedrooms: {
         type: Number,
         required: true,
@@ -37,10 +40,13 @@ const apartmentSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    tel: {
+    phone: {
         type: Number,
-    },
+    }, 
     address: {
+        type: String,
+    },
+    address2: {
         type: String,
     },
     createdAt: { type: Date, default: Date.now },

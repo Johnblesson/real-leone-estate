@@ -1,4 +1,5 @@
 import User from '../models/auth.js';
+import Apartments from '../models/apartments.js';
 // import { body, validationResult } from 'express-validator';
 
 export const profile = async (req, res) => {
