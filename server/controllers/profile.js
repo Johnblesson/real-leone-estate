@@ -143,3 +143,26 @@ export const profile = async (req, res) => {
       res.status(500).json({ message: 'Internal server error' });
     }
   };
+
+
+  // View user GET REQUEST
+export const view = async (req, res) => {
+  try {
+    const users = await User.findOne({ _id: req.params.id });
+
+    let relativePath = ''; // Declare relativePath outside the if block
+  
+      // Transform the photo path to match the URL served by Express
+      if (users && users.photo) {
+        const photoPath = users.photo.replace(/\\/g, '/'); // Replace backslashes with forward slashes
+        relativePath = photoPath.replace('public/assets/', '/assets/'); // Remove "public/assets/" prefix and add "/assets/" route prefix
+      }
+
+    res.render("view", {
+      users,
+      relativePath,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};

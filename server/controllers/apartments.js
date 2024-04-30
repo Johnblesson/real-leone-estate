@@ -122,6 +122,38 @@ const apartmentDisplay = async (req, res) => {
   }
 };
 
+//Get all apartments on a list
+export const getListedApartments = async (req, res) => {
+  try {
+
+    const page = parseInt(req.query.page) || 1; // Get the requested page number from the query parameter
+    const limit = 4; // Number of entries per page
+    const skip = (page - 1) * limit;
+
+    // Fetch all storage data
+    // const allStorage = await RECEPTION.find();
+    const allApartments = await Apartments.find().skip(skip).limit(limit);
+    const totalEntries = await Apartments.countDocuments();
+
+    const totalPages = Math.ceil(totalEntries / limit);
+    // const allStorage = await Apartments.find();
+
+    // Fetch the most recent storage data
+    const latestApartment = await Apartments.findOne().sort({ _id: -1 });
+
+   res.render('admin-dashboard', { 
+    allApartments, 
+    latestApartment, 
+    currentPage: page, 
+    totalPages: totalPages,
+})
+  } catch (error) {
+    return res.status(500).json({
+      message: error,
+    });
+  }
+};
+
 export {
   createApartment,
   getAllApartments,

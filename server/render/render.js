@@ -276,3 +276,96 @@ export const service = async (req, res) => {
       res.status(500).send('Internal Server Error');
     }
   };
+
+  // Admin Listed Properties
+
+  // service Page
+export const listedProperties = async (req, res) => {
+  const locals = {
+    title: "Home Page",
+    description: "This is the home page of the System.",
+  };
+
+  // Function to determine the time of the day
+const getTimeOfDay = () => {
+  const currentHour = new Date().getHours();
+
+  if (currentHour >= 5 && currentHour < 12) {
+    return 'Good Morning';
+  } else if (currentHour >= 12 && currentHour < 18) {
+    return 'Good Afternoon';
+  } else {
+    return 'Good Evening';
+  }
+};
+  try {
+    const page = parseInt(req.query.page) || 1; // Get the requested page number from the query parameter
+    const limit = 4; // Number of entries per page
+    const skip = (page - 1) * limit;
+
+      // Fetch all storage data
+    // const allStorage = await RECEPTION.find();
+    const allApartments = await Apartments.find().skip(skip).limit(limit);
+    const totalEntries = await Apartments.countDocuments();
+
+    const totalPages = Math.ceil(totalEntries / limit);
+    // const allStorage = await Apartments.find();
+
+    // Fetch the most recent storage data
+    const latestApartment = await Apartments.findOne().sort({ _id: -1 });
+
+    const user = req.isAuthenticated() ? req.user : null;
+
+     // Determine the time of the day
+    const greeting = getTimeOfDay();
+
+    // Render the index page with the receptions and latestStorage data
+    res.render('admin-dashboard', 
+    { 
+      locals, 
+      user, 
+      greeting,
+      allApartments, 
+      latestApartment, 
+      currentPage: page, 
+      totalPages: totalPages,
+    });
+  } catch (error) {
+    console.error('Error rendering the page:', error);
+    res.status(500).send('Internal Server Error');
+  }
+};
+
+
+// User Home Page
+export const allusers = async (req, res) => {
+  const locals = {
+    title: "Home Page",
+    description: "This is the home page of the System.",
+  };
+
+  // Function to determine the time of the day
+const getTimeOfDay = () => {
+  const currentHour = new Date().getHours();
+
+  if (currentHour >= 5 && currentHour < 12) {
+    return 'Good Morning';
+  } else if (currentHour >= 12 && currentHour < 18) {
+    return 'Good Afternoon';
+  } else {
+    return 'Good Evening';
+  }
+};
+  try {
+    const user = req.isAuthenticated() ? req.user : null;
+
+     // Determine the time of the day
+    const greeting = getTimeOfDay();
+
+    // Render the index page with the receptions and latestStorage data
+    res.render('all-users', { locals, user, greeting});
+  } catch (error) {
+    console.error('Error rendering the page:', error);
+    res.status(500).send('Internal Server Error');
+  }
+};
