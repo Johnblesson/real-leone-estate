@@ -10,46 +10,47 @@
           <h2 class="h2 section-title">Featured Listings</h2>
 
           <ul class="property-list has-scrollbar">
-
+            <% apartment.forEach(apartment => { %>
             <li>
               <div class="property-card">
                 <figure class="card-banner">
                   <!-- Dynamic image source -->
+                  
                   <a href="#">
-                    <img src="<%= apartments.photo %>" alt="<%= apartments.title %>" class="w-100">
+                    <img src="<%= apartment.apartmentsPhoto %>" alt="<%= apartment.title %>" class="w-100">
                   </a>
                   <!-- Dynamic badge indicating status (e.g., For Rent, For Sale) -->
-                  <div class="card-badge green"><%= apartments.status %></div>
+                  <div class="card-badge green"><%= apartment.status %></div>
                   <div class="banner-actions">
                     <!-- Button with location information -->
                     <button class="banner-actions-btn">
                       <ion-icon name="location"></ion-icon>
-                      <address><%= apartments.location %></address>
+                      <address><%= apartment.location %></address>
                     </button>
                     <!-- Button with number of bedrooms -->
                     <button class="banner-actions-btn">
                       <ion-icon name="bed-outline"></ion-icon>
-                      <span><%= apartments.bedrooms %></span>
+                      <span><%= apartment.bedrooms %></span>
                     </button>
                     <!-- Button with number of bathrooms -->
                     <button class="banner-actions-btn">
                       <ion-icon name="man-outline"></ion-icon>
-                      <span><%= apartments.bathrooms %></span>
+                      <span><%= apartment.bathrooms %></span>
                     </button>
                   </div>
                 </figure>
                 <div class="card-content">
                   <!-- Dynamic price -->
                   <div class="card-price">
-                    <strong><%= apartments.price %></strong>/Month
+                    <strong><%= apartment.price %></strong><%= apartment.duration %>
                   </div>
                   <!-- Dynamic title -->
                   <h3 class="h3 card-title">
-                    <a href="#"><%= apartments.title %></a>
+                    <a href="#"><%= apartment.title %></a>
                   </h3>
                   <!-- Dynamic description -->
                   <p class="card-text">
-                    <%= apartments.description %>
+                    <%= apartment.description %>
                   </p>
                   <ul class="card-list">
                     <!-- Placeholder for square footage -->
@@ -62,22 +63,14 @@
                 </div>
                 <div class="card-footer">
                   <div class="card-author">
-                    <figure class="author-avatar">
-                      <!-- Dynamic user photo -->
-                      <% if (user.photo) { %>
-                        <img src="<%= relativePath %>" alt="profile" />
-                      <% } else { %>
-                        <!-- Default image placeholder if photo doesn't exist -->
-                        <img src="/path/to/default/image.jpg" alt="profile" />
-                      <% } %>
-                    </figure>
+                    
                     <div>
                       <!-- Dynamic user fullname -->
-                      <p class="author-name">
-                        <a href="#"><%= user.fullname %></a>
+                      <p class="author-name"> Created by:
+                        <a href=""><%= apartment.createdBy %></a>
                       </p>
                       <!-- Dynamic user bio -->
-                      <p class="author-title"><%= user.bio %></p>
+                      <p class="author-title"></p>
                     </div>
                   </div>
                   <div class="card-footer-actions">
@@ -95,7 +88,7 @@
                 </div>
               </div>
             </li>
-            
+            <% }) %>
 
 
             <!-- <li>
@@ -104,7 +97,7 @@
                 <figure class="card-banner">
 
                   <a href="#">
-                    <img src="./images/property-2.jpg" alt="Modern Apartments" class="w-100">
+                    <img src="./images/property-2.jpg" alt="Modern Apartment" class="w-100">
                   </a>
 
                   <div class="card-badge orange">For Sales</div>

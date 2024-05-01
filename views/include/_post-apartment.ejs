@@ -41,7 +41,7 @@
 
       </div>
 
-      <div class="formbold-input-flex">
+      <!-- <div class="formbold-input-flex">
         <div>
             <label for="price" class="formbold-form-label"> Price: </label>
             <input
@@ -63,6 +63,39 @@
               <option value="Others">Others</option>
           </select>
           </div>
+      </div> -->
+
+      <div class="formbold-input-flex">
+        <div>
+          <label for="price" class="formbold-form-label">Price:</label>
+          <input
+            type="number"
+            name="price"
+            id="price"
+            placeholder="Price"
+            class="formbold-form-input"
+            required
+          />
+        </div>
+      
+        <div>
+          <label for="status" class="formbold-form-label">Status:</label>
+          <select id="status" class="formbold-form-input" name="status">
+            <option value="Sell">Sell</option>
+            <option value="Rent">Rent</option>
+            <option value="Least">Least</option>
+            <option value="Others">Others</option>
+          </select>
+        </div>
+      
+        <!-- Duration field initially hidden -->
+        <div id="durationField" style="display: none;">
+          <label for="duration" class="formbold-form-label">Duration:</label>
+          <select id="duration" class="formbold-form-input" name="duration">
+            <option value="Monthly">Monthly</option>
+            <option value="Yearly">Yearly</option>
+          </select>
+        </div>
       </div>
 
       <div class="formbold-mb-3 formbold-input-wrapp">
@@ -123,9 +156,9 @@
       </div>
 
       <div class="formbold-mb-3 formbold-input-wrapp">
-        <label for="phone" class="formbold-form-label"> Negotiation: </label>
+        <label for="negotiation" class="formbold-form-label"> Negotiation: </label>
         <div>
-          <select id="area" class="formbold-form-input" name="area">
+          <select id="negotiation" class="formbold-form-input" name="negotiation">
             <option value="Negotiable">Negotiable</option>
             <option value="Non Negotiable">Non Negotiable</option>
         </select>
@@ -157,7 +190,7 @@
       </div>
 
       <div class="formbold-mb-3 formbold-input-wrapp">
-        <label for="phone" class="formbold-form-label"> Created by: </label>
+        <label for="createdBy" class="formbold-form-label"> Created by: </label>
         <div>
           <input
             type="text"
@@ -197,9 +230,23 @@
     </form>
   </div>
 </div>
-<style>
- 
-</style>
+<script>
+  // Get the status select element
+  const statusSelect = document.getElementById('status');
+  // Get the duration field
+  const durationField = document.getElementById('durationField');
 
+  // Add event listener to the status select element
+  statusSelect.addEventListener('change', function() {
+    // Check if the selected value is "Rent"
+    if (statusSelect.value === 'Rent') {
+      // If "Rent" is selected, show the duration field
+      durationField.style.display = 'block';
+    } else {
+      // If any other option is selected, hide the duration field
+      durationField.style.display = 'none';
+    }
+  });
+</script>
 </body>
 </html>

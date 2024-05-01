@@ -21,6 +21,10 @@ const apartmentSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    duration: {
+        type: String,
+        default: '',
+    },
     location: {
         type: String,
         required: true,
@@ -62,6 +66,10 @@ const apartmentSchema = new mongoose.Schema({
         type: String,
         enum: ['verified', 'not verified'],
         default: 'not verified',
+    },
+    createdBy: {
+        type: String,
+        required: true,
     },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }

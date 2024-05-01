@@ -11,12 +11,79 @@
 </head>
 <body>
 
+  <header class="header" data-header>
+
+    <div class="overlay" data-overlay></div>
+
+    <div class="header-top">
+      <div class="container">
+
+        <ul class="header-top-list">
+
+          <!-- <li>
+            <a href="mailto:info@homeverse.com" class="header-top-link">
+              <ion-icon name="mail-outline"></ion-icon>
+
+              <span>info@homeverse.com</span>
+            </a>
+          </li> -->
+
+          <li>
+            <a href="#" class="header-top-link">
+              <ion-icon name=""></ion-icon>
+
+              <span><%= greeting %> Administrator | <%= user ? user.username : '' %></span>
+            </a>
+          </li>
+
+        </ul>
+
+        <div class="wrapper">
+          <ul class="header-top-social-list">
+
+            <li>
+              <a href="#" class="header-top-social-link">
+                <ion-icon name="logo-facebook"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="header-top-social-link">
+                <ion-icon name="logo-twitter"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="header-top-social-link">
+                <ion-icon name="logo-instagram"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="header-top-social-link">
+                <ion-icon name="logo-pinterest"></ion-icon>
+              </a>
+            </li>
+
+          </ul>
+
+          <form action="/logout" method="get">
+            <button class="header-top-btn">
+              <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+            </form>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
 <div class="formbold-main-wrapper">
   <!-- Author: FormBold Team -->
   <!-- Learn More: https://formbold.com -->
   <div class="formbold-form-wrapper">
     
-    <form action="#" method="POST" enctype="multipart/form-data">
+    <form action="/edit-admin-apartment/<%= apartment._id %>?_method=PATCH" method="POST">
       <div class="formbold-input-flex">
         <div>
           <label for="title" class="formbold-form-label"> Title </label>
@@ -24,7 +91,7 @@
             type="text"
             name="title"
             id="title"
-            placeholder="Title"
+            value="<%= apartment.title %>"
             class="formbold-form-input"
           />
         </div>
@@ -32,11 +99,11 @@
         <div>
           <label for="typeOfProperty" class="formbold-form-label"> Type of Property </label>
           <select id="typeOfProperty" class="formbold-form-input" name="typeOfProperty">
-            <option value="Apartment">Apartment</option>
-            <option value="Land">Land</option>
-            <option value="Shop">Shop</option>
-            <option value="Shop">Other</option>
-        </select>
+            <option value="Apartment" <%= apartment.typeOfProperty === 'Apartment' ? 'selected' : '' %>>Apartment</option>
+            <option value="Land" <%= apartment.typeOfProperty === 'Land' ? 'selected' : '' %>>Land</option>
+            <option value="Shop" <%= apartment.typeOfProperty === 'Shop' ? 'selected' : '' %>>Shop</option>
+            <option value="Other" <%= apartment.typeOfProperty === 'Other' ? 'selected' : '' %>>Other</option>
+          </select>
         </div>
 
       </div>
@@ -48,21 +115,22 @@
             type="number"
             name="price"
             id="price"
-            placeholder="Price"
+            value="<%= apartment.price %>"
             class="formbold-form-input"
             required
             />
         </div>
 
         <div>
-            <label for="status" class="formbold-form-label"> Status </label>
-            <select id="status" class="formbold-form-input" name="status">
-              <option value="Sell">Sell</option>
-              <option value="Rent">Rent</option>
-              <option value="Least">Least</option>
-              <option value="Others">Others</option>
+          <label for="status" class="formbold-form-label"> Status </label>
+          <select id="status" class="formbold-form-input" name="status">
+            <option value="Sell" <%= apartment.status === 'Sell' ? 'selected' : '' %>>Sell</option>
+            <option value="Rent" <%= apartment.status === 'Rent' ? 'selected' : '' %>>Rent</option>
+            <option value="Least" <%= apartment.status === 'Least' ? 'selected' : '' %>>Least</option>
+            <option value="Others" <%= apartment.status === 'Others' ? 'selected' : '' %>>Others</option>
           </select>
-          </div>
+        </div>
+        
       </div>
 
       <div class="formbold-mb-3 formbold-input-wrapp">
@@ -72,7 +140,7 @@
             type="text"
             name="phone"
             id="phone"
-            placeholder="Phone number"
+            value="<%= apartment.phone %>"
             class="formbold-form-input"
           />
         </div>
@@ -83,15 +151,16 @@
 
         <div>
           <select id="area" class="formbold-form-input" name="area">
-            <option value="Western Area Urban">Western Area Urban</option>
-            <option value="Western Area Urban">Western Area Rural</option>
-            <option value="Others">Others</option>
+            <option value="Western Area Urban" <%= apartment.area === 'Western Area Urban' ? 'selected' : '' %>>Western Area Urban</option>
+            <option value="Western Area Rural" <%= apartment.area === 'Western Area Rural' ? 'selected' : '' %>>Western Area Rural</option>
+            <option value="Others" <%= apartment.area !== 'Western Area Urban' && apartment.area !== 'Western Area Rural' ? 'selected' : '' %>>Others</option>
+          </select>          
         </select>
           <input
             type="text"
             name="location"
             id="location"
-            placeholder="Location"
+            value="<%= apartment.location %>"
             class="formbold-form-input"
           />
         </div>
@@ -104,7 +173,7 @@
             type="number"
             name="bedrooms"
             id="bedrooms"
-            placeholder="Bedrooms"
+            value="<%= apartment.bedrooms %>"
             class="formbold-form-input"
           />
         </div>
@@ -115,7 +184,7 @@
             type="number"
             name="bathrooms"
             id="bathrooms"
-            placeholder="bathrooms"
+            value="<%= apartment.bathrooms %>"
             class="formbold-form-input"
           />
         </div>
@@ -144,8 +213,8 @@
         <div>
           <label for="verification" class="formbold-form-label"> Verification </label>
           <select id="verification" class="formbold-form-input" name="verification">
-            <option value="Verified">Verified</option>
-            <option value="Not Verified">Not Verified</option>
+            <option value="verified">Verified</option>
+            <option value="not-verified">Not Verified</option>
         </select>
         </div>
 
@@ -163,43 +232,19 @@
           type="text"
           name="address"
           id="address"
-          placeholder="Street address"
+          value="<%= apartment.address %>"
           class="formbold-form-input formbold-mb-3"
         />
         <input
           type="text"
           name="address2"
           id="address2"
-          placeholder="Street address line 2"
+          placeholder="Address 2 (Optional)"
+          value="<%= apartment.address2 %>"
           class="formbold-form-input"
         />
-      </div>
-
-      <div class="formbold-mb-3">
-        <label for="description" class="formbold-form-label">
-            Description
-        </label>
-        <textarea
-          rows="6"
-          name="description"
-          id="description"
-          class="formbold-form-input"
-        ></textarea>
-      </div>
-
-      <div class="formbold-form-file-flex">
-        <label for="apartmentsPhoto" class="formbold-form-label">
-          Upload Property Image
-        </label>
-        <input
-          type="file"
-          name="apartmentsPhoto"
-          id="apartmentsPhoto"
-          class="formbold-form-file"
-        />
-      </div>
-
-      <button class="formbold-btn">Create Post</button>
+      </div>   
+      <button class="formbold-btn">Update Apartment</button>
     </form>
   </div>
 </div>
