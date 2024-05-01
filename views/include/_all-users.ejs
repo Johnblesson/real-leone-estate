@@ -89,8 +89,10 @@
             <tr>
                 <th>Fullname</th>
                 <th>Username</th>
+                <th>Phone No.</th>
                 <th>Email</th>
                 <th>Role</th>
+                <th>Sudo</th>
                 <th>Status</th>
                 <th>Actions</th> <!-- New column for actions -->
             </tr>
@@ -100,13 +102,15 @@
             <tr>
                 <td class="hover"><%= user.fullname %></td>
                 <td class="hover"><%= user.username %></td>
+                <td class="hover"><%= user.phone %></td>
                 <td class="hover"><%= user.email %></td>
                 <td class="hover <%= user.role === 'admin' ? 'role-pink-bg' : (user.role === 'user' ? 'role-green-bg' : '') %>"><%= user.role %></td>
+                <td class="hover"><%= user.sudo %></td>
                 <td class="hover <%= user.status === 'active' ? 'status-green-bg' : (user.status === 'inactive' ? 'status-red-bg' : '') %>"><%= user.status %></td>
                
                 <td class="hover px-6 py-4 whitespace-nowrap">
                     <!-- Add icons with links to your delete, view, and update routes -->
-                    <a href="/edit/<%= user._id %>"><i class="fas fa-edit text-green-500 cursor-pointer"></i></a>
+                    <a href="/edit-user/<%= user._id %>"><i class="fas fa-edit text-green-500 cursor-pointer"></i></a>
                     <a href="/delete/<%= user._id %>"><i class="fas fa-trash-alt text-red-500 cursor-pointer"></i></a>
                     <a href="/view/<%= user._id %>"><i class="fas fa-eye text-blue-500 cursor-pointer mx-2"></i></a>
                 </td>
@@ -115,6 +119,17 @@
             <% }); %>
             <tbody>
         </table>
+
+         <!-- Assuming you have a variable 'currentPage' and 'totalPages' from the server-side -->
+        <div class="container mx-auto">
+            <div class="pagination">
+            <% for (let i = 1; i <= totalPages; i++) { %>
+                <a href="?page=<%= i %>" class="<%= i === currentPage ? 'active' : '' %>">
+                    <%= i %>
+                </a>
+            <% } %>
+        </div>
+  </div>
     </div>
 </body>
 </html>

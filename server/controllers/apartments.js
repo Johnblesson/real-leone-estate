@@ -24,6 +24,9 @@ const createApartment = async (req, res) => {
       area: req.body.area,
       address: req.body.address,
       address2: req.body.address2,
+      negotiation: req.body.negotiation,
+      availabilty: req.body.availabilty,
+      verification: req.body.verification,
       createdAt: new Date(), // Assuming createdAt and updatedAt are Date objects
       updatedAt: new Date()
     });
@@ -93,34 +96,130 @@ const deleteApartmentById = async (req, res) => {
   }
 };
 
- // Controller function to get all apartments
+//  // Controller function to get all apartments
 
+// const apartmentDisplay = async (req, res) => {
+//   try {
+//     const apartments = await Apartments.find();
+//     let relativePath = ''; // Declare relativePath outside the if block
+
+//     // Transform the photo path to match the URL served by Express
+//     if (apartments && apartments.apartmentsPhoto) {
+//       const photoPath = apartments.apartmentsPhoto.replace(/\\/g, '/'); // Replace backslashes with forward slashes
+//       relativePath = photoPath.replace('public/assets/', '/assets/'); // Remove "public/assets/" prefix and add "/assets/" route prefix
+//     }
+
+//     const locals = {
+//       title: "All Properties",
+//       description: "This is the all properties page.",
+//     };
+
+//     res.render("/all-properties", {
+//       locals,
+//       apartments, // Pass the transformed users data to the EJS template
+//       relativePath, // Pass the transformed photo path to the EJS template
+//     });
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).send("An error occurred while fetching users profile.");
+//   }
+// };
+
+// // Controller function to get all apartments
+// const apartmentDisplay = async (req, res) => {
+
+//    // Function to determine the time of the day
+//    const getTimeOfDay = () => {
+//     const currentHour = new Date().getHours();
+  
+//     if (currentHour >= 5 && currentHour < 12) {
+//       return 'Good Morning';
+//     } else if (currentHour >= 12 && currentHour < 18) {
+//       return 'Good Afternoon';
+//     } else {
+//       return 'Good Evening';
+//     }
+//   };
+
+//   try {
+//     const apartments = await Apartments.find();
+//     let relativePath = ''; // Declare relativePath outside the if block
+
+//        // Transform the photo path to match the URL served by Express
+//        if (apartments && apartments.apartmentsPhoto) {
+//         const photoPath = apartments.apartmentsPhoto.replace(/\\/g, '/'); // Replace backslashes with forward slashes
+//         relativePath = photoPath.replace('public/assets/', '/assets/'); // Remove "public/assets/" prefix and add "/assets/" route prefix
+//       }
+
+//     // No need for relativePath transformation as it's for individual apartment photo
+
+//     // Determine the time of the day
+//     const greeting = getTimeOfDay();
+
+//     const locals = {
+//       title: "All Properties",
+//       description: "This is the all properties page.",
+//     };
+
+//      // Check if the user is authenticated and get their ID
+//      const user = req.isAuthenticated() ? req.user : null;
+
+//     res.render("all-properties", {
+//       locals,
+//       apartments, // Pass the apartments data to the EJS template
+//       greeting,
+//       user,
+//       relativePath
+//     });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send("An error occurred while fetching apartments.");
+//   }
+// };
+
+// Controller function to get all apartments
 const apartmentDisplay = async (req, res) => {
-  try {
-    const apartments = await Apartments.find();
-    let relativePath = ''; // Declare relativePath outside the if block
+  // Function to determine the time of the day
+  const getTimeOfDay = () => {
+    const currentHour = new Date().getHours();
 
-    // Transform the photo path to match the URL served by Express
-    if (apartments && apartments.apartmentsPhoto) {
-      const photoPath = apartments.apartmentsPhoto.replace(/\\/g, '/'); // Replace backslashes with forward slashes
-      relativePath = photoPath.replace('public/assets/', '/assets/'); // Remove "public/assets/" prefix and add "/assets/" route prefix
+    if (currentHour >= 5 && currentHour < 12) {
+      return 'Good Morning';
+    } else if (currentHour >= 12 && currentHour < 18) {
+      return 'Good Afternoon';
+    } else {
+      return 'Good Evening';
     }
+  };
 
-    const locals = {
+  try {
+    // Fetch all apartments from the database
+    const apartments = await Apartments.find();
+
+    // Determine the time of the day
+    const greeting = getTimeOfDay();
+
+    // Check if the user is authenticated and get their ID
+    const user = req.isAuthenticated() ? req.user : null;
+
+    let relativePath = ''; // For example: relativePath = '/path/to/images/';
+
+    // Render the all-properties view template with the apartments data
+    res.render("all-properties", {
       title: "All Properties",
       description: "This is the all properties page.",
-    };
-
-    res.render("/all-properties", {
-      locals,
-      apartments, // Pass the transformed users data to the EJS template
-      relativePath, // Pass the transformed photo path to the EJS template
+      apartments,
+      greeting,
+      user,
+      relativePath,
     });
   } catch (error) {
-    console.log(error);
-    res.status(500).send("An error occurred while fetching users profile.");
+    console.error(error);
+    res.status(500).send("An error occurred while fetching apartments.");
   }
 };
+
+
 
 //Get all apartments on a list
 export const getListedApartments = async (req, res) => {
@@ -151,6 +250,128 @@ export const getListedApartments = async (req, res) => {
     return res.status(500).json({
       message: error,
     });
+  }
+};
+
+// Get
+export const editapartment = async (req, res) => {
+
+  const locals = {
+    title: "Edit Apartment",
+    description: "This is the edit apartment page.",
+  };
+
+    // Function to determine the time of the day
+    const getTimeOfDay = () => {
+      const currentHour = new Date().getHours();
+    
+      if (currentHour >= 5 && currentHour < 12) {
+        return 'Good Morning';
+      } else if (currentHour >= 12 && currentHour < 18) {
+        return 'Good Afternoon';
+      } else {
+        return 'Good Evening';
+      }
+    };
+
+  try {
+    const apartment = await Apartments.findOne({ _id: req.params.id });
+
+     // Determine the time of the day
+     const greeting = getTimeOfDay();
+
+     const user = req.isAuthenticated() ? req.user : null;
+
+    res.render("update-apartment", {
+      locals,
+      apartment,
+      greeting,
+      user,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// Get
+export const admineditapartment = async (req, res) => {
+
+  const locals = {
+    title: "Edit Apartment",
+    description: "This is the edit apartment page.",
+  };
+
+    // Function to determine the time of the day
+    const getTimeOfDay = () => {
+      const currentHour = new Date().getHours();
+    
+      if (currentHour >= 5 && currentHour < 12) {
+        return 'Good Morning';
+      } else if (currentHour >= 12 && currentHour < 18) {
+        return 'Good Afternoon';
+      } else {
+        return 'Good Evening';
+      }
+    };
+
+  try {
+    const apartment = await Apartments.findOne({ _id: req.params.id });
+
+     // Determine the time of the day
+     const greeting = getTimeOfDay();
+
+     const user = req.isAuthenticated() ? req.user : null;
+
+    res.render("update-admin-apartment", {
+      locals,
+      apartment,
+      greeting,
+      user,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// Update Admin Apartments record
+export const updateAdminApartments = async (req, res) => {
+  try {
+    const { id } = req.params; // Extract the ID of the record to be updated
+
+    // Find the existing Apartments record by ID and update its fields
+    const updatedApartment = await Apartments.findByIdAndUpdate(id, req.body, { new: true });
+
+    // Check if the Apartments record exists
+    if (!updatedApartment) {
+      return res.status(404).json({ message: 'Apartments record not found' });
+    }
+
+    // Respond with the updated Apartments record
+    res.status(200).render('success/update-apartment', { updatedApartment });
+  } catch (error) {
+    console.error('Error updating Apartments record:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+// Update Admin Apartments record
+export const updateApartments = async (req, res) => {
+  try {
+    const { id } = req.params; // Extract the ID of the record to be updated
+
+    // Find the existing Apartments record by ID and update its fields
+    const updatedApartment = await Apartments.findByIdAndUpdate(id, req.body, { new: true });
+
+    // Check if the Apartments record exists
+    if (!updatedApartment) {
+      return res.status(404).json({ message: 'Apartments record not found' });
+    }
+
+    // Respond with the updated Apartments record
+    res.status(200).render('success/update-apartment', { updatedApartment });
+  } catch (error) {
+    console.error('Error updating Apartments record:', error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 };
 

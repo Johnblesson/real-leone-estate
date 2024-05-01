@@ -1,16 +1,17 @@
 import Apartments from "../models/apartments.js";
+import User from "../models/auth.js";
 
 // User Home Page
 export const homeRoute = async (req, res) => {
-    const locals = {
-      title: "Home Page",
-      description: "This is the home page of the System.",
-    };
-  
-    // Function to determine the time of the day
+  const locals = {
+    title: "Home Page",
+    description: "This is the home page of the System.",
+  };
+
+  // Function to determine the time of the day
   const getTimeOfDay = () => {
     const currentHour = new Date().getHours();
-  
+
     if (currentHour >= 5 && currentHour < 12) {
       return 'Good Morning';
     } else if (currentHour >= 12 && currentHour < 18) {
@@ -19,19 +20,25 @@ export const homeRoute = async (req, res) => {
       return 'Good Evening';
     }
   };
-    try {
-      const user = req.isAuthenticated() ? req.user : null;
-  
-       // Determine the time of the day
-      const greeting = getTimeOfDay();
-  
-      // Render the index page with the receptions and latestStorage data
-      res.render('index', { locals, user, greeting});
-    } catch (error) {
-      console.error('Error rendering the page:', error);
-      res.status(500).send('Internal Server Error');
-    }
-  };
+
+  try {
+    // Check if the user is authenticated and get their ID
+    const userId = req.isAuthenticated() ? req.user._id : null;
+
+    // Fetch user by ID from the database if user is authenticated
+    const user = userId ? await User.findById(userId) : null;
+
+    // Determine the time of the day
+    const greeting = getTimeOfDay();
+
+    // Render the index page with the receptions and latestStorage data
+    res.render('index', { locals, user, greeting });
+  } catch (error) {
+    console.error('Error rendering the page:', error);
+    res.status(500).send('Internal Server Error');
+  }
+};
+
   
   // Admin Home Page
   export const adminHomeRoute = async (req, res) => {

@@ -49,6 +49,20 @@ const apartmentSchema = new mongoose.Schema({
     address2: {
         type: String,
     },
+    negotiation: {
+        type: String,
+        required: true,
+    },
+    availabilty: {
+        type: String,
+        enum: ['available', 'not available'],
+        default: 'available',
+    },
+    verification: {
+        type: String,
+        enum: ['verified', 'not verified'],
+        default: 'not verified',
+    },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
 }, {

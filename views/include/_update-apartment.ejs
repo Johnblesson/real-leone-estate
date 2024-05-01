@@ -16,7 +16,7 @@
   <!-- Learn More: https://formbold.com -->
   <div class="formbold-form-wrapper">
     
-    <form action="create-apartment" method="POST" enctype="multipart/form-data">
+    <form action="#" method="POST" enctype="multipart/form-data">
       <div class="formbold-input-flex">
         <div>
           <label for="title" class="formbold-form-label"> Title </label>
@@ -123,9 +123,15 @@
       </div>
 
       <div class="formbold-mb-3 formbold-input-wrapp">
-        <label for="phone" class="formbold-form-label"> Negotiation: </label>
+        <label for="avaliablity" class="formbold-form-label"> Avaliablity </label>
+          <select id="availabilty" class="formbold-form-input" name="availabilty">
+            <option value="Avaliable">Avaliable</option>
+            <option value="Not Availabile">Not Availabile</option>
+        </select>
+
+        <label for="negotiation" class="formbold-form-label"> Negotiation: </label>
         <div>
-          <select id="area" class="formbold-form-input" name="area">
+          <select id="negotiation" class="formbold-form-input" name="negotiation">
             <option value="Negotiable">Negotiable</option>
             <option value="Non Negotiable">Non Negotiable</option>
         </select>
@@ -154,19 +160,6 @@
           placeholder="Street address line 2"
           class="formbold-form-input"
         />
-      </div>
-
-      <div class="formbold-mb-3 formbold-input-wrapp">
-        <label for="phone" class="formbold-form-label"> Created by: </label>
-        <div>
-          <input
-            type="text"
-            name="createdBy"
-            value="<%= user.fullname  %>"
-            class="formbold-form-input"
-            readonly
-          />
-        </div>
       </div>
 
       <div class="formbold-mb-3">

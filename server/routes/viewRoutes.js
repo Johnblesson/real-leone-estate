@@ -8,7 +8,7 @@ import { isAdmin } from "../middlewares/isAdmin.js";
 
 
 // Add more routes here
-router.get("/all-properties", ensureAuthenticated, allProperties );
+// router.get("/all-properties", ensureAuthenticated, allProperties );
 
 router.get("/sell-properties", ensureAuthenticated, );
 
@@ -26,6 +26,6 @@ router.get('/create-apartment', ensureAuthenticated, getPostApartment)
 
 router.get('/listed-properties', listedProperties)
 
-router.get('/all-users', getAllUsers)
+router.get('/all-user', getAllUsers)
 
 export default router;

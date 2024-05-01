@@ -35,11 +35,13 @@ app.set('views', templatePath);
 app.use(express.static('public'))
 app.use("/assets", express.static(path.join(__dirname, "public/assets"))); 
 
-app.use(express.static('public', { 
+
+// Serve static files from the 'public' directory
+app.use(express.static('public', {
   setHeaders: (res, path, stat) => {
-      if (path.endsWith('.css')) {
-          res.set('Content-Type', 'text/css');
-      }
+    if (path.endsWith('.css')) {
+      res.set('Content-Type', 'text/css');
+    }
   }
 }));
 
@@ -68,3 +70,4 @@ const PORT = process.env.PORT || 8080;
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server is running on port ${PORT}`);
 });
+

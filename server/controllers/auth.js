@@ -1,4 +1,5 @@
 import express from 'express';
+import mongoose from 'mongoose';
 const app = express();
 import User from '../models/auth.js';
 import { body, validationResult } from 'express-validator';
@@ -34,6 +35,7 @@ export const signUp = async (req, res) => {
           fullname: req.body.fullname,
           username: req.body.username,
           email: req.body.email,
+          phone: req.body.phone,
           bio: req.body.bio,
           password: hashedPassword,
           photo: req.file ? req.file.path : '', // Store the file path if file exists
@@ -131,27 +133,106 @@ export const getLoginPage = (req, res) => {
 
 // Get All Users Controller
 export const getAllUsers = async (req, res) => {
-    try {
-        const page = parseInt(req.query.page) || 1; // Get the requested page number from the query parameter
-        const limit = 5; // Number of entries per page
-        const skip = (page - 1) * limit;
 
-        // Fetch total number of users
-        const totalUsers = await User.countDocuments();
+  const locals = {
+    title: "All Users",
+    description: "This is the all users page.",
+  };
 
-        const totalPages = Math.ceil(totalUsers / limit);
+  try {
+    const page = parseInt(req.query.page) || 1; // Get the requested page number from the query parameter
+    const limit = 15; // Number of entries per page
+    const skip = (page - 1) * limit;
 
-        // Fetch users for the current page
-        const users = await User.find().skip(skip).limit(limit);
+    // Fetch all storage data
+    // const allStorage = await User.find().skip(skip).limit(limit);
+    const totalEntries = await User.countDocuments();
 
-        res.render('all-users', {
-            data: users,
-            currentPage: page,
-            totalPages: totalPages,
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('An error occurred while fetching users.');
-    }
+    const totalPages = Math.ceil(totalEntries / limit);
+
+    // Fetch all users from the database
+    // const users = await User.find({}, '-password'); // Exclude password field from the response
+    const users = await User.aggregate([
+      // Stage 1: Exclude password field from the response
+      { $project: { password: 0 } },
+      // Stage 2: Skip and limit
+      { $skip: skip },
+      { $limit: limit }
+  ]);
+  
+    res.render('all-users', { 
+      data: users, 
+      locals,
+      currentPage: page, 
+      totalPages: totalPages,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('An error occurred while fetching users.');
+  }
 };
 
+
+// Get
+export const edituser = async (req, res) => {
+  const locals = {
+    title: "Edit user",
+    description: "This is the edit user page.",
+  };
+
+  // Function to determine the time of the day
+  const getTimeOfDay = () => {
+    const currentHour = new Date().getHours();
+
+    if (currentHour >= 5 && currentHour < 12) {
+      return 'Good Morning';
+    } else if (currentHour >= 12 && currentHour < 18) {
+      return 'Good Afternoon';
+    } else {
+      return 'Good Evening';
+    }
+  };
+
+  try {
+    const users = await User.findOne({ _id: req.params.id });
+
+    // Determine the time of the day
+    const greeting = getTimeOfDay();
+
+    const user = req.isAuthenticated() ? req.user : null;
+
+    res.render("edit-user", {
+      locals,
+      users,
+      greeting,
+      user,
+    });
+  } catch (error) {
+    // Handle errors gracefully
+    console.error(error.message);
+    res.status(404).send("User not found");
+  }
+};
+
+// Update user data #Sudo Admin
+export const updateUser = async (req, res) => {
+  try {
+    // Extract the User ID from the request parameters
+    const { id } = req.params;
+
+    // Find the User record by ID and update its fields
+    const updatedUser = await User.findByIdAndUpdate(id, req.body, { new: true });
+
+    // Check if the User record exists
+    if (!updatedUser) {
+      return res.status(404).json({ message: 'User record not found' });
+    }
+
+    // Respond with the updated User record
+    // res.status(200).json(updatedStorage);
+    res.render('success/users');
+  } catch (error) {
+    console.error('Error updating User record:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
