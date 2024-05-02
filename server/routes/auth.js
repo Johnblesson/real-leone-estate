@@ -24,4 +24,9 @@ router.get('/logout', ensureAuthenticated, (req, res) => {
     res.redirect('/'); 
 });
 
+// 404 Route
+router.get('/forbidden', (req, res) => {
+    res.render('404');
+});
+
 export default router;

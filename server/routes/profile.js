@@ -8,10 +8,10 @@ import { isAdmin } from "../middlewares/isAdmin.js";
 router.get('/profile/:id', ensureAuthenticated, profile);
 router.get('/admin-profile/:id', ensureAuthenticated, adminprofile);
 
-router.get("/update-profile/:id", updateprofile); //updateadminprofile
-router.get("/update-admin-profile/:id", updateadminprofile); //updateadminprofile
-router.patch('/update-profile/:id', ensureAuthenticated, updateUser);
-router.patch('/update-admin-profile/:id', ensureAuthenticated, updateUser);
+router.get("/update-profile/:id", ensureAuthenticated, updateprofile); //updateadminprofile
+router.get("/update-admin-profile/:id", ensureAuthenticated, updateadminprofile); //updateadminprofile
+router.patch('/update-profile/:id', ensureAuthenticated, ensureAuthenticated, updateUser);
+router.patch('/update-admin-profile/:id', ensureAuthenticated, ensureAuthenticated, updateUser);
 
 router.get('/view/:id', view);
 

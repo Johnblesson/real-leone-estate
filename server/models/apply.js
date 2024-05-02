@@ -1,0 +1,19 @@
+import mongoose from "mongoose";
+
+const applySchema = new mongoose.Schema({
+    phone: String,
+    location: String,
+    username: String,
+    address: String,
+    address2: String,
+    createdBy : String,
+    comments : String,
+    createdAt: { type: Date, default: Date.now },
+    updatedAt: { type: Date, default: Date.now }
+}, {
+    timestamps: true,
+});
+
+const Application = mongoose.model('applications', applySchema);
+
+export default Application;

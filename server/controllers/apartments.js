@@ -45,8 +45,6 @@ const createApartment = async (req, res) => {
 };
 
 
-
-
 // Controller function to get all apartments
 const getAllApartments = async (req, res) => {
   try {
@@ -103,106 +101,6 @@ const deleteApartmentById = async (req, res) => {
   }
 };
 
-// // Controller function to get all apartments
-// const apartmentDisplay = async (req, res) => {
-
-//    // Function to determine the time of the day
-//    const getTimeOfDay = () => {
-//     const currentHour = new Date().getHours();
-  
-//     if (currentHour >= 5 && currentHour < 12) {
-//       return 'Good Morning';
-//     } else if (currentHour >= 12 && currentHour < 18) {
-//       return 'Good Afternoon';
-//     } else {
-//       return 'Good Evening';
-//     }
-//   };
-
-//   try {
-//     const apartments = await Apartments.find();
-//     let relativePath = ''; // Declare relativePath outside the if block
-
-//        // Transform the photo path to match the URL served by Express
-//        if (apartments && apartments.apartmentsPhoto) {
-//         const photoPath = apartments.apartmentsPhoto.replace(/\\/g, '/'); // Replace backslashes with forward slashes
-//         relativePath = photoPath.replace('public/assets/', '/assets/'); // Remove "public/assets/" prefix and add "/assets/" route prefix
-//       }
-
-//     // No need for relativePath transformation as it's for individual apartment photo
-
-//     // Determine the time of the day
-//     const greeting = getTimeOfDay();
-
-//     const locals = {
-//       title: "All Properties",
-//       description: "This is the all properties page.",
-//     };
-
-//      // Check if the user is authenticated and get their ID
-//      const user = req.isAuthenticated() ? req.user : null;
-
-//     res.render("all-properties", {
-//       locals,
-//       apartments, // Pass the apartments data to the EJS template
-//       greeting,
-//       user,
-//       relativePath
-//     });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).send("An error occurred while fetching apartments.");
-//   }
-// };
-
-// // Controller function to get all apartments
-// const apartmentDisplay = async (req, res) => {
-//   // Function to determine the time of the day
-//   const getTimeOfDay = () => {
-//     const currentHour = new Date().getHours();
-
-//     if (currentHour >= 5 && currentHour < 12) {
-//       return 'Good Morning';
-//     } else if (currentHour >= 12 && currentHour < 18) {
-//       return 'Good Afternoon';
-//     } else {
-//       return 'Good Evening';
-//     }
-//   };
-
-//   try {
-//     const users = await User.find();
-//     // Fetch all apartments from the database
-//     const apartments = await Apartments.find();
-
-//     // Determine the time of the day
-//     const greeting = getTimeOfDay();
-
-//     // Check if the user is authenticated and get their ID
-//     const user = req.isAuthenticated() ? req.user : null;
-
-//     let relativePath = ''; // Declare relativePath outside the if block
-  
-//     // Transform the photo path to match the URL served by Express
-//     if (users && users.photo) {
-//       const photoPath = users.photo.replace(/\\/g, '/'); // Replace backslashes with forward slashes
-//       relativePath = photoPath.replace('public/assets/', '/assets/'); // Remove "public/assets/" prefix and add "/assets/" route prefix
-//     }
-
-//     // Render the all-properties view template with the apartments data
-//     res.render("all-properties", {
-//       apartments,
-//       greeting,
-//       user,
-//       relativePath,
-//       users,
-//     });
-  
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).send("An error occurred while fetching apartments.");
-//   }
-// };
 
 const apartmentDisplay = async (req, res) => {
   // Function to determine the time of the day
@@ -220,7 +118,7 @@ const apartmentDisplay = async (req, res) => {
 
   try {
     // Fetch only verified apartments from the database
-    const apartments = await Apartments.find({ verification: 'verified' });
+    const apartment = await Apartments.find({ verification: 'verified' });
 
     // Determine the time of the day
     const greeting = getTimeOfDay();
@@ -238,7 +136,7 @@ const apartmentDisplay = async (req, res) => {
 
     // Render the all-properties view template with the verified apartments data
     res.render("all-properties", {
-      apartments,
+      apartment,
       greeting,
       user,
       relativePath,
