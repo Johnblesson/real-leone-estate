@@ -207,16 +207,14 @@ export const getListedApartments = async (req, res) => {
   try {
 
     const page = parseInt(req.query.page) || 1; // Get the requested page number from the query parameter
-    const limit = 4; // Number of entries per page
+    const limit = 15; // Number of entries per page
     const skip = (page - 1) * limit;
 
     // Fetch all storage data
-    // const allStorage = await RECEPTION.find();
     const allApartments = await Apartments.find().skip(skip).limit(limit);
     const totalEntries = await Apartments.countDocuments();
 
     const totalPages = Math.ceil(totalEntries / limit);
-    // const allStorage = await Apartments.find();
 
     // Fetch the most recent storage data
     const latestApartment = await Apartments.findOne().sort({ _id: -1 });
@@ -414,6 +412,101 @@ export const adminEditApartments = async (req, res) => {
     res.status(404).send("User not found");
   }
 };
+
+
+// Controller function to get all apartments
+export const adminVerifyApartment = async (req, res) => {
+  // Function to determine the time of the day
+  const getTimeOfDay = () => {
+    const currentHour = new Date().getHours();
+
+    if (currentHour >= 5 && currentHour < 12) {
+      return 'Good Morning';
+    } else if (currentHour >= 12 && currentHour < 18) {
+      return 'Good Afternoon';
+    } else {
+      return 'Good Evening';
+    }
+  };
+
+  try {
+    const page = parseInt(req.query.page) || 1; // Get the requested page number from the query parameter
+    const limit = 15; // Number of entries per page
+    const skip = (page - 1) * limit;
+
+    // Fetch all storage data
+    // const allStorage = await User.find().skip(skip).limit(limit);
+    const totalEntries = await Apartments.countDocuments();
+
+    const totalPages = Math.ceil(totalEntries / limit);
+
+    const users = await User.find();
+    // Fetch all apartments from the database
+    const apartments = await Apartments.find();
+
+    // Determine the time of the day
+    const greeting = getTimeOfDay();
+
+    // Check if the user is authenticated and get their ID
+    const user = req.isAuthenticated() ? req.user : null;
+
+    // Render the all-properties view template with the apartments data
+    res.render("verify-apartment", {
+      apartments,
+      greeting,
+      user,
+      users,
+      currentPage: page, 
+      totalPages: totalPages,
+    });
+  
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("An error occurred while fetching apartments.");
+  }
+};
+
+// Get
+export const verifyUpdateApartment = async (req, res) => {
+  const locals = {
+    title: "Edit user",
+    description: "This is the edit user page.",
+  };
+
+  // Function to determine the time of the day
+  const getTimeOfDay = () => {
+    const currentHour = new Date().getHours();
+
+    if (currentHour >= 5 && currentHour < 12) {
+      return 'Good Morning';
+    } else if (currentHour >= 12 && currentHour < 18) {
+      return 'Good Afternoon';
+    } else {
+      return 'Good Evening';
+    }
+  };
+
+  try {
+    const apartment = await Apartments.findOne({ _id: req.params.id });
+
+    // Determine the time of the day
+    const greeting = getTimeOfDay();
+
+    const user = req.isAuthenticated() ? req.user : null;
+
+    res.render("verification", {
+      locals,
+      apartment,
+      greeting,
+      user,
+    });
+  } catch (error) {
+    // Handle errors gracefully
+    console.error(error.message);
+    res.status(404).send("User not found");
+  }
+};
+
 
 
 export {

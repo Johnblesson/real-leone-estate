@@ -17,6 +17,7 @@ import homepageRoutes from "./server/routes/homepage.js";
 import profileRoutes from "./server/routes/profile.js";
 import apartmentsRoutes from "./server/routes/apartments.js";
 import applyRoute from "./server/routes/apply.js";
+import adminRoutes from "./server/routes/admin.js";
 
 const app = express();
 dotenv.config();
@@ -67,6 +68,7 @@ app.use(homepageRoutes);
 app.use(profileRoutes);
 app.use(apartmentsRoutes);
 app.use(applyRoute);
+app.use(adminRoutes);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, '0.0.0.0', () => {

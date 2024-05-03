@@ -26,8 +26,12 @@ router.get('/create-apartment', ensureAuthenticated, getPostApartment)
 
 router.get('/listed-properties', listedProperties)
 
-router.get('/all-user', ensureAuthenticated, getAllUsers)
+router.get('/all-users', ensureAuthenticated, getAllUsers)
 
 router.get('/application-form', ensureAuthenticated, application)
+
+// router.get('/administarator', (req, res) => {
+//     res.render('administrator')
+// })
 
 export default router;
