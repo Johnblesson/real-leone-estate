@@ -42,6 +42,7 @@ export const signUp = async (req, res) => {
           role: req.body.role,
           status: req.body.status,
           sudo: req.body.sudo,
+          accountant: req.body.accountant,
           createdAt: new Date(), // Assuming createdAt and updatedAt are Date objects
           updatedAt: new Date()
       });
@@ -139,7 +140,23 @@ export const getAllUsers = async (req, res) => {
     description: "This is the all users page.",
   };
 
+   // Function to determine the time of the day
+const getTimeOfDay = () => {
+  const currentHour = new Date().getHours();
+
+  if (currentHour >= 5 && currentHour < 12) {
+    return 'Good Morning';
+  } else if (currentHour >= 12 && currentHour < 18) {
+    return 'Good Afternoon';
+  } else {
+    return 'Good Evening';
+  }
+};
+
   try {
+   // Determine the time of the day
+   const greeting = getTimeOfDay();
+
     const page = parseInt(req.query.page) || 1; // Get the requested page number from the query parameter
     const limit = 15; // Number of entries per page
     const skip = (page - 1) * limit;
@@ -149,6 +166,8 @@ export const getAllUsers = async (req, res) => {
     const totalEntries = await User.countDocuments();
 
     const totalPages = Math.ceil(totalEntries / limit);
+
+    const user = req.isAuthenticated() ? req.user : null;
 
     // Fetch all users from the database
     // const users = await User.find({}, '-password'); // Exclude password field from the response
@@ -163,6 +182,8 @@ export const getAllUsers = async (req, res) => {
     res.render('all-users', { 
       data: users, 
       locals,
+      user,
+      greeting,
       currentPage: page, 
       totalPages: totalPages,
     });
@@ -244,5 +265,117 @@ export const deleteUser = async (req, res) => {
     res.render("success/delete-user");
   } catch (error) {
     console.log(error);
+  }
+};
+
+
+// View Edit password GET REQUEST Admin
+export const viewChangePwdPage = async (req, res) => {
+
+// Function to determine the time of the day
+const getTimeOfDay = () => {
+  const currentHour = new Date().getHours();
+
+  if (currentHour >= 5 && currentHour < 12) {
+    return 'Good Morning';
+  } else if (currentHour >= 12 && currentHour < 18) {
+    return 'Good Afternoon';
+  } else {
+    return 'Good Evening';
+  }
+};
+  try {
+    const users = await User.findOne({ _id: req.params.id });
+
+    // Check if the user exists
+    if (!users) {
+      return res.status(404).send('User not found');
+  }
+
+  // Access the role from the retrieved user data
+  const role = users.role;
+
+  const user = req.isAuthenticated() ? req.user : null;
+
+  // Determine the time of the day
+  const greeting = getTimeOfDay();
+
+    // res.render("update-password", {
+    //   users,
+    //   user,
+    //   greeting,
+    // });
+
+    // Check the role and render the appropriate page
+    if (role === 'admin') {
+      // Render the admin update password page
+      res.render('update-password', {
+          users, // Pass user data to the template if needed
+          greeting, // Greeting message for admin
+          user,
+      });
+  } else if (role === 'user') {
+      // Render the user update password page
+      res.render('update-password-user', {
+          users, // Pass user data to the template if needed
+          greeting, // Greeting message for user
+          user,
+      });
+  } else {
+      // Handle other roles or unauthorized access
+      res.status(403).send('Unauthorized');
+  }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+}
+};
+
+// Change Password Controller
+export const changePassword = async (req, res) => {
+  try {
+    const { userId, username, email, oldPassword, newPassword } = req.body;
+
+    let user;
+
+    // Check if userId is provided
+    if (userId) {
+      // Find the user by userId
+      user = await User.findById(userId);
+    } else {
+      // If userId is not provided, check by username or email
+      user = await User.findOne({ $or: [{ username }, { email }] });
+    }
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Check if the old password matches the user's current password
+    const passwordMatch = await bcrypt.compare(oldPassword, user.password);
+
+    if (!passwordMatch) {
+      return res.status(400).json({ error: 'Incorrect old password' });
+    }
+
+    // Validate the new password format
+    if (!/^(?=.*[a-z])(?=.*[A-Z]).{6,}$/.test(newPassword)) {
+      return res.status(400).json({
+        error: 'Password must be at least 6 characters long and contain both uppercase and lowercase letters.',
+      });
+    }
+
+    // Hash the new password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    // Update the user's password
+    user.password = hashedPassword;
+    await user.save();
+
+    // res.status(200).json({ message: 'Password changed successfully' });
+    res.render('success/password');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('An error occurred while changing password.');
   }
 };

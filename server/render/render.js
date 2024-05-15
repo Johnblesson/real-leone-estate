@@ -22,6 +22,15 @@ export const homeRoute = async (req, res) => {
   };
 
   try {
+    const apartment = await Apartments.find();
+    let relativePath = ''; // Declare relativePath outside the if block
+
+    // Transform the photo path to match the URL served by Express
+  if (apartment && apartment.apartmentsPhoto) {
+    const photoPath = apartment.apartmentsPhoto.replace(/\\/g, '/'); // Replace backslashes with forward slashes
+    relativePath = photoPath.replace('public/assets/', '/assets/'); // Remove "public/assets/" prefix and add "/assets/" route prefix
+  }
+
     // Check if the user is authenticated and get their ID
     const userId = req.isAuthenticated() ? req.user._id : null;
 
@@ -32,7 +41,7 @@ export const homeRoute = async (req, res) => {
     const greeting = getTimeOfDay();
 
     // Render the index page with the receptions and latestStorage data
-    res.render('index', { locals, user, greeting });
+    res.render('index', { locals, user, greeting, apartment, relativePath});
   } catch (error) {
     console.error('Error rendering the page:', error);
     res.status(500).send('Internal Server Error');
@@ -62,13 +71,22 @@ export const homeRoute = async (req, res) => {
   };
   
     try {
+      const apartment = await Apartments.find();
+      let relativePath = ''; // Declare relativePath outside the if block
+  
+      // Transform the photo path to match the URL served by Express
+    if (apartment && apartment.apartmentsPhoto) {
+      const photoPath = apartment.apartmentsPhoto.replace(/\\/g, '/'); // Replace backslashes with forward slashes
+      relativePath = photoPath.replace('public/assets/', '/assets/'); // Remove "public/assets/" prefix and add "/assets/" route prefix
+    }
+
       const user = req.isAuthenticated() ? req.user : null;
   
       // Determine the time of the day
       const greeting = getTimeOfDay();
   
       // Render the index page with the receptions data
-      res.render('index-admin', {locals, user, greeting });
+      res.render('index-admin', {locals, user, greeting, apartment, relativePath});
     } catch (error) {
       console.error('Error rendering the page:', error);
       res.status(500).send('Internal Server Error');
@@ -282,12 +300,21 @@ export const blog = async (req, res) => {
   };
     try {
       const user = req.isAuthenticated() ? req.user : null;
+
+      const apartment = await Apartments.find();
+      let relativePath = ''; // Declare relativePath outside the if block
+  
+      // Transform the photo path to match the URL served by Express
+    if (apartment && apartment.apartmentsPhoto) {
+      const photoPath = apartment.apartmentsPhoto.replace(/\\/g, '/'); // Replace backslashes with forward slashes
+      relativePath = photoPath.replace('public/assets/', '/assets/'); // Remove "public/assets/" prefix and add "/assets/" route prefix
+    }
   
        // Determine the time of the day
       const greeting = getTimeOfDay();
   
       // Render the index page with the receptions and latestStorage data
-      res.render('blog', { locals, user, greeting});
+      res.render('blog', { locals, user, greeting, apartment, relativePath });
     } catch (error) {
       console.error('Error rendering the page:', error);
       res.status(500).send('Internal Server Error');
@@ -420,35 +447,3 @@ const getTimeOfDay = () => {
   }
 };
 
-// User Page
-export const application = async (req, res) => {
-  const locals = {
-    title: "Home Page",
-    description: "This is the home page of the System.",
-  };
-
-  // Function to determine the time of the day
-const getTimeOfDay = () => {
-  const currentHour = new Date().getHours();
-
-  if (currentHour >= 5 && currentHour < 12) {
-    return 'Good Morning';
-  } else if (currentHour >= 12 && currentHour < 18) {
-    return 'Good Afternoon';
-  } else {
-    return 'Good Evening';
-  }
-};
-  try {
-    const user = req.isAuthenticated() ? req.user : null;
-
-     // Determine the time of the day
-    const greeting = getTimeOfDay();
-
-    // Render the index page with the receptions and latestStorage data
-    res.render('apply', { locals, user, greeting});
-  } catch (error) {
-    console.error('Error rendering the page:', error);
-    res.status(500).send('Internal Server Error');
-  }
-};

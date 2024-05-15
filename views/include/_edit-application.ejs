@@ -83,7 +83,21 @@
     <!-- Learn More: https://formbold.com -->
     <div class="formbold-form-wrapper">
       
-  <form action="" method="POST">
+  <form action="/update-admin-application/<%= apply._id %>?_method=PATCH" method="POST">
+
+    <div class="formbold-mb-3 formbold-input-wrapp">
+      <label for="aid" class="formbold-form-label"> AID: </label>
+      <div>
+        <input
+          type="text"
+          name="applyAid"
+          id="aid"
+          value="<%= apply.applyAid %>"
+          class="formbold-form-input"
+          readonly
+        />
+      </div>
+    </div>
   
         <div class="formbold-mb-3 formbold-input-wrapp">
           <label for="phone" class="formbold-form-label"> Phone: </label>

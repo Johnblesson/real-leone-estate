@@ -1,6 +1,9 @@
 import mongoose from "mongoose";
 
 const apartmentSchema = new mongoose.Schema({
+    aid: {
+        type: String
+    },
     title: {
         type: String,
         required: true,
@@ -29,7 +32,7 @@ const apartmentSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    apartmentsPhoto: {
+    photo: {
         type: String, // Or Buffer if storing Base64 data
     },
     bedrooms: {

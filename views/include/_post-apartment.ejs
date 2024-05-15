@@ -4,16 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Apartment Form</title>
-    <!-- 
-    - custom css link
-  -->
   <link rel="stylesheet" href="./css/form.css">
 </head>
 <body>
-
 <div class="formbold-main-wrapper">
-  <!-- Author: FormBold Team -->
-  <!-- Learn More: https://formbold.com -->
+ 
   <div class="formbold-form-wrapper">
     
     <form action="create-apartment" method="POST" enctype="multipart/form-data">
@@ -28,7 +23,6 @@
             class="formbold-form-input"
           />
         </div>
-
         <div>
           <label for="typeOfProperty" class="formbold-form-label"> Type of Property </label>
           <select id="typeOfProperty" class="formbold-form-input" name="typeOfProperty">
@@ -40,30 +34,6 @@
         </div>
 
       </div>
-
-      <!-- <div class="formbold-input-flex">
-        <div>
-            <label for="price" class="formbold-form-label"> Price: </label>
-            <input
-            type="number"
-            name="price"
-            id="price"
-            placeholder="Price"
-            class="formbold-form-input"
-            required
-            />
-        </div>
-
-        <div>
-            <label for="status" class="formbold-form-label"> Status </label>
-            <select id="status" class="formbold-form-input" name="status">
-              <option value="Sell">Sell</option>
-              <option value="Rent">Rent</option>
-              <option value="Least">Least</option>
-              <option value="Others">Others</option>
-          </select>
-          </div>
-      </div> -->
 
       <div class="formbold-input-flex">
         <div>
@@ -92,8 +62,9 @@
         <div id="durationField" style="display: none;">
           <label for="duration" class="formbold-form-label">Duration:</label>
           <select id="duration" class="formbold-form-input" name="duration">
-            <option value="Monthly">Monthly</option>
-            <option value="Yearly">Yearly</option>
+            <option value="">...</option>
+            <option value="/ Monthly">Monthly</option>
+            <option value="/ Yearly">Yearly</option>
           </select>
         </div>
       </div>
@@ -165,11 +136,6 @@
         </div>
       </div>
 
-      <!-- <div class="formbold-mb-3">
-        <label for="dob" class="formbold-form-label"> When can you start? </label>
-        <input type="date" name="dob" id="dob" class="formbold-form-input" />
-      </div> -->
-
       <div class="formbold-mb-3">
         <label for="address" class="formbold-form-label"> Address </label>
 
@@ -215,13 +181,13 @@
       </div>
 
       <div class="formbold-form-file-flex">
-        <label for="apartmentsPhoto" class="formbold-form-label">
+        <label for="photo" class="formbold-form-label">
           Upload Property Image
         </label>
         <input
           type="file"
-          name="apartmentsPhoto"
-          id="apartmentsPhoto"
+          name="photo"
+          id="photo"
           class="formbold-form-file"
         />
       </div>

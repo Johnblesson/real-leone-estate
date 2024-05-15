@@ -1,16 +1,18 @@
+import Apartments from "../models/apartments.js";
 import Application from "../models/apply.js";
 
 // Controller function to create a new application
 export const createApplication = async (req, res) => {
   try {
     // Extracting data from request body
-    const { phone, location, username, address, address2, createdBy, comments } = req.body;
+    const { phone, location, applyAid, username, address, address2, createdBy, comments } = req.body;
 
     // Create a new Application object with form data
     const applicationForm = new Application({
       phone,
       location,
       username,
+      applyAid,
       address,
       address2,
       createdBy,
@@ -115,5 +117,108 @@ export const deleteApplication = async (req, res) => {
     res.render("success/delete-application");
   } catch (error) {
     console.log(error);
+  }
+};
+
+
+export const application = async (req, res) => {
+
+  // Function to determine the time of the day
+  const getTimeOfDay = () => {
+    const currentHour = new Date().getHours();
+
+    if (currentHour >= 5 && currentHour < 12) {
+      return 'Good Morning';
+    } else if (currentHour >= 12 && currentHour < 18) {
+      return 'Good Afternoon';
+    } else {
+      return 'Good Evening';
+    }
+  };
+
+  try {
+    // Get the apartment ID and location from the query parameters
+    const apartmentId = req.query.aid;
+    const location = req.query.location;
+
+    // Fetch the apartment details based on the ID
+    const apartment = await Apartments.findOne({ _id: req.params.id });
+
+    // Determine the time of the day
+    const greeting = getTimeOfDay();
+
+    // Check if the user is authenticated
+    const user = req.isAuthenticated() ? req.user : null;
+
+    // Render the apply page with the necessary data
+    res.render('apply', {
+      user,
+      greeting,
+      apartment,
+      aid: apartmentId,
+      location: location,
+    });
+  } catch (error) {
+    console.error('Error rendering the page:', error);
+    res.status(500).send('Internal Server Error');
+  }
+};
+
+
+// 
+export const adminApplication = async (req, res) => {
+  const locals = {
+    title: "Home Page",
+    description: "This is the home page of the System.",
+  };
+
+  // Function to determine the time of the day
+const getTimeOfDay = () => {
+  const currentHour = new Date().getHours();
+
+  if (currentHour >= 5 && currentHour < 12) {
+    return 'Good Morning';
+  } else if (currentHour >= 12 && currentHour < 18) {
+    return 'Good Afternoon';
+  } else {
+    return 'Good Evening';
+  }
+};
+  try {
+    // Get the apartment ID from the query parameter
+    const apartmentId = req.query.aid;
+    const apartment = await Apartments.findOne({ _id: req.params.id });
+    const user = req.isAuthenticated() ? req.user : null;
+
+     // Determine the time of the day
+    const greeting = getTimeOfDay();
+
+    // Render the index page with the receptions and latestStorage data
+    res.render('apply-admin', { locals, user, greeting, apartment, aid: apartmentId });
+  } catch (error) {
+    console.error('Error rendering the page:', error);
+    res.status(500).send('Internal Server Error');
+  }
+};
+
+
+// Update Admin Applications record
+export const updateApplication = async (req, res) => {
+  try {
+    const { id } = req.params; // Extract the ID of the record to be updated
+
+    // Find the existing Applications record by ID and update its fields
+    const updatedApplication = await Application.findByIdAndUpdate(id, req.body, { new: true });
+
+    // Check if the Applications record exists
+    if (!updatedApplication) {
+      return res.status(404).json({ message: 'Application record not found' });
+    }
+
+    // Respond with the updated Applications record
+    res.status(200).render('success/update-application', { updatedApplication });
+  } catch (error) {
+    console.error('Error updating Applications record:', error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 };

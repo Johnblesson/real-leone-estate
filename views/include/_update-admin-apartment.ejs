@@ -85,6 +85,19 @@
     
     <form action="/edit-admin-apartment/<%= apartment._id %>?_method=PATCH" method="POST">
       <div class="formbold-input-flex">
+      <div>
+        <label for="aid" class="formbold-form-label"> AID </label>
+        <input
+          type="text"
+          name="aid"
+          id="aid"
+          value="<%= apartment.aid %>"
+          class="formbold-form-input"
+        />
+      </div>
+    </div>
+
+      <div class="formbold-input-flex">
         <div>
           <label for="title" class="formbold-form-label"> Title </label>
           <input

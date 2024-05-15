@@ -1,8 +1,4 @@
-<!-- 
-        - #BLOG
-      -->
-
-      <section class="blog" id="blog">
+      <!-- <section class="blog" id="blog">
         <div class="container">
 
           <p class="section-subtitle">News & Blogs</p>
@@ -171,4 +167,86 @@
           </ul>
 
         </div>
-      </section>
+      </section> -->
+
+
+      
+<ul class="property-list has-scrollbar">
+  <% apartment.forEach(apt => { %>
+  <li>
+    <div class="property-card">
+      <figure class="card-banner">
+        <!-- Dynamic image source -->
+        <a href="#">
+          <img src="<%= apt.apartmentsPhoto %>" alt="<%= apt.title %>" class="w-100">
+        </a>
+        <!-- Dynamic badge indicating status (e.g., For Rent, For Sale) -->
+        <div class="card-badge green"><%= apt.status %></div>
+        <div class="banner-actions">
+          <!-- Button with location information -->
+          <button class="banner-actions-btn">
+            <ion-icon name="location"></ion-icon>
+            <address><%= apt.location %></address>
+          </button>
+          <!-- Button with number of bedrooms -->
+          <button class="banner-actions-btn">
+            <ion-icon name="bed-outline"></ion-icon>
+            <span><%= apt.bedrooms %></span>
+          </button>
+          <!-- Button with number of bathrooms -->
+          <button class="banner-actions-btn">
+            <ion-icon name="man-outline"></ion-icon>
+            <span><%= apt.bathrooms %></span>
+          </button>
+        </div>
+      </figure>
+      <div class="card-content">
+        <!-- Dynamic price -->
+        <div class="card-price">
+          <strong><%= 'Le' + apt.price %></strong><%= apt.duration %>
+        </div>
+        <!-- Dynamic title -->
+        <h3 class="h3 card-title">
+          <a href="#"><%= apt.title %></a>
+        </h3>
+        <!-- Dynamic description -->
+        <p class="card-text">
+          <%= apt.description %>
+        </p>
+        <ul class="card-list">
+          <!-- Placeholder for square footage -->
+          <li class="card-item">
+            <strong>Apartment ID (AID): AID<%= apt.aid %></strong>
+            <!-- <ion-icon name="square-outline"></ion-icon> -->
+            <a href="/admin-application-form?aid=<%= apt.aid %>"><span>Contact site: Administrator</span></a>
+          </li>
+        </ul>
+      </div>
+      <div class="card-footer">
+        <div class="card-author">
+          <div>
+            <!-- Dynamic user fullname -->
+            <p class="author-name"> Created by:
+              <a href=""><%= apt.createdBy %></a>
+            </p>
+            <!-- Dynamic user bio -->
+            <p class="author-title"></p>
+          </div>
+        </div>
+        <div class="card-footer-actions">
+          <!-- Action buttons (placeholders) -->
+          <button class="card-footer-actions-btn">
+            <ion-icon name="resize-outline"></ion-icon>
+          </button>
+          <button class="card-footer-actions-btn">
+            <ion-icon name="heart-outline"></ion-icon>
+          </button>
+          <button class="card-footer-actions-btn">
+            <ion-icon name="add-circle-outline"></ion-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </li>
+  <% }) %>
+</ul>

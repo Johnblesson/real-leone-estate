@@ -10,7 +10,7 @@
         <div class="footer-brand">
 
           <a href="#" class="logo">
-            <img src="./images/logo-light.png" alt="Homeverse logo">
+            <!-- <img style="width: 80%; float: left; margin-right: 10px;" src="./images/hub.jpg" alt="Homehub logo"> -->
           </a>
 
           <p class="section-text">
@@ -23,7 +23,7 @@
               <a href="#" class="contact-link">
                 <ion-icon name="location-outline"></ion-icon>
 
-                <address>Brooklyn, New York, United States</address>
+                <address>Hill Station, Freetown, Sierra Leone</address>
               </a>
             </li>
 
@@ -31,7 +31,7 @@
               <a href="tel:+0123456789" class="contact-link">
                 <ion-icon name="call-outline"></ion-icon>
 
-                <span>+0123-456789</span>
+                <span>+23279969094</span>
               </a>
             </li>
 
@@ -39,7 +39,7 @@
               <a href="mailto:contact@homeverse.com" class="contact-link">
                 <ion-icon name="mail-outline"></ion-icon>
 
-                <span>contact@homeverse.com</span>
+                <span>contact@homehub.com</span>
               </a>
             </li>
 
@@ -124,11 +124,11 @@
             </li>
 
             <li>
-              <a href="#" class="footer-link">Login</a>
+              <a href="/" class="footer-link">Login</a>
             </li>
 
             <li>
-              <a href="#" class="footer-link">My account</a>
+              <a href="/update-password/<%= user._id %>" class="footer-link">My account</a>
             </li>
 
             <li>
@@ -182,7 +182,7 @@
       <div class="container">
 
         <p class="copyright">
-          &copy; 2024 <a href="#">Real Leone</a>. All Rights Reserved || Logged in as <a href="#"><%= user ? user.role : '' %></a> - <%= user ? user.fullname : '' %> || <a href="/logout">Logout</a>
+          &copy; 2024 <a href="#">Homehub</a>. All Rights Reserved || Logged in as <a href="#"><%= user ? user.role : '' %></a> - <%= user ? user.fullname : '' %> || <a href="/logout">Logout</a>
         </p>
 
       </div>

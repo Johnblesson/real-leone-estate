@@ -36,6 +36,10 @@ const userSchema = new mongoose.Schema({
         enum: ['active', 'inactive'],
         default: 'active',
     },
+    accountant: {
+        type: Boolean,
+        default: false,
+    },
     sudo: {
         type: Boolean,
         default: false,

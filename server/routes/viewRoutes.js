@@ -1,11 +1,12 @@
 import { Router } from "express";
 const router = Router();
 
-import { about, service, features, blog, allProperties, getPostApartment, listedProperties, allusers, application} from "../render/render.js";
+import { about, service, features, blog, allProperties, getPostApartment, listedProperties, allusers } from "../render/render.js";
+import { adminAbout, adminFeatures, adminService, adminBlog } from "../render/admin.js";
 import { getAllUsers } from "../controllers/auth.js"
 import ensureAuthenticated from "../middlewares/auth.js";
 import { isAdmin } from "../middlewares/isAdmin.js";
-
+import { isAccountant } from "../middlewares/isAccountant.js";
 
 // Add more routes here
 // router.get("/all-properties", ensureAuthenticated, allProperties );
@@ -26,12 +27,24 @@ router.get('/create-apartment', ensureAuthenticated, getPostApartment)
 
 router.get('/listed-properties', listedProperties)
 
-router.get('/all-users', ensureAuthenticated, getAllUsers)
+router.get('/all-users', isAdmin, ensureAuthenticated, getAllUsers)
 
-router.get('/application-form', ensureAuthenticated, application)
+// Post apartments success message
+router.get('/admin-apartment-success', (req, res) => {
+    res.render('success/admin-apartment')
+})
 
-// router.get('/administarator', (req, res) => {
-//     res.render('administrator')
-// })
+router.get('/apartment-success', (req, res) => {
+    res.render('success/user-apartment')
+})
+
+// Admin routes
+router.get("/admin-about", ensureAuthenticated, adminAbout);
+
+router.get("/admin-features", ensureAuthenticated, adminFeatures);
+
+router.get("/admin-service", ensureAuthenticated, adminService);
+
+router.get("/admin-blog", ensureAuthenticated, adminBlog);
 
 export default router;

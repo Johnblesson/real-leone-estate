@@ -16,15 +16,16 @@ import {
     adminEditApartments, // get edit apartments for admin
     adminVerifyApartment,
     verifyUpdateApartment,
+    viewapartment,
 } from '../controllers/apartments.js';
 
 import { allAdminProperties } from '../render/render.js'
 import ensureAuthenticated from '../middlewares/auth.js';
 import { isAdmin } from '../middlewares/isAdmin.js';
-import { checkApartmentVerification }from '../middlewares/isVerified.js';
+import { checkSudoMiddleware } from '../middlewares/sudo.js'
 import upload from '../upload/upload.js';
 
-router.post('/create-apartment', upload.single('apartmentsPhoto'), createApartment);
+router.post('/create-apartment', upload.single('photo'), createApartment);
 router.get('/apartments', ensureAuthenticated, getAllApartments);
 router.get('/edit-apartment', ensureAuthenticated, editapartment);
 router.get('/admin-edit-apartment', ensureAuthenticated, isAdmin, admineditapartment);
@@ -32,18 +33,19 @@ router.get('/all-properties', ensureAuthenticated, apartmentDisplay);
 router.get('/all-admin-properties', ensureAuthenticated, allAdminProperties);
 router.get('/all-apartments', ensureAuthenticated, allApartments);
 router.get('/apartments/:id', ensureAuthenticated, getApartmentById);
-router.put('/apartments/:id', ensureAuthenticated, updateApartmentById);
-router.delete('/apartments/:id', ensureAuthenticated, deleteApartmentById);
+router.put('/apartments/:id', ensureAuthenticated, isAdmin, updateApartmentById);
+router.delete('/delete-apartments/:id', ensureAuthenticated, isAdmin, checkSudoMiddleware, deleteApartmentById);
+router.get('/delete-apartments/:id', ensureAuthenticated, isAdmin, checkSudoMiddleware, deleteApartmentById);
 router.patch('/update-apartments/:id', ensureAuthenticated, updateApartments);
-router.patch('/update-admin-apartments/:id', ensureAuthenticated, updateAdminApartments);
-
-router.get("/edit-admin-apartment/:id", ensureAuthenticated, adminEditApartments);
-router.patch("/edit-admin-apartment/:id", ensureAuthenticated, updateAdminApartments);
+router.patch('/update-admin-apartments/:id', ensureAuthenticated, isAdmin, updateAdminApartments);
+router.get('/view-apartmet-details/:id', ensureAuthenticated, isAdmin, viewapartment);
+router.get("/edit-admin-apartment/:id", ensureAuthenticated, isAdmin, adminEditApartments);
+router.patch("/edit-admin-apartment/:id", ensureAuthenticated, isAdmin, updateAdminApartments);
 
 // router.get('/properties', properties);
 
-router.get('/verify-apartment', isAdmin, adminVerifyApartment);
+router.get('/verify-apartment', checkSudoMiddleware, isAdmin, adminVerifyApartment);
 
-router.get('/verify-update-apartment/:id', isAdmin, ensureAuthenticated, verifyUpdateApartment);
+router.get('/verify-update-apartment/:id', checkSudoMiddleware, isAdmin, ensureAuthenticated, verifyUpdateApartment);
 
 export default router;

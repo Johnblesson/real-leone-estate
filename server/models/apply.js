@@ -4,6 +4,7 @@ const applySchema = new mongoose.Schema({
     phone: String,
     location: String,
     username: String,
+    applyAid: String,
     address: String,
     address2: String,
     createdBy : String,

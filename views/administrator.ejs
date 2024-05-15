@@ -38,7 +38,8 @@
         <div class="header-right">
           <span class="material-icons-outlined">notifications</span>
           <span class="material-icons-outlined">email</span>
-          <span class="material-icons-outlined">account_circle</span>
+          <span class="material-icons-outlined"><a href="/admin-home">account_circle</a></span>
+          <span class="material-icons-outlined"><a href="/logout">logout</a></span>
         </div>
       </header>
       <!-- End Header -->
@@ -47,7 +48,7 @@
       <aside id="sidebar">
         <div class="sidebar-title">
           <div class="sidebar-brand">
-            <span class="material-icons-outlined">home</span> HOMEHUB
+            <a href="/admin-home"><span class="material-icons-outlined">home</span> HOMEHUB </a>
           </div>
           <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
         </div>
@@ -95,7 +96,7 @@
       <!-- Main -->
       <main class="main-container">
         <div class="main-title">
-          <h2>DASHBOARD</h2>
+          <h2>ADMIN DASHBOARD</h2>
         </div>
 
         <div class="main-cards">
@@ -129,11 +130,12 @@
           </div>
 
           <div class="card">
-            <div class="card-inner">
-              <h3>ALERTS</h3>
-              <span class="material-icons-outlined">notification_important</span>
-            </div>
-            <h1>56</h1>
+            <a href="/account">
+            <div class="card-inner"> 
+              <h3>ACCOUNTS</h3>
+              <span class="material-icons-outlined">money</span>
+            </div></a>
+            <h1></h1>
           </div>
 
         </div>

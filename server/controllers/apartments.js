@@ -10,10 +10,13 @@ const createApartment = async (req, res) => {
       return res.status(400).json({ error: 'No file uploaded' });
     }
 
-    const durationSlashes = '/' + req.body.duration;
+    const user = await User.find();
+
+    const durationSlashes = req.body.duration;
 
     // Create a new Apartments object with form data
     const apartmentData = new Apartments({
+      aid: req.bod.aid,
       title: req.body.title,
       location: req.body.location,
       price: req.body.price,
@@ -23,7 +26,7 @@ const createApartment = async (req, res) => {
       bedrooms: req.body.bedrooms,
       bathrooms: req.body.bathrooms,
       description: req.body.description,
-      apartmentsPhoto: req.file.path,
+      photo: req.file ? req.file.path : '', // Store the file path if file exists
       phone: req.body.phone,
       area: req.body.area,
       address: req.body.address,
@@ -37,7 +40,15 @@ const createApartment = async (req, res) => {
     });
 
     const savedApartment = await apartmentData.save();
-    res.status(201).render('success/apartment');
+
+    if (user.role === 'admin') {
+      res.redirect('/admin-apartment-success')
+    } else if (user.role === 'user') {
+      res.redirect('/apartment-success')
+    } else {
+      res.redirect('/apartment-success')
+    }
+    // res.status(201).render('success/apartment');
     console.log(savedApartment);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -102,7 +113,52 @@ const deleteApartmentById = async (req, res) => {
 };
 
 
-const apartmentDisplay = async (req, res) => {
+// export const apartmentDisplay = async (req, res) => {
+//   // Function to determine the time of the day
+//   const getTimeOfDay = () => {
+//     const currentHour = new Date().getHours();
+
+//     if (currentHour >= 5 && currentHour < 12) {
+//       return 'Good Morning';
+//     } else if (currentHour >= 12 && currentHour < 18) {
+//       return 'Good Afternoon';
+//     } else {
+//       return 'Good Evening';
+//     }
+//   };
+
+//   try {
+//     // Fetch only verified apartments from the database
+//     const apartment = await Apartments.find({ verification: 'verified' });
+
+//     // Determine the time of the day
+//     const greeting = getTimeOfDay();
+
+//     // Check if the user is authenticated and get their ID
+//     const user = req.isAuthenticated() ? req.user : null;
+
+//     let relativePath = ''; // Declare relativePath outside the if block
+
+//     // Transform the photo path to match the URL served by Express
+//     if (user && user.photo) {
+//       const photoPath = user.photo.replace(/\\/g, '/'); // Replace backslashes with forward slashes
+//       relativePath = photoPath.replace('public/assets/', '/assets/'); // Remove "public/assets/" prefix and add "/assets/" route prefix
+//     }
+
+//     // Render the all-properties view template with the verified apartments data
+//     res.render("all-properties", {
+//       apartment,
+//       greeting,
+//       user,
+//       relativePath,
+//     });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send("An error occurred while fetching apartments.");
+//   }
+// };
+
+export const apartmentDisplay = async (req, res) => {
   // Function to determine the time of the day
   const getTimeOfDay = () => {
     const currentHour = new Date().getHours();
@@ -134,6 +190,9 @@ const apartmentDisplay = async (req, res) => {
       relativePath = photoPath.replace('public/assets/', '/assets/'); // Remove "public/assets/" prefix and add "/assets/" route prefix
     }
 
+    console.log("Relative Path:", relativePath); // Log the relativePath
+    console.log("Apartments:", apartment); // Log the fetched apartments
+
     // Render the all-properties view template with the verified apartments data
     res.render("all-properties", {
       apartment,
@@ -146,6 +205,7 @@ const apartmentDisplay = async (req, res) => {
     res.status(500).send("An error occurred while fetching apartments.");
   }
 };
+
 
 
 // Controller function to get all apartments
@@ -508,6 +568,20 @@ export const verifyUpdateApartment = async (req, res) => {
 };
 
 
+// View get
+export const viewapartment = async (req, res) => {
+  try {
+    const apartment = await Apartments.findOne({ _id: req.params.id });
+
+    res.render("view-apt", {
+      apartment,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
 
 export {
   createApartment,
@@ -515,5 +589,4 @@ export {
   getApartmentById,
   updateApartmentById,
   deleteApartmentById,
-  apartmentDisplay,
 };
