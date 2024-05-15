@@ -60,8 +60,8 @@
             </a>
           </li>
           <li class="sidebar-list-item">
-            <a href="#" target="_blank">
-              <span class="material-icons-outlined">home</span> Transactions
+            <a href="/transaction-form" target="_blank">
+              <span class="material-icons-outlined">monetization_on</span> Transactions Form
             </a>
           </li>
           <li class="sidebar-list-item">
@@ -101,13 +101,13 @@
 
         <div class="main-cards">
           <div class="card">
-            <a href="#">
+            <a href="/all-transactions">
             <div class="card-inner">
               <h3>TRANSACTIONS</h3>
               <span class="material-icons-outlined">monetization_on</span>
             </div></a>
             <!-- <h1>249</h1> -->
-            <h1></h1>
+            <h1><%= totalAmount %></h1>
           </div>
 
           
@@ -136,7 +136,7 @@
               <h3>TOTAL INCOME</h3>
               <span class="material-icons-outlined">money</span>
             </div></a>
-            <h1></h1>
+            <h1><%= totalPercent %></h1> 
           </div>
         </div>
 
@@ -148,7 +148,7 @@
                 <span class="material-icons-outlined">home</span>
               </div></a>
               <!-- <h1>249</h1> -->
-              <h1></h1>
+              <h1><%= totalBuyerTenant %></h1>
             </div>
   
             
@@ -158,7 +158,7 @@
                 <h3>OWNER 5%</h3>
                 <span class="material-icons-outlined">supervisor_account</span>
               </div></a>
-              <h1></h1>
+              <h1><%= totalOwner %></h1>
             </div>
   
             <div class="card">
