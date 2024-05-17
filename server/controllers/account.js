@@ -1,6 +1,7 @@
 import Expenses from '../models/expenses.js';
 import User from '../models/auth.js';
 import Transactions from '../models/transaction.js';
+import Staffs from '../models/staffs.js'
 import { sumTransactionsAmount, sumTotalPercentAmount, sumOwnerPercent, sumBuyerTenantPercent } from './transactionSum.js'
 
 // Controller function to create a new Expenses
@@ -144,6 +145,7 @@ export const accDashboard = async (req, res) => {
         };
 
         const usersCount = await User.countDocuments();
+        const staffsCount = await Staffs.countDocuments();
 
         // Determine the time of the day
         const greeting = getTimeOfDay();
@@ -173,6 +175,7 @@ export const accDashboard = async (req, res) => {
             totalPercent,
             totalOwner,
             totalBuyerTenant,
+            staffsCount,
         });
     } catch (error) {
         console.error('Error rendering the page:', error);
@@ -190,6 +193,15 @@ export const deleteExpenses = async (req, res) => {
     }
   };
 
+  // Delete Expenses data
+export const deleteTransactions = async (req, res) => {
+  try {
+    await Transactions.deleteOne({ _id: req.params.id });
+    res.render("success/delete-transactions");
+  } catch (error) {
+    console.log(error);
+  }
+};
 
   // Get expenses page
 export const editExpenses = async (req, res) => {
@@ -255,59 +267,7 @@ export const updateExpenses = async (req, res) => {
   };
 
 
-  // Transaction Contollers
-
-// // Controller function to create a new Expenses
-// export const createTransactions = async (req, res) => {
-//   try {
-//     // Extracting data from request body
-//     const { 
-//       date,
-//       aid,
-//       ownerName,
-//       buyerName,
-//       tenantName,
-//       amount,
-//       createdBy,
-//       username,
-//       comments
-//     } = req.body;
-
-//     // Calculate ownerPercent and buyerTenantPercent based on 5% of the amount
-//     const ownerPercent = amount * 0.05;
-//     const buyerTenantPercent = amount * 0.05;
-//     const totalPercentAmount = ownerPercent + buyerTenantPercent;
-
-//     // Create a new Transactions object with form data
-//     const TransactionsForm = new Transactions({
-//       date,
-//       aid,
-//       ownerName,
-//       buyerName,
-//       tenantName,
-//       amount,
-//       ownerPercent,
-//       buyerTenantPercent,
-//       totalPercentAmount,
-//       createdBy,
-//       username,
-//       comments,
-//       createdAt: new Date(), // Assuming createdAt and updatedAt are Date objects
-//       updatedAt: new Date()
-//     });
-
-//     // Saving the Transactions to the database
-//     const savedTransactions = await TransactionsForm.save();
-
-//     // Sending a success response
-//     res.status(201).render('success/transactions');
-//     console.log(savedTransactions);
-//   } catch (error) {
-//     // Sending an error response
-//     res.status(400).json({ error: error.message });
-//   }
-// };
-
+// Transaction Contollers
 
 // Controller function to create a new Expenses
 export const createTransactions = async (req, res) => {
@@ -432,13 +392,99 @@ export const getAllTransactions = async (req, res) => {
   }
 };
 
+  // Get All transactions Controller
+export const ownerPercent = async (req, res) => {
 
-  // Delete transactions data
-export const deleteTransactions = async (req, res) => {
   try {
-    await Transactions.deleteOne({ _id: req.params.id });
-    res.render("success/delete-transactions");
+    const page = parseInt(req.query.page) || 1; // Get the requested page number from the query parameter
+    const limit = 15; // Number of entries per page
+    const skip = (page - 1) * limit;
+
+    // Fetch all storage data
+    // const allStorage = await User.find().skip(skip).limit(limit);
+    const totalEntries = await Transactions.countDocuments();
+
+    const totalPages = Math.ceil(totalEntries / limit);
+
+    // Fetch all users from the database
+    // const users = await User.find({}, '-password'); // Exclude password field from the response
+    const transactions = await Transactions.aggregate([
+      { $skip: skip },
+      { $limit: limit }
+  ]);
+  
+    res.render('owner-percent', { 
+      transactions: transactions, 
+      currentPage: page, 
+      totalPages: totalPages,
+    });
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    res.status(500).send('An error occurred while fetching users.');
   }
 };
+
+// Update transactions data
+
+  // Get expenses page
+  export const getUpdateTransactions = async (req, res) => {
+    const locals = {
+      title: "Edit expenses",
+      description: "This is the edit expenses page.",
+    };
+  
+    // Function to determine the time of the day
+    const getTimeOfDay = () => {
+      const currentHour = new Date().getHours();
+  
+      if (currentHour >= 5 && currentHour < 12) {
+        return 'Good Morning';
+      } else if (currentHour >= 12 && currentHour < 18) {
+        return 'Good Afternoon';
+      } else {
+        return 'Good Evening';
+      }
+    };
+  
+    try {
+      const transactions = await Transactions.findOne({ _id: req.params.id });
+  
+      // Determine the time of the day
+      const greeting = getTimeOfDay();
+  
+      const user = req.isAuthenticated() ? req.user : null;
+  
+      res.render("transactions-update", {
+        locals,
+        transactions,
+        greeting,
+        user,
+      });
+    } catch (error) {
+      // Handle errors gracefully
+      console.error(error.message);
+      res.status(404).send("User not found");
+    }
+  };
+
+
+  // Update Admin Transaction record
+export const updateTransactions = async (req, res) => {
+    try {
+      const { id } = req.params; // Extract the ID of the record to be updated
+  
+      // Find the existing Transactions record by ID and update its fields
+      const updatedTransaction = await Transactions.findByIdAndUpdate(id, req.body, { new: true });
+  
+      // Check if the Transactions record exists
+      if (!updatedTransaction) {
+        return res.status(404).json({ message: 'Transaction record not found' });
+      }
+  
+      // Respond with the updated Transactions record
+      res.status(200).render('success/Transaction-update', { updatedTransaction });
+    } catch (error) {
+      console.error('Error updating Transactions record:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  };

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Apartment Form</title>
+  <title>Add Staffs</title>
     <!-- 
     - custom css link
   -->
@@ -13,8 +13,48 @@
 
 <div class="formbold-main-wrapper">
   <div class="formbold-form-wrapper">
-    
-<form action="/apply" method="POST">
+    <h1>Staff form</h1>
+<form action="/add-staffs" method="POST">
+
+  <div class="formbold-mb-3 formbold-input-wrapp">
+    <label for="dateOfEmployment" class="formbold-form-label"> Date of Employment: </label>
+    <div>
+      <input
+        type="date"
+        name="dateOfEmployment"
+        id="dateOfEmployment"
+        class="formbold-form-input"
+        required
+      />
+    </div>
+  </div>
+
+      <div class="formbold-mb-3 formbold-input-wrapp">
+        <label for="staffName" class="formbold-form-label"> Staff Name: </label>
+        <div>
+          <input
+            type="text"
+            name="staffName"
+            id="staffName"
+            class="formbold-form-input"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="formbold-mb-3 formbold-input-wrapp">
+        <label for="position" class="formbold-form-label"> Position: </label>
+        <div>
+          <input
+            type="text"
+            name="position"
+            id="position"
+            placeholder="Position"
+            class="formbold-form-input"
+            required
+          />
+        </div>
+      </div>
 
       <div class="formbold-mb-3 formbold-input-wrapp">
         <label for="phone" class="formbold-form-label"> Phone: </label>
@@ -31,30 +71,14 @@
       </div>
 
       <div class="formbold-mb-3 formbold-input-wrapp">
-        <label for="location" class="formbold-form-label"> Apartment Location: </label>
+        <label for="email" class="formbold-form-label"> Email: </label>
         <div>
           <input
-            type="text"
-            name="location"
-            id="location"
-            value="<%= location %>"
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Email Address"
             class="formbold-form-input"
-            readonly
-          />
-        </div>
-      </div>
-
-      <div class="formbold-mb-3 formbold-input-wrapp">
-        <label for="apply-aid" class="formbold-form-label"> Apartment ID (AID): </label>
-        <div>
-          <input
-            type="text"
-            name="applyAid"
-            id="apply-aid"
-            placeholder="Apartment ID"
-            class="formbold-form-input"
-            value="<%= aid %>"
-            readonly
           />
         </div>
       </div>

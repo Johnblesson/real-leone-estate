@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="./css/success.css">
-    <title>Delete User</title>
+    <title>Staff Success</title>
 
     <style>
         body {
@@ -29,7 +29,7 @@
 }
 
 .success-message h1 {
-    color: hsl(9, 100%, 62%);;
+    color: hsl(9, 100%, 62%);
 }
 
 .add-another-reception {
@@ -39,7 +39,7 @@
 .add-another-reception a {
     display: inline-block;
     padding: 10px 20px;
-    background-color: hsl(9, 100%, 62%);;
+    background-color: hsl(9, 100%, 62%);
     color: #fff;
     text-decoration: none;
     border-radius: 5px;
@@ -47,16 +47,39 @@
 }
 
 .add-another-reception a:hover {
-    background-color: hsl(9, 83%, 55%);
+    background-color: hsl(9, 91%, 57%);
 }
+
+/* a {
+    text-decoration: none;
+} */
+
+a {
+    text-decoration: none;
+    position: relative;
+}
+
+a::after {
+    content: 'Click me';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+a:hover::after {
+    opacity: 1;
+}
+
     </style>
 </head>
 <body>
     <div class="container">
         <div class="success-message">
-            <h1>User Deleted Successfully!</h1>
-            <p>User details have been deleted successfully.</p>
-        </div>
+            <h1>Staff created successfully!</h1>
+            <p>A new staff has been created successfully</p>
+        </div>        
         <div class="add-another-reception">
             <a href="#" onclick="goBack()">Go Back</a>
         </div>
