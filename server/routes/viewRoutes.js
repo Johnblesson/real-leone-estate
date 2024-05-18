@@ -1,7 +1,7 @@
 import { Router } from "express";
 const router = Router();
 
-import { about, service, features, blog, allProperties, getPostApartment, listedProperties, allusers } from "../render/render.js";
+import { about, service, features, blog, allProperties, getPostApartment, getPostApartmentAdmin, listedProperties, allusers } from "../render/render.js";
 import { adminAbout, adminFeatures, adminService, adminBlog } from "../render/admin.js";
 import { getAllUsers } from "../controllers/auth.js"
 import ensureAuthenticated from "../middlewares/auth.js";
@@ -24,6 +24,8 @@ router.get("/service", ensureAuthenticated, service);
 router.get("/blog", ensureAuthenticated, blog);
 
 router.get('/create-apartment', ensureAuthenticated, getPostApartment)
+
+router.get('/create-apartment-admin', ensureAuthenticated, isAdmin, getPostApartmentAdmin)
 
 router.get('/listed-properties', listedProperties)
 

@@ -137,6 +137,7 @@
         <div>
           <label for="status" class="formbold-form-label"> Status </label>
           <select id="status" class="formbold-form-input" name="status">
+            <option value="" disabled selected hidden>Select Status</option>
             <option value="Sell" <%= apartment.status === 'Sell' ? 'selected' : '' %>>Sell</option>
             <option value="Rent" <%= apartment.status === 'Rent' ? 'selected' : '' %>>Rent</option>
             <option value="Least" <%= apartment.status === 'Least' ? 'selected' : '' %>>Least</option>
@@ -164,6 +165,7 @@
 
         <div>
           <select id="area" class="formbold-form-input" name="area">
+            <option value="" disabled selected hidden>Select Area</option>
             <option value="Western Area Urban" <%= apartment.area === 'Western Area Urban' ? 'selected' : '' %>>Western Area Urban</option>
             <option value="Western Area Rural" <%= apartment.area === 'Western Area Rural' ? 'selected' : '' %>>Western Area Rural</option>
             <option value="Others" <%= apartment.area !== 'Western Area Urban' && apartment.area !== 'Western Area Rural' ? 'selected' : '' %>>Others</option>
@@ -208,6 +210,7 @@
         <label for="negotiation" class="formbold-form-label"> Negotiation: </label>
         <div>
           <select id="negotiation" class="formbold-form-input" name="negotiation">
+            <option value="" disabled selected hidden>Select Negotiation</option>
             <option value="Negotiable">Negotiable</option>
             <option value="Non Negotiable">Non Negotiable</option>
         </select>
@@ -218,19 +221,19 @@
         <div>
           <label for="avaliablity" class="formbold-form-label"> Avaliablity </label>
           <select id="availabilty" class="formbold-form-input" name="availabilty">
+            <option value="" disabled selected hidden>Select Avaliablity</option>
             <option value="Avaliable">Avaliable</option>
             <option value="Not Availabile">Not Availabile</option>
         </select>
         </div>
-
-        <!-- <div>
-          <label for="verification" class="formbold-form-label"> Verification </label>
-          <select id="verification" class="formbold-form-input" name="verification">
-            <option value="verified">Verified</option>
-            <option value="not-verified">Not Verified</option>
-        </select>
-        </div> -->
-
+          <div>
+            <label for="sponsored" class="formbold-form-label"> Sponsored </label>
+            <select id="sponsored" class="formbold-form-input" name="sponsored">
+              <option value="" disabled selected hidden>Select Sponsored</option>
+              <option value="false">False</option>
+              <option value="true">True</option>
+          </select>
+          </div>
       </div>
 
       <div class="formbold-mb-3">

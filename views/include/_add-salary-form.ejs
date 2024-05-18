@@ -21,6 +21,7 @@
         <div>
           <select name="staffName" class="formbold-form-input" id="staffName">
             <% staffNames.forEach(staffName => { %>
+              <option value="" disabled selected hidden>Select Staff</option>
               <option value="<%= staffName %>"><%= staffName %></option>
             <% }); %>
           </select>

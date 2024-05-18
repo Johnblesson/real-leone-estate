@@ -29,10 +29,41 @@ export const profile = async (req, res) => {
     }
   };
   
+  // export const adminprofile = async (req, res) => {
+  //   try {
+  //     const users = await User.findOne({ _id: req.params.id });
+  //     let relativePath = ''; // Declare relativePath outside the if block
+  
+  //     // Transform the photo path to match the URL served by Express
+  //     if (users && users.photo) {
+  //       const photoPath = users.photo.replace(/\\/g, '/'); // Replace backslashes with forward slashes
+  //       relativePath = photoPath.replace('public/assets/', '/assets/'); // Remove "public/assets/" prefix and add "/assets/" route prefix
+  //     }
+  
+  //     const locals = {
+  //       title: "Users Profile",
+  //       description: "This is the users profile page.",
+  //     };
+  
+  //     res.render("profile-admin", {
+  //       locals,
+  //       users, // Pass the transformed users data to the EJS template
+  //       relativePath, // Pass the transformed photo path to the EJS template
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //     res.status(500).send("An error occurred while fetching users profile.");
+  //   }
+  // };
+
+
   export const adminprofile = async (req, res) => {
     try {
       const users = await User.findOne({ _id: req.params.id });
       let relativePath = ''; // Declare relativePath outside the if block
+      const apts = await Apartments.findOne({ _id: req.params.id });
+      const apartments = await Apartments.find({ verification: 'verified' }).sort({ sponsored: -1, createdAt: -1 });
+
   
       // Transform the photo path to match the URL served by Express
       if (users && users.photo) {
@@ -40,21 +71,27 @@ export const profile = async (req, res) => {
         relativePath = photoPath.replace('public/assets/', '/assets/'); // Remove "public/assets/" prefix and add "/assets/" route prefix
       }
   
-      const locals = {
-        title: "Users Profile",
-        description: "This is the users profile page.",
-      };
+      apartments.forEach(apartment => {
+        if (apartment.photo) {
+          const photoPath = apartment.photo.replace(/\\/g, '/');
+          apartment.relativePath = photoPath.replace('public/assets/', '/assets/');
+        } else {
+          apartment.relativePath = '';
+        }
+      });
   
       res.render("profile-admin", {
-        locals,
         users, // Pass the transformed users data to the EJS template
         relativePath, // Pass the transformed photo path to the EJS template
+        apartments,
+        apts,
       });
     } catch (error) {
       console.log(error);
       res.status(500).send("An error occurred while fetching users profile.");
     }
   };
+
   
   // View user's profile GET REQUEST
   export const updateprofile = async (req, res) => {
@@ -166,3 +203,5 @@ export const view = async (req, res) => {
     console.log(error);
   }
 };
+
+

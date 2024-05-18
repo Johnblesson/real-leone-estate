@@ -1,252 +1,83 @@
-      <!-- <section class="blog" id="blog">
-        <div class="container">
-
-          <p class="section-subtitle">News & Blogs</p>
-
-          <h2 class="h2 section-title">Leatest News Feeds</h2>
-
-          <ul class="blog-list has-scrollbar">
-
-            <li>
-              <div class="blog-card">
-
-                <figure class="card-banner">
-                  <img src="./images/blog-1.png" alt="The Most Inspiring Interior Design Of 2021" class="w-100">
-                </figure>
-
-                <div class="blog-content">
-
-                  <div class="blog-content-top">
-
-                    <ul class="card-meta-list">
-
-                      <li>
-                        <a href="#" class="card-meta-link">
-                          <ion-icon name="person"></ion-icon>
-
-                          <span>by: Admin</span>
-                        </a>
-                      </li>
-
-                      <li>
-                        <a href="#" class="card-meta-link">
-                          <ion-icon name="pricetags"></ion-icon>
-
-                          <span>Interior</span>
-                        </a>
-                      </li>
-
-                    </ul>
-
-                    <h3 class="h3 blog-title">
-                      <a href="#">The Most Inspiring Interior Design Of 2021</a>
-                    </h3>
-
-                  </div>
-
-                  <div class="blog-content-bottom">
-                    <div class="publish-date">
-                      <ion-icon name="calendar"></ion-icon>
-
-                      <time datetime="2022-27-04">Apr 27, 2022</time>
-                    </div>
-
-                    <a href="#" class="read-more-btn">Read More</a>
-                  </div>
-
-                </div>
-
-              </div>
-            </li>
-
-            <li>
-              <div class="blog-card">
-
-                <figure class="card-banner">
-                  <img src="./images/blog-2.jpg" alt="Recent Commercial Real Estate Transactions" class="w-100">
-                </figure>
-
-                <div class="blog-content">
-
-                  <div class="blog-content-top">
-
-                    <ul class="card-meta-list">
-
-                      <li>
-                        <a href="#" class="card-meta-link">
-                          <ion-icon name="person"></ion-icon>
-
-                          <span>by: Admin</span>
-                        </a>
-                      </li>
-
-                      <li>
-                        <a href="#" class="card-meta-link">
-                          <ion-icon name="pricetags"></ion-icon>
-
-                          <span>Estate</span>
-                        </a>
-                      </li>
-
-                    </ul>
-
-                    <h3 class="h3 blog-title">
-                      <a href="#">Recent Commercial Real Estate Transactions</a>
-                    </h3>
-
-                  </div>
-
-                  <div class="blog-content-bottom">
-                    <div class="publish-date">
-                      <ion-icon name="calendar"></ion-icon>
-
-                      <time datetime="2022-27-04">Apr 27, 2022</time>
-                    </div>
-
-                    <a href="#" class="read-more-btn">Read More</a>
-                  </div>
-
-                </div>
-
-              </div>
-            </li>
-
-            <li>
-              <div class="blog-card">
-
-                <figure class="card-banner">
-                  <img src="./images/blog-3.jpg" alt="Renovating a Living Room? Experts Share Their Secrets"
-                    class="w-100">
-                </figure>
-
-                <div class="blog-content">
-
-                  <div class="blog-content-top">
-
-                    <ul class="card-meta-list">
-
-                      <li>
-                        <a href="#" class="card-meta-link">
-                          <ion-icon name="person"></ion-icon>
-
-                          <span>by: Admin</span>
-                        </a>
-                      </li>
-
-                      <li>
-                        <a href="#" class="card-meta-link">
-                          <ion-icon name="pricetags"></ion-icon>
-
-                          <span>Room</span>
-                        </a>
-                      </li>
-
-                    </ul>
-
-                    <h3 class="h3 blog-title">
-                      <a href="#">Renovating a Living Room? Experts Share Their Secrets</a>
-                    </h3>
-
-                  </div>
-
-                  <div class="blog-content-bottom">
-                    <div class="publish-date">
-                      <ion-icon name="calendar"></ion-icon>
-
-                      <time datetime="2022-27-04">Apr 27, 2022</time>
-                    </div>
-
-                    <a href="#" class="read-more-btn">Read More</a>
-                  </div>
-
-                </div>
-
-              </div>
-            </li>
-
-          </ul>
-
-        </div>
-      </section> -->
-
-
-      
 <ul class="property-list has-scrollbar">
-  <% apartment.forEach(apt => { %>
-  <li>
-    <div class="property-card">
-      <figure class="card-banner">
-        <!-- Dynamic image source -->
-        <a href="#">
-          <img src="<%= apt.apartmentsPhoto %>" alt="<%= apt.title %>" class="w-100">
-        </a>
-        <!-- Dynamic badge indicating status (e.g., For Rent, For Sale) -->
-        <div class="card-badge green"><%= apt.status %></div>
-        <div class="banner-actions">
-          <!-- Button with location information -->
-          <button class="banner-actions-btn">
-            <ion-icon name="location"></ion-icon>
-            <address><%= apt.location %></address>
-          </button>
-          <!-- Button with number of bedrooms -->
-          <button class="banner-actions-btn">
-            <ion-icon name="bed-outline"></ion-icon>
-            <span><%= apt.bedrooms %></span>
-          </button>
-          <!-- Button with number of bathrooms -->
-          <button class="banner-actions-btn">
-            <ion-icon name="man-outline"></ion-icon>
-            <span><%= apt.bathrooms %></span>
-          </button>
+  <% apartments.forEach(apt => { %>
+    <li>
+      <div class="property-card">
+        <figure class="card-banner">
+          <!-- Dynamic image source -->
+          <% if (apt.relativePath) { %>
+            <img src="<%= apt.relativePath %>" alt="<%= apt.title %>" />
+          <% } else { %>
+            <!-- Default image placeholder if photo doesn't exist -->
+            <img src="/path/to/default/image.jpg" alt="default image" />
+          <% } %>
+          <!-- Dynamic badge indicating status (e.g., For Rent, For Sale) -->
+          <div class="card-badge green"><%= apt.status %></div>
+          <div class="banner-actions">
+            <!-- Button with location information -->
+            <button class="banner-actions-btn">
+              <ion-icon name="location"></ion-icon>
+              <address><%= apt.location %></address>
+            </button>
+            <!-- Button with number of bedrooms -->
+            <button class="banner-actions-btn">
+              <ion-icon name="bed-outline"></ion-icon>
+              <span><%= apt.bedrooms %></span>
+            </button>
+            <!-- Button with number of bathrooms -->
+            <button class="banner-actions-btn">
+              <ion-icon name="man-outline"></ion-icon>
+              <span><%= apt.bathrooms %></span>
+            </button>
+          </div>
+        </figure>
+        <div class="card-content">
+          <!-- Dynamic price -->
+          <div class="card-price">
+            <strong><%= apt.currency %> <%= apt.price %></strong><%= apt.duration %>
+          </div>
+          <!-- Dynamic title -->
+          <h3 class="h3 card-title">
+            <a href="#"><%= apt.title %></a>
+          </h3>
+          <!-- Dynamic description -->
+          <p class="card-text">
+            <%= apt.description %>
+          </p>
+          <ul class="card-list">
+            <!-- Placeholder for square footage -->
+            <li class="card-item">
+              <strong>Apartment ID (AID): AID<%= apt.aid %></strong>
+              <a href="/application-form?aid=<%= apt.aid %>&location=<%= apt.location %>">
+                <span>Contact site: Administrator</span>
+              </a>
+            </li>
+          </ul>
         </div>
-      </figure>
-      <div class="card-content">
-        <!-- Dynamic price -->
-        <div class="card-price">
-          <strong><%= 'Le' + apt.price %></strong><%= apt.duration %>
-        </div>
-        <!-- Dynamic title -->
-        <h3 class="h3 card-title">
-          <a href="#"><%= apt.title %></a>
-        </h3>
-        <!-- Dynamic description -->
-        <p class="card-text">
-          <%= apt.description %>
-        </p>
-        <ul class="card-list">
-          <!-- Placeholder for square footage -->
-          <li class="card-item">
-            <strong>Apartment ID (AID): AID<%= apt.aid %></strong>
-            <!-- <ion-icon name="square-outline"></ion-icon> -->
-            <a href="/admin-application-form?aid=<%= apt.aid %>"><span>Contact site: Administrator</span></a>
-          </li>
-        </ul>
-      </div>
-      <div class="card-footer">
-        <div class="card-author">
-          <div>
-            <!-- Dynamic user fullname -->
-            <p class="author-name"> Created by:
-              <a href=""><%= apt.createdBy %></a>
-            </p>
-            <!-- Dynamic user bio -->
-            <p class="author-title"></p>
+        <div class="card-footer">
+          <div class="card-author">
+            <div>
+              <!-- Dynamic user fullname -->
+              <p class="author-name"> Created by:
+                <a href=""><%= apt.createdBy %></a>
+              </p>
+              <!-- Dynamic user bio -->
+              <p class="author-title"></p>
+            </div>
+          </div>
+          <div class="card-footer-actions">
+            <!-- Action buttons (placeholders) -->
+            <button class="card-footer-actions-btn">
+              <ion-icon name="resize-outline"></ion-icon>
+            </button>
+            <button class="card-footer-actions-btn">
+              <ion-icon name="heart-outline"></ion-icon>
+            </button>
+            <button class="card-footer-actions-btn">
+              <ion-icon name="add-circle-outline"></ion-icon>
+            </button>
           </div>
         </div>
-        <div class="card-footer-actions">
-          <!-- Action buttons (placeholders) -->
-          <button class="card-footer-actions-btn">
-            <ion-icon name="resize-outline"></ion-icon>
-          </button>
-          <button class="card-footer-actions-btn">
-            <ion-icon name="heart-outline"></ion-icon>
-          </button>
-          <button class="card-footer-actions-btn">
-            <ion-icon name="add-circle-outline"></ion-icon>
-          </button>
-        </div>
       </div>
-    </div>
-  </li>
-  <% }) %>
+    </li>
+  <% }); %>
 </ul>

@@ -16,11 +16,12 @@ const createApartment = async (req, res) => {
 
     // Create a new Apartments object with form data
     const apartmentData = new Apartments({
-      aid: req.bod.aid,
+      aid: req.body.aid,
       title: req.body.title,
       location: req.body.location,
       price: req.body.price,
-      duration: durationSlashes,  
+      duration: durationSlashes, 
+      currency: req.body.currency, 
       typeOfProperty: req.body.typeOfProperty,
       status: req.body.status,
       bedrooms: req.body.bedrooms,
@@ -34,6 +35,7 @@ const createApartment = async (req, res) => {
       negotiation: req.body.negotiation,
       availabilty: req.body.availabilty,
       verification: req.body.verification,
+      sponsored: req.body.sponsored,
       createdBy: req.body.createdBy,
       createdAt: new Date(), // Assuming createdAt and updatedAt are Date objects
       updatedAt: new Date()
@@ -112,54 +114,8 @@ const deleteApartmentById = async (req, res) => {
   }
 };
 
-
-// export const apartmentDisplay = async (req, res) => {
-//   // Function to determine the time of the day
-//   const getTimeOfDay = () => {
-//     const currentHour = new Date().getHours();
-
-//     if (currentHour >= 5 && currentHour < 12) {
-//       return 'Good Morning';
-//     } else if (currentHour >= 12 && currentHour < 18) {
-//       return 'Good Afternoon';
-//     } else {
-//       return 'Good Evening';
-//     }
-//   };
-
-//   try {
-//     // Fetch only verified apartments from the database
-//     const apartment = await Apartments.find({ verification: 'verified' });
-
-//     // Determine the time of the day
-//     const greeting = getTimeOfDay();
-
-//     // Check if the user is authenticated and get their ID
-//     const user = req.isAuthenticated() ? req.user : null;
-
-//     let relativePath = ''; // Declare relativePath outside the if block
-
-//     // Transform the photo path to match the URL served by Express
-//     if (user && user.photo) {
-//       const photoPath = user.photo.replace(/\\/g, '/'); // Replace backslashes with forward slashes
-//       relativePath = photoPath.replace('public/assets/', '/assets/'); // Remove "public/assets/" prefix and add "/assets/" route prefix
-//     }
-
-//     // Render the all-properties view template with the verified apartments data
-//     res.render("all-properties", {
-//       apartment,
-//       greeting,
-//       user,
-//       relativePath,
-//     });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).send("An error occurred while fetching apartments.");
-//   }
-// };
-
+// Display all properties for users
 export const apartmentDisplay = async (req, res) => {
-  // Function to determine the time of the day
   const getTimeOfDay = () => {
     const currentHour = new Date().getHours();
 
@@ -173,39 +129,33 @@ export const apartmentDisplay = async (req, res) => {
   };
 
   try {
-    // Fetch only verified apartments from the database
-    const apartment = await Apartments.find({ verification: 'verified' });
+    const apts = await Apartments.findOne({ _id: req.params.id });
+    // Find all verified apartments and sort them by sponsored status and createdAt timestamp in descending order
+    const apartments = await Apartments.find({ verification: 'verified' }).sort({ sponsored: -1, createdAt: -1 });
 
-    // Determine the time of the day
     const greeting = getTimeOfDay();
-
-    // Check if the user is authenticated and get their ID
     const user = req.isAuthenticated() ? req.user : null;
 
-    let relativePath = ''; // Declare relativePath outside the if block
+    apartments.forEach(apartment => {
+      if (apartment.photo) {
+        const photoPath = apartment.photo.replace(/\\/g, '/');
+        apartment.relativePath = photoPath.replace('public/assets/', '/assets/');
+      } else {
+        apartment.relativePath = '';
+      }
+    });
 
-    // Transform the photo path to match the URL served by Express
-    if (user && user.photo) {
-      const photoPath = user.photo.replace(/\\/g, '/'); // Replace backslashes with forward slashes
-      relativePath = photoPath.replace('public/assets/', '/assets/'); // Remove "public/assets/" prefix and add "/assets/" route prefix
-    }
-
-    console.log("Relative Path:", relativePath); // Log the relativePath
-    console.log("Apartments:", apartment); // Log the fetched apartments
-
-    // Render the all-properties view template with the verified apartments data
     res.render("all-properties", {
-      apartment,
+      apartments,
       greeting,
       user,
-      relativePath,
+      apts,
     });
   } catch (error) {
     console.error(error);
     res.status(500).send("An error occurred while fetching apartments.");
   }
 };
-
 
 
 // Controller function to get all apartments
@@ -259,7 +209,6 @@ export const allApartments = async (req, res) => {
     res.status(500).send("An error occurred while fetching apartments.");
   }
 };
-
 
 
 //Get all apartments on a list
@@ -575,6 +524,19 @@ export const viewapartment = async (req, res) => {
 
     res.render("view-apt", {
       apartment,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// Search bar
+export const search = async (req, res) => {
+  try {
+    const search = await Apartments.distinct('location');
+
+    res.render("all-admin-properties", {
+      search
     });
   } catch (error) {
     console.log(error);

@@ -121,6 +121,7 @@ export const deleteApplication = async (req, res) => {
 };
 
 
+// Get application by ID
 export const application = async (req, res) => {
 
   // Function to determine the time of the day
@@ -164,37 +165,44 @@ export const application = async (req, res) => {
   }
 };
 
-
-// 
+// Admin Application
 export const adminApplication = async (req, res) => {
-  const locals = {
-    title: "Home Page",
-    description: "This is the home page of the System.",
-  };
 
   // Function to determine the time of the day
-const getTimeOfDay = () => {
-  const currentHour = new Date().getHours();
+  const getTimeOfDay = () => {
+    const currentHour = new Date().getHours();
 
-  if (currentHour >= 5 && currentHour < 12) {
-    return 'Good Morning';
-  } else if (currentHour >= 12 && currentHour < 18) {
-    return 'Good Afternoon';
-  } else {
-    return 'Good Evening';
-  }
-};
+    if (currentHour >= 5 && currentHour < 12) {
+      return 'Good Morning';
+    } else if (currentHour >= 12 && currentHour < 18) {
+      return 'Good Afternoon';
+    } else {
+      return 'Good Evening';
+    }
+  };
+
   try {
-    // Get the apartment ID from the query parameter
+    // Get the apartment ID and location from the query parameters
     const apartmentId = req.query.aid;
-    const apartment = await Apartments.findOne({ _id: req.params.id });
-    const user = req.isAuthenticated() ? req.user : null;
+    const location = req.query.location;
 
-     // Determine the time of the day
+    // Fetch the apartment details based on the ID
+    const apartment = await Apartments.findOne({ _id: req.params.id });
+
+    // Determine the time of the day
     const greeting = getTimeOfDay();
 
-    // Render the index page with the receptions and latestStorage data
-    res.render('apply-admin', { locals, user, greeting, apartment, aid: apartmentId });
+    // Check if the user is authenticated
+    const user = req.isAuthenticated() ? req.user : null;
+
+    // Render the apply page with the necessary data
+    res.render('apply-admin', {
+      user,
+      greeting,
+      apartment,
+      aid: apartmentId,
+      location: location,
+    });
   } catch (error) {
     console.error('Error rendering the page:', error);
     res.status(500).send('Internal Server Error');

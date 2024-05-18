@@ -32,11 +32,11 @@
         background-color: rgb(7, 252, 85);
     }
   
-    .sudo-blue-bg {
+    .sponsored-blue-bg {
         background-color: rgb(7, 207, 252);
     }
   
-    .sudo-grey-bg {
+    .sponsored-grey-bg {
         background-color: rgb(162, 159, 159);
     }
   
@@ -147,9 +147,11 @@
                 <th>Title</th>
                 <th>Phone No.</th>
                 <th>Location</th>
-                <th>address</th>
+                <th>Address</th>
+                <th>Negotiation</th>
                 <th>Avaliablity</th>
                 <th>Verification</th>
+                <th>Sponsored</th>
                 <th>Actions</th> <!-- New column for actions -->
             </tr>
             </thead>
@@ -162,9 +164,13 @@
                 <td class="hover"><%= apartment.phone %></td>
                 <td class="hover"><%= apartment.location %></td>
                 <td class="hover"><%= apartment.address %></td>
+                <td class="hover"><%= apartment.negotiation %></td>
                 <td class="hover"><%= apartment.availabilty %></td>
                 <td class="hover <%= apartment.verification === 'verified' ? 'status-green-bg' : (apartment.verification === 'not verified' ? 'status-red-bg' : '') %>"> 
                     <%= apartment.verification %>
+                </td>
+                <td class="hover <%= apartment.sponsored === 'true' ? 'sponsored-blue-bg' : (apartment.sponsored === 'false' ? 'sponsored-grey-bg' : 'status-default-bg') %>"> 
+                    <%= apartment.sponsored %>
                 </td>
                 <td class="hover px-6 py-4 whitespace-nowrap">
                     <!-- Add icons with links to your delete, view, and update routes -->
@@ -204,37 +210,6 @@
         }
     }
    </script>
-
-
-<!-- <script>
-    function searchApartments() {
-        // Declare variables
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("searchInput");
-        filter = input.value.toUpperCase();
-        table = document.getElementsByClassName("fl-table")[0]; // Assuming only one table
-        tr = table.getElementsByTagName("tr");
-
-        // Loop through all table rows, and hide those who don't match the search query
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[0]; // Assuming AID is the first column
-            if (td) {
-                txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-    }
-
-    function clearSearch() {
-        document.getElementById("searchInput").value = "";
-        searchApartments();
-    }
-</script> -->
-
 
 <script>
     function searchApartments(searchType) {

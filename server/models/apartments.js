@@ -1,9 +1,7 @@
 import mongoose from "mongoose";
 
 const apartmentSchema = new mongoose.Schema({
-    aid: {
-        type: String
-    },
+    aid: String,
     title: {
         type: String,
         required: true,
@@ -21,12 +19,16 @@ const apartmentSchema = new mongoose.Schema({
         required: true,
     },
     price: {
-        type: String,
+        type: Number,
         required: true,
     },
     duration: {
         type: String,
         default: '',
+    },
+    currency: {
+        type: String,
+        required: true,
     },
     location: {
         type: String,
@@ -70,6 +72,10 @@ const apartmentSchema = new mongoose.Schema({
         enum: ['verified', 'not verified'],
         default: 'not verified',
     },
+    sponsored: {
+        type: Boolean,
+        default: false,
+    },
     createdBy: {
         type: String,
         required: true,
@@ -78,6 +84,12 @@ const apartmentSchema = new mongoose.Schema({
     updatedAt: { type: Date, default: Date.now }
 }, {
     timestamps: true,
+});
+
+// Define a virtual property to format the price with commas
+apartmentSchema.virtual('formattedPrice').get(function() {
+    // Format the price with commas
+    return this.price.toLocaleString();
 });
 
 const Apartments = mongoose.model('apartments', apartmentSchema);

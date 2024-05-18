@@ -1,14 +1,7 @@
 import Apartments from "../models/apartments.js";
 import User from "../models/auth.js";
 
-// User Home Page
 export const homeRoute = async (req, res) => {
-  const locals = {
-    title: "Home Page",
-    description: "This is the home page of the System.",
-  };
-
-  // Function to determine the time of the day
   const getTimeOfDay = () => {
     const currentHour = new Date().getHours();
 
@@ -22,151 +15,176 @@ export const homeRoute = async (req, res) => {
   };
 
   try {
-    const apartment = await Apartments.find();
-    let relativePath = ''; // Declare relativePath outside the if block
+    const apts = await Apartments.findOne({ _id: req.params.id });
+     // Find all verified apartments and sort them by sponsored status and createdAt timestamp in descending order
+     const apartments = await Apartments.find({ verification: 'verified' }).sort({ sponsored: -1, createdAt: -1 });
 
-    // Transform the photo path to match the URL served by Express
-  if (apartment && apartment.apartmentsPhoto) {
-    const photoPath = apartment.apartmentsPhoto.replace(/\\/g, '/'); // Replace backslashes with forward slashes
-    relativePath = photoPath.replace('public/assets/', '/assets/'); // Remove "public/assets/" prefix and add "/assets/" route prefix
+    const greeting = getTimeOfDay();
+    const user = req.isAuthenticated() ? req.user : null;
+
+    apartments.forEach(apartment => {
+      if (apartment.photo) {
+        const photoPath = apartment.photo.replace(/\\/g, '/');
+        apartment.relativePath = photoPath.replace('public/assets/', '/assets/');
+      } else {
+        apartment.relativePath = '';
+      }
+    });
+
+    res.render("index", {
+      apartments,
+      greeting,
+      user,
+      apts,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("An error occurred while fetching apartments.");
   }
+};
 
-    // Check if the user is authenticated and get their ID
-    const userId = req.isAuthenticated() ? req.user._id : null;
+  // Admin Home Page
+  export const adminHomeRoute = async (req, res) => {
+    const getTimeOfDay = () => {
+      const currentHour = new Date().getHours();
+  
+      if (currentHour >= 5 && currentHour < 12) {
+        return 'Good Morning';
+      } else if (currentHour >= 12 && currentHour < 18) {
+        return 'Good Afternoon';
+      } else {
+        return 'Good Evening';
+      }
+    };
+  
+    try {
+      const apts = await Apartments.findOne({ _id: req.params.id });
+       // Find all verified apartments and sort them by sponsored status and createdAt timestamp in descending order
+      const apartments = await Apartments.find({ verification: 'verified' }).sort({ sponsored: -1, createdAt: -1 });
+  
+      const greeting = getTimeOfDay();
+      const user = req.isAuthenticated() ? req.user : null;
+  
+      apartments.forEach(apartment => {
+        if (apartment.photo) {
+          const photoPath = apartment.photo.replace(/\\/g, '/');
+          apartment.relativePath = photoPath.replace('public/assets/', '/assets/');
+        } else {
+          apartment.relativePath = '';
+        }
+      });
+  
+      res.render("index-admin", {
+        apartments,
+        greeting,
+        user,
+        apts,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("An error occurred while fetching apartments.");
+    }
+  };
 
-    // Fetch user by ID from the database if user is authenticated
-    const user = userId ? await User.findById(userId) : null;
 
-    // Determine the time of the day
+  // Post Apartment
+export const getPostApartment = async (req, res) => {
+ 
+  // Function to determine the time of the day
+const getTimeOfDay = () => {
+  const currentHour = new Date().getHours();
+
+  if (currentHour >= 5 && currentHour < 12) {
+    return 'Good Morning';
+  } else if (currentHour >= 12 && currentHour < 18) {
+    return 'Good Afternoon';
+  } else {
+    return 'Good Evening';
+  }
+};
+  try {
+    const user = req.isAuthenticated() ? req.user : null;
+
+     // Determine the time of the day
     const greeting = getTimeOfDay();
 
     // Render the index page with the receptions and latestStorage data
-    res.render('index', { locals, user, greeting, apartment, relativePath});
+    res.render('post-apartment', { user, greeting});
   } catch (error) {
     console.error('Error rendering the page:', error);
     res.status(500).send('Internal Server Error');
   }
 };
 
-  
-  // Admin Home Page
-  export const adminHomeRoute = async (req, res) => {
-  
-    const locals = {
-        title: "Home Page",
-        description: "This is the admin home page of the System.",
-    };
-  
-      // Function to determine the time of the day
+
+// Post Apartment Admin
+export const getPostApartmentAdmin = async (req, res) => {
+
+  // Function to determine the time of the day
+const getTimeOfDay = () => {
+  const currentHour = new Date().getHours();
+
+  if (currentHour >= 5 && currentHour < 12) {
+    return 'Good Morning';
+  } else if (currentHour >= 12 && currentHour < 18) {
+    return 'Good Afternoon';
+  } else {
+    return 'Good Evening';
+  }
+};
+  try {
+    const user = req.isAuthenticated() ? req.user : null;
+
+     // Determine the time of the day
+    const greeting = getTimeOfDay();
+
+    // Render the index page with the receptions and latestStorage data
+    res.render('post-apartment-admin', { user, greeting});
+  } catch (error) {
+    console.error('Error rendering the page:', error);
+    res.status(500).send('Internal Server Error');
+  }
+};
+
+// Display all properties for admin
+export const allAdminProperties = async (req, res) => {
   const getTimeOfDay = () => {
     const currentHour = new Date().getHours();
-  
+
     if (currentHour >= 5 && currentHour < 12) {
       return 'Good Morning';
-    } else if (currentHour >= 12 && currentHour < 17) {
+    } else if (currentHour >= 12 && currentHour < 18) {
       return 'Good Afternoon';
     } else {
       return 'Good Evening';
     }
   };
-  
-    try {
-      const apartment = await Apartments.find();
-      let relativePath = ''; // Declare relativePath outside the if block
-  
-      // Transform the photo path to match the URL served by Express
-    if (apartment && apartment.apartmentsPhoto) {
-      const photoPath = apartment.apartmentsPhoto.replace(/\\/g, '/'); // Replace backslashes with forward slashes
-      relativePath = photoPath.replace('public/assets/', '/assets/'); // Remove "public/assets/" prefix and add "/assets/" route prefix
-    }
 
-      const user = req.isAuthenticated() ? req.user : null;
-  
-      // Determine the time of the day
-      const greeting = getTimeOfDay();
-  
-      // Render the index page with the receptions data
-      res.render('index-admin', {locals, user, greeting, apartment, relativePath});
-    } catch (error) {
-      console.error('Error rendering the page:', error);
-      res.status(500).send('Internal Server Error');
-    }
-  };
-
-
-  // service Page
-export const getPostApartment = async (req, res) => {
-  const locals = {
-    title: "Home Page",
-    description: "This is the home page of the System.",
-  };
-
-  // Function to determine the time of the day
-const getTimeOfDay = () => {
-  const currentHour = new Date().getHours();
-
-  if (currentHour >= 5 && currentHour < 12) {
-    return 'Good Morning';
-  } else if (currentHour >= 12 && currentHour < 18) {
-    return 'Good Afternoon';
-  } else {
-    return 'Good Evening';
-  }
-};
   try {
+    const apts = await Apartments.findOne({ _id: req.params.id });
+     // Find all verified apartments and sort them by sponsored status and createdAt timestamp in descending order
+    const apartments = await Apartments.find({ verification: 'verified' }).sort({ sponsored: -1, createdAt: -1 });
+    const greeting = getTimeOfDay();
     const user = req.isAuthenticated() ? req.user : null;
 
-     // Determine the time of the day
-    const greeting = getTimeOfDay();
+    apartments.forEach(apartment => {
+      if (apartment.photo) {
+        const photoPath = apartment.photo.replace(/\\/g, '/');
+        apartment.relativePath = photoPath.replace('public/assets/', '/assets/');
+      } else {
+        apartment.relativePath = '';
+      }
+    });
 
-    // Render the index page with the receptions and latestStorage data
-    res.render('post-apartment', { locals, user, greeting});
+    res.render("all-admin-properties", {
+      apartments,
+      greeting,
+      user,
+      apts,
+    });
   } catch (error) {
-    console.error('Error rendering the page:', error);
-    res.status(500).send('Internal Server Error');
-  }
-};
-
-// All Properties Page
-export const allAdminProperties = async (req, res) => {
-    
-  // Function to determine the time of the day
-const getTimeOfDay = () => {
-  const currentHour = new Date().getHours();
-
-  if (currentHour >= 5 && currentHour < 12) {
-    return 'Good Morning';
-  } else if (currentHour >= 12 && currentHour < 18) {
-    return 'Good Afternoon';
-  } else {
-    return 'Good Evening';
-  }
-};
-  try {
-    const user = req.isAuthenticated() ? req.user : null;
-
-    const apartment = await Apartments.find();
-    let relativePath = ''; // Declare relativePath outside the if block
-
-    // Transform the photo path to match the URL served by Express
-  if (apartment && apartment.apartmentsPhoto) {
-    const photoPath = apartment.apartmentsPhoto.replace(/\\/g, '/'); // Replace backslashes with forward slashes
-    relativePath = photoPath.replace('public/assets/', '/assets/'); // Remove "public/assets/" prefix and add "/assets/" route prefix
-  }
-
-  const locals = {
-    title: "All Properties",
-    description: "This is the all properties page.",
-  };
-
-     // Determine the time of the day
-    const greeting = getTimeOfDay();
-
-    // Render the index page with the receptions and latestStorage data
-    res.render('all-admin-properties', { locals, apartment, greeting, user, relativePath });
-  } catch (error) {
-    console.error('Error rendering the page:', error);
-    res.status(500).send('Internal Server Error');
+    console.error(error);
+    res.status(500).send("An error occurred while fetching apartments.");
   }
 };
   
@@ -279,17 +297,11 @@ export const features = async (req, res) => {
     }
   };
 
- // Blog Page
+// Blog Page
 export const blog = async (req, res) => {
-    const locals = {
-      title: "Home Page",
-      description: "This is the home page of the System.",
-    };
-  
-    // Function to determine the time of the day
   const getTimeOfDay = () => {
     const currentHour = new Date().getHours();
-  
+
     if (currentHour >= 5 && currentHour < 12) {
       return 'Good Morning';
     } else if (currentHour >= 12 && currentHour < 18) {
@@ -298,28 +310,38 @@ export const blog = async (req, res) => {
       return 'Good Evening';
     }
   };
-    try {
-      const user = req.isAuthenticated() ? req.user : null;
 
-      const apartment = await Apartments.find();
-      let relativePath = ''; // Declare relativePath outside the if block
-  
-      // Transform the photo path to match the URL served by Express
-    if (apartment && apartment.apartmentsPhoto) {
-      const photoPath = apartment.apartmentsPhoto.replace(/\\/g, '/'); // Replace backslashes with forward slashes
-      relativePath = photoPath.replace('public/assets/', '/assets/'); // Remove "public/assets/" prefix and add "/assets/" route prefix
-    }
-  
-       // Determine the time of the day
-      const greeting = getTimeOfDay();
-  
-      // Render the index page with the receptions and latestStorage data
-      res.render('blog', { locals, user, greeting, apartment, relativePath });
-    } catch (error) {
-      console.error('Error rendering the page:', error);
-      res.status(500).send('Internal Server Error');
-    }
-  };
+  try {
+    // Fetch all verified apartments from the database
+    const apartments = await Apartments.find({ verification: 'verified' });
+
+    // Transform photo paths for rendering
+    apartments.forEach(apartment => {
+      if (apartment.photo) {
+        const photoPath = apartment.photo.replace(/\\/g, '/');
+        apartment.relativePath = photoPath.replace('public/assets/', '/assets/');
+      } else {
+        apartment.relativePath = '';
+      }
+    });
+
+    // Determine the time of the day
+    const greeting = getTimeOfDay();
+
+    // Check if the user is authenticated and get their ID
+    const user = req.isAuthenticated() ? req.user : null;
+
+    res.render("index-admin", { // Assuming your main admin page is index-admin.ejs
+      apartments,
+      greeting,
+      user
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("An error occurred while fetching apartments.");
+  }
+};
+
 
 // service Page
 export const service = async (req, res) => {
