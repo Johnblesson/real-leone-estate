@@ -145,5 +145,37 @@ export const adminService = async (req, res) => {
   };
 
 
+// Get
+export const termsConditions = async (req, res) => {
 
+  // Function to determine the time of the day
+  const getTimeOfDay = () => {
+    const currentHour = new Date().getHours();
+
+    if (currentHour >= 5 && currentHour < 12) {
+      return 'Good Morning';
+    } else if (currentHour >= 12 && currentHour < 18) {
+      return 'Good Afternoon';
+    } else {
+      return 'Good Evening';
+    }
+  };
+
+  try {
+
+    // Determine the time of the day
+    const greeting = getTimeOfDay();
+
+    const user = req.isAuthenticated() ? req.user : null;
+
+    res.render("terms-conditions", {
+      greeting,
+      user,
+    });
+  } catch (error) {
+    // Handle errors gracefully
+    console.error(error.message);
+    res.status(404).send("Page not found");
+  }
+};
 

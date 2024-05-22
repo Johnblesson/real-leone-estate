@@ -17,6 +17,9 @@ import {
     adminVerifyApartment,
     verifyUpdateApartment,
     viewapartment,
+    sponsorship,
+    updateAdminSponsorship,
+    editSponsorship,
 } from '../controllers/apartments.js';
 
 import { allAdminProperties } from '../render/render.js'
@@ -47,5 +50,9 @@ router.patch("/edit-admin-apartment/:id", ensureAuthenticated, isAdmin, updateAd
 router.get('/verify-apartment', checkSudoMiddleware, isAdmin, adminVerifyApartment);
 
 router.get('/verify-update-apartment/:id', checkSudoMiddleware, isAdmin, ensureAuthenticated, verifyUpdateApartment);
+
+router.get('/sponsorship', sponsorship)
+router.get('/edit-sponsorship/:id', editSponsorship)
+router.patch('/update-admin-sponsorship/:id', ensureAuthenticated, isAdmin, updateAdminSponsorship);
 
 export default router;

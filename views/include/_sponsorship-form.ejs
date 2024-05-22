@@ -83,18 +83,32 @@
   <!-- Learn More: https://formbold.com -->
   <div class="formbold-form-wrapper">
     
-    <form action="/edit-admin-apartment/<%= apartment._id %>?_method=PATCH" method="POST">
-        <div class="formbold-input-flex">
-            <div>
-              <label for="verification" class="formbold-form-label"> Verification </label>
-              <select id="verification" class="formbold-form-input" name="verification">
-            <option value="" disabled selected hidden>Select Verification</option>
-                <option value="verified">Verified</option>
-                <option value="not-verified">Not Verified</option>
-            </select>
+    <form action="/update-admin-sponsorship/<%= apartment._id %>?_method=PATCH" method="POST">
+      <div class="formbold-input-flex">
+      <div>
+        <label for="aid" class="formbold-form-label"> AID </label>
+        <input
+          type="text"
+          name="aid"
+          id="aid"
+          value="<%= apartment.aid %>"
+          class="formbold-form-input"
+        />
+      </div>
+    </div>
+
+    <div class="formbold-input-flex">
+        <div>
+          <label for="sponsored" class="formbold-form-label"> Sponsored </label>
+          <select id="sponsored" class="formbold-form-input" name="sponsored">
+            <option value="" disabled selected hidden>Select Sponsored</option>
+            <option value="false">False</option>
+            <option value="true">True</option>
+        </select>
         </div>
-          </div>
-        <div class="formbold-mb-3 formbold-input-wrapp">
+    </div>
+
+      <div class="formbold-mb-3 formbold-input-wrapp">
         <label for="phone" class="formbold-form-label"> Phone: </label>
         <div>
           <input
@@ -110,7 +124,15 @@
 
       <div class="formbold-mb-3 formbold-input-wrapp">
         <label for="location" class="formbold-form-label"> Location </label>
+
         <div>
+          <select id="area" class="formbold-form-input" name="area">
+            <option value="" disabled selected hidden>Select Area</option>
+            <option value="Western Area Urban" <%= apartment.area === 'Western Area Urban' ? 'selected' : '' %>>Western Area Urban</option>
+            <option value="Western Area Rural" <%= apartment.area === 'Western Area Rural' ? 'selected' : '' %>>Western Area Rural</option>
+            <option value="Others" <%= apartment.area !== 'Western Area Urban' && apartment.area !== 'Western Area Rural' ? 'selected' : '' %>>Others</option>
+          </select>          
+        </select>
           <input
             type="text"
             name="location"
@@ -121,27 +143,10 @@
           />
         </div>
       </div>
-
-      <div class="formbold-mb-3 formbold-input-wrapp">
-        <label for="createdBy" class="formbold-form-label"> Created by: </label>
-        <div>
-          <input
-            type="text"
-            name="createdBy"
-            value="<%= apartment.createdBy  %>"
-            class="formbold-form-input"
-            readonly
-          />
-        </div>
-      </div>
- 
-      <button class="formbold-btn">Verified Apartment</button>
+  
+      <button class="formbold-btn">Update Apartment</button>
     </form>
   </div>
 </div>
-<style>
- 
-</style>
-
 </body>
 </html>

@@ -1,6 +1,85 @@
+<style>
+  .property-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Three columns */
+  gap: 20px; /* Adjust the gap between grid items */
+  padding: 15px;
+  list-style: none;
+}
+
+.property-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.property-card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-banner img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.card-content {
+  padding: 16px;
+}
+
+.card-footer {
+  padding: 16px;
+  border-top: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-author {
+  display: flex;
+  align-items: center;
+}
+
+.card-author .author-name a {
+  color: #333;
+  text-decoration: none;
+}
+
+.card-footer-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.top-right {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: hsl(9, 100%, 62%);
+}
+
+.top-left{
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+/* Media query for mobile devices */
+@media (max-width: 768px) {
+  .property-list {
+    grid-template-columns: repeat(1, 1fr); /* One column on mobile devices */
+  }
+}
+
+</style>
+
 <ul class="property-list has-scrollbar">
   <% apartments.forEach(apt => { %>
-    <li>
+    <li class="property-item">
       <div class="property-card">
         <figure class="card-banner">
           <!-- Dynamic image source -->
@@ -10,8 +89,14 @@
             <!-- Default image placeholder if photo doesn't exist -->
             <img src="/path/to/default/image.jpg" alt="default image" />
           <% } %>
+
+          <!-- Dynamic badge indicating availability -->
+        <div class="card-badge top-right"><%= apt.availabilty %></div>
+
           <!-- Dynamic badge indicating status (e.g., For Rent, For Sale) -->
-          <div class="card-badge green"><%= apt.status %></div>
+         <!-- Dynamic badge indicating status -->
+        <div class="card-badge green top-left"><%= apt.status %></div>
+
           <div class="banner-actions">
             <!-- Button with location information -->
             <button class="banner-actions-btn">
@@ -33,8 +118,8 @@
         <div class="card-content">
           <!-- Dynamic price -->
           <div class="card-price">
-            <strong><%= apt.currency %> <%= apt.price %></strong><%= apt.duration %>
-          </div>
+            <strong><%= apt.currency %> <%= apt.price.toLocaleString('en-US', { maximumFractionDigits: 2 }) %></strong><%= apt.duration %> <pre><%= apt.negotiation %></pre>
+          </div> 
           <!-- Dynamic title -->
           <h3 class="h3 card-title">
             <a href="#"><%= apt.title %></a>
@@ -47,7 +132,7 @@
             <!-- Placeholder for square footage -->
             <li class="card-item">
               <strong>Apartment ID (AID): AID<%= apt.aid %></strong>
-              <a href="/application-form?aid=<%= apt.aid %>&location=<%= apt.location %>">
+              <a href="/admin-application-form?aid=<%= apt.aid %>&location=<%= apt.location %>">
                 <span>Contact site: Administrator</span>
               </a>
             </li>

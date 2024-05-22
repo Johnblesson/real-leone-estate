@@ -210,6 +210,58 @@ export const allApartments = async (req, res) => {
   }
 };
 
+// Controller function to get sponsorsip
+export const sponsorship = async (req, res) => {
+  // Function to determine the time of the day
+  const getTimeOfDay = () => {
+    const currentHour = new Date().getHours();
+
+    if (currentHour >= 5 && currentHour < 12) {
+      return 'Good Morning';
+    } else if (currentHour >= 12 && currentHour < 18) {
+      return 'Good Afternoon';
+    } else {
+      return 'Good Evening';
+    }
+  };
+
+  try {
+    const page = parseInt(req.query.page) || 1; // Get the requested page number from the query parameter
+    const limit = 15; // Number of entries per page
+    const skip = (page - 1) * limit;
+
+    // Fetch all storage data
+    // const allStorage = await User.find().skip(skip).limit(limit);
+    const totalEntries = await Apartments.countDocuments();
+
+    const totalPages = Math.ceil(totalEntries / limit);
+
+    const users = await User.find();
+    // Fetch all apartments from the database
+    const apartments = await Apartments.find();
+
+    // Determine the time of the day
+    const greeting = getTimeOfDay();
+
+    // Check if the user is authenticated and get their ID
+    const user = req.isAuthenticated() ? req.user : null;
+
+    // Render the all-properties view template with the apartments data
+    res.render("sponsorship", {
+      apartments,
+      greeting,
+      user,
+      users,
+      currentPage: page, 
+      totalPages: totalPages,
+    });
+  
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("An error occurred while fetching apartments.");
+  }
+};
+
 
 //Get all apartments on a list
 export const getListedApartments = async (req, res) => {
@@ -540,6 +592,70 @@ export const search = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
+  }
+};
+
+
+
+// Get Upadate Sponsorship
+export const editSponsorship = async (req, res) => {
+
+  const locals = {
+    title: "Edit Apartment",
+    description: "This is the edit apartment page.",
+  };
+
+    // Function to determine the time of the day
+    const getTimeOfDay = () => {
+      const currentHour = new Date().getHours();
+    
+      if (currentHour >= 5 && currentHour < 12) {
+        return 'Good Morning';
+      } else if (currentHour >= 12 && currentHour < 18) {
+        return 'Good Afternoon';
+      } else {
+        return 'Good Evening';
+      }
+    };
+
+  try {
+    const apartment = await Apartments.findOne({ _id: req.params.id });
+
+     // Determine the time of the day
+     const greeting = getTimeOfDay();
+
+     const user = req.isAuthenticated() ? req.user : null;
+
+    res.render("sponsorship-form", {
+      locals,
+      apartment,
+      greeting,
+      user,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+// Update Admin Apartments record
+export const updateAdminSponsorship = async (req, res) => {
+  try {
+    const { id } = req.params; // Extract the ID of the record to be updated
+
+    // Find the existing Apartments record by ID and update its fields
+    const updatedApartment = await Apartments.findByIdAndUpdate(id, req.body, { new: true });
+
+    // Check if the Apartments record exists
+    if (!updatedApartment) {
+      return res.status(404).json({ message: 'Apartments record not found' });
+    }
+
+    // Respond with the updated Apartments record
+    res.status(200).render('success/update-apartment', { updatedApartment });
+  } catch (error) {
+    console.error('Error updating Apartments record:', error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 };
 

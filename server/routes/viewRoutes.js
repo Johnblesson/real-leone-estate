@@ -2,7 +2,7 @@ import { Router } from "express";
 const router = Router();
 
 import { about, service, features, blog, allProperties, getPostApartment, getPostApartmentAdmin, listedProperties, allusers } from "../render/render.js";
-import { adminAbout, adminFeatures, adminService, adminBlog } from "../render/admin.js";
+import { adminAbout, adminFeatures, adminService, adminBlog, termsConditions } from "../render/admin.js";
 import { getAllUsers } from "../controllers/auth.js"
 import ensureAuthenticated from "../middlewares/auth.js";
 import { isAdmin } from "../middlewares/isAdmin.js";
@@ -40,6 +40,10 @@ router.get('/apartment-success', (req, res) => {
     res.render('success/user-apartment')
 })
 
+router.get("/services-fee-agreement", (req, res) => {
+    res.render("service-fee-agreement")
+})
+
 // Admin routes
 router.get("/admin-about", ensureAuthenticated, adminAbout);
 
@@ -48,5 +52,7 @@ router.get("/admin-features", ensureAuthenticated, adminFeatures);
 router.get("/admin-service", ensureAuthenticated, adminService);
 
 router.get("/admin-blog", ensureAuthenticated, adminBlog);
+
+router.get("/terms-and-conditions", termsConditions)
 
 export default router;

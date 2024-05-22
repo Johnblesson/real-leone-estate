@@ -1,7 +1,7 @@
 import { Router } from "express";
 const router = Router();
 
-import { signUp, logIn, edituser, updateUser, deleteUser, viewChangePwdPage, changePassword } from "../controllers/auth.js";
+import { signUp, logIn, edituser, updateUser, deleteUser, viewChangePwdPage, changePassword, googleAuthCallback, googleAuth } from "../controllers/auth.js";
 import { getLoginPage } from "../controllers/auth.js";
 import upload from "../upload/upload.js";
 import ensureAuthenticated from "../middlewares/auth.js";
@@ -22,6 +22,9 @@ router.get("/update-password/:id", ensureAuthenticated, viewChangePwdPage)
 // router.get("/update-password-user/:id", ensureAuthenticated, viewChangePwdPageUser)
 router.patch("/update-password/:id", ensureAuthenticated, changePassword)
 
+// google oauth
+router.get('/auth/google', googleAuth);
+router.get('/auth/google/callback', googleAuthCallback);
 
 // Logout route
 router.get('/logout', (req, res) => {

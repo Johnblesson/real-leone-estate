@@ -71,6 +71,15 @@ export const signUp = async (req, res) => {
   }
 };
 
+
+// Google Oauth
+export const googleAuth = passport.authenticate('google', { scope: ['profile', 'email'] });
+
+export const googleAuthCallback = passport.authenticate('google', {
+  failureRedirect: '/login',
+  successRedirect: '/'
+});
+
   // Login Controller
 export const logIn = (req, res, next) => {
   passport.authenticate('local', async (err, user, info) => {
@@ -128,9 +137,11 @@ export const getLoginPage = (req, res) => {
 
   const timestamp = new Date().toISOString();
   console.log('ip address:', ip, '/', timestamp);
-  res.render('login');
+  // res.render('login');
+  res.render('login', {
+    googleAuthUrl: '/auth/google'  // Pass the Google OAuth URL to the view
+  });
 };
-
 
 // Get All Users Controller
 export const getAllUsers = async (req, res) => {
