@@ -6,26 +6,64 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="./css/login.css">
     <title>Login</title>
+    <style>
+        .password-wrapper {
+    position: relative;
+}
+
+.password-wrapper input[type="password"] {
+    width: calc(100% - 40px); /* Adjust input width to accommodate icon */
+    padding-right: 40px;
+}
+
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+    </style>
 </head>
 <body>
     <div class="container">
+        <!-- Login Form -->
         <div class="form-container login">
+            <a href="#" class="logo">
+                <img src="./images/hub.png" alt="Homehub logo">
+            </a>
             <form action="/login" method="post">
                 <h1>Login</h1>
-                <!-- <div class="social-icons">
-                    <a href="#" class="icon"><i class="fa-brands fa-google"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
-                </div>
-                <span>or use your account</span> -->
                 <input type="text" name="username" placeholder="Username" required>
-                <input type="password" name="password" placeholder="Password" required>
+                <div class="password-wrapper">
+                    <input type="password" name="password" id="password" placeholder="Password" required>
+                    <i class="toggle-password fas fa-eye-slash"></i>
+                </div>
                 <a href="#">Forgot Your Password?</a>
                 <button type="submit">Login</button>
                 <a href="/signup"><p>Don't have an account? Sign Up</a></p>
             </form>
         </div>
     </div>
+
+    <script>
+        const togglePassword = document.querySelector('.toggle-password');
+        const password = document.querySelector('#password');
+
+        togglePassword.addEventListener('click', function (e) {
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+
+            // Adjust input width when password is hidden
+            if (type === 'password') {
+                password.style.width = 'calc(100% - 40px)';
+            } else {
+                password.style.width = '100%';
+            }
+        });
+    </script>
 </body>
 </html>
