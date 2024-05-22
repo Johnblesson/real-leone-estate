@@ -1,7 +1,7 @@
 import { Router } from "express";
 const router = Router();
 
-import { about, service, features, blog, allProperties, getPostApartment, getPostApartmentAdmin, listedProperties, allusers } from "../render/render.js";
+import { about, service, features, blog, allProperties, getPostApartment, getPostApartmentAdmin, listedProperties, allusers, guestPage } from "../render/render.js";
 import { adminAbout, adminFeatures, adminService, adminBlog, termsConditions } from "../render/admin.js";
 import { getAllUsers } from "../controllers/auth.js"
 import ensureAuthenticated from "../middlewares/auth.js";
@@ -10,6 +10,8 @@ import { isAccountant } from "../middlewares/isAccountant.js";
 
 // Add more routes here
 // router.get("/all-properties", ensureAuthenticated, allProperties );
+
+router.get("/", guestPage)
 
 router.get("/sell-properties", ensureAuthenticated, );
 
@@ -58,5 +60,6 @@ router.get("/terms-and-conditions", termsConditions)
 router.get("/signup", (req, res) => {
     res.render("signup")    
 });
+
 
 export default router;

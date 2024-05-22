@@ -12,7 +12,7 @@ import { checkSudoMiddleware } from "../middlewares/sudo.js";
 router.post("/signup", upload.single("photo"), signUp);
 router.post("/login", logIn);
 
-router.get("/", getLoginPage);
+router.get("/login", getLoginPage);
 
 router.get("/edit-user/:id", ensureAuthenticated, isAdmin, edituser);
 router.patch("/edit-user/:id", ensureAuthenticated, isAdmin, checkSudoMiddleware, updateUser)
@@ -29,7 +29,7 @@ router.patch("/update-password/:id", ensureAuthenticated, changePassword)
 // Logout route
 router.get('/logout', (req, res) => {
     req.session.destroy();
-    res.redirect('/'); 
+    res.redirect('/login'); 
 });
 
 // 404 Route
