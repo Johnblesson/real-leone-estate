@@ -55,4 +55,8 @@ router.get("/admin-blog", ensureAuthenticated, adminBlog);
 
 router.get("/terms-and-conditions", termsConditions)
 
+router.get("/signup", (req, res) => {
+    res.render("signup")    
+});
+
 export default router;

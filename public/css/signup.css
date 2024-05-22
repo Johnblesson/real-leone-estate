@@ -35,7 +35,7 @@ h1 {
 .social-icons .icon {
     text-decoration: none;
     color: #fff;
-    background: #333;
+    background: #512da8;
     padding: 10px;
     border-radius: 50%;
     margin: 0 10px;
@@ -44,18 +44,20 @@ h1 {
 }
 
 .social-icons .icon:hover {
-    background: #555;
+    background: linear-gradient(to right, #5c6bc0, #512da8);
 }
 
 span {
     display: block;
     text-align: center;
     margin-bottom: 20px;
-    color: #666;
+    color: #333;
 }
 
 input[type="text"], 
-input[type="password"] {
+input[type="email"], 
+input[type="password"], 
+input[type="file"] {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
@@ -63,23 +65,10 @@ input[type="password"] {
     border-radius: 5px;
 }
 
-a {
-    display: block;
-    text-align: right;
-    margin: 10px 0;
-    color: #333;
-    text-decoration: none;
-    font-size: 14px;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
 button {
     width: 100%;
     padding: 10px;
-    background: #333;
+    background: linear-gradient(to right, #5c6bc0, #512da8);
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -89,23 +78,7 @@ button {
 }
 
 button:hover {
-    background: #555;
-}
-
-p {
-    text-align: center;
-    margin: 20px 0 0;
-    color: #666;
-}
-
-p a {
-    color: #333;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-p a:hover {
-    text-decoration: underline;
+    background: #512da8;;
 }
 
 @media only screen and (max-width: 600px) {
