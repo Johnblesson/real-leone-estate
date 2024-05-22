@@ -23,8 +23,8 @@ router.get("/update-password/:id", ensureAuthenticated, viewChangePwdPage)
 router.patch("/update-password/:id", ensureAuthenticated, changePassword)
 
 // google oauth
-router.get('/auth/google', googleAuth);
-router.get('/auth/google/callback', googleAuthCallback);
+// router.get('/auth/google', googleAuth);
+// router.get('/auth/google/callback', googleAuthCallback);
 
 // Logout route
 router.get('/logout', (req, res) => {

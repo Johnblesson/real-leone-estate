@@ -8,6 +8,8 @@ import path from "path";
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import session from 'express-session';
+import flash from 'connect-flash';
+import cookieParser from 'cookie-parser';
 import methodOverride from 'method-override';
 import passport from './server/passport/passport-config.js';
 import connectDB from './server/database/connection.js';
@@ -24,6 +26,8 @@ const app = express();
 dotenv.config();
 connectDB();
 app.use(express.json());
+app.use(cookieParser());
+app.use(flash());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 

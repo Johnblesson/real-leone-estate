@@ -139,7 +139,8 @@ export const getLoginPage = (req, res) => {
   console.log('ip address:', ip, '/', timestamp);
   // res.render('login');
   res.render('login', {
-    googleAuthUrl: '/auth/google'  // Pass the Google OAuth URL to the view
+    // googleAuthUrl: '/auth/google',  // Pass the Google OAuth URL to the view
+    // message: req.flash('error')
   });
 };
 
