@@ -91,6 +91,61 @@ button:hover {
     height: auto;
 }
 
+.password-wrapper {
+    position: relative;
+}
+
+.password-wrapper input[type="password"] {
+    width: calc(100% - 40px); /* Adjust input width to accommodate icon */
+    padding-right: 40px;
+}
+
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+
+div {
+            margin-bottom: 10px;
+        }
+        input[type="checkbox"] {
+            appearance: none;
+            background-color: #fff;
+            border: 2px solid #ccc;
+            padding: 4px;
+            border-radius: 50%;
+            display: inline-block;
+            position: relative;
+        }
+        input[type="checkbox"]:checked {
+            background-color: #4CAF50;
+            border: none;
+        }
+        input[type="checkbox"]:checked::after {
+            content: '\2713';
+            font-size: 10px;
+            color: white;
+            position: absolute;
+            top: 0;
+            left: 3px;
+        }
+        label {
+            margin-left: -2px;
+            color: #555555;
+            font-size: 10px;
+        }
+        a {
+            color: #1a73e8;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+
 @media only screen and (max-width: 600px) {
     .container {
         padding: 20px;

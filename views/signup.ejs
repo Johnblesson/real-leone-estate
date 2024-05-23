@@ -7,22 +7,6 @@
     <link rel="stylesheet" href="./css/signup.css">
     <title>Sign Up</title>
     <style>
-        .password-wrapper {
-    position: relative;
-}
-
-.password-wrapper input[type="password"] {
-    width: calc(100% - 40px); /* Adjust input width to accommodate icon */
-    padding-right: 40px;
-}
-
-.toggle-password {
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-    cursor: pointer;
-}
 
     </style>
 </head>
@@ -43,8 +27,24 @@
                     <i class="toggle-password fas fa-eye-slash"></i>
                 </div>
                 <input type="file" name="photo" accept="image/*">
+
+                <div>
+                    <input type="checkbox" id="terms" name="terms" required>
+                    <label for="terms">I agree to the <a href="/terms-and-conditions">Terms and Conditions</a></label>
+                </div>
+        
+                <div>
+                    <input type="checkbox" id="service_fee" name="service_fee" required>
+                    <label for="service_fee">I agree to the <a href="/services-fee-agreement">Service Fee Agreement</a></label>
+                </div>
+        
+                <div>
+                    <input type="checkbox" id="privacy_policy" name="privacy_policy" required>
+                    <label for="privacy_policy">I agree to the <a href="#">Privacy Policy</a></label>
+                </div>
+
                 <button type="submit">Sign Up</button>
-                <p>Already have an account? <a href="/">Login</a></p>
+                <p>Already have an account? <a href="/login">Login</a></p>
             </form>
         </div>
     </div>

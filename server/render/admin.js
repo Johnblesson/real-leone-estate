@@ -145,7 +145,7 @@ export const adminService = async (req, res) => {
   };
 
 
-// Get
+// Terms and Conditions
 export const termsConditions = async (req, res) => {
 
   // Function to determine the time of the day
@@ -179,3 +179,7 @@ export const termsConditions = async (req, res) => {
   }
 };
 
+// registration process statement
+export const registrationProcessStatement = (req, res) => {
+  res.render("registration-process-statement")
+}
