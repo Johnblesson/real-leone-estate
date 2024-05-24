@@ -67,5 +67,9 @@ router.get("/signup", (req, res) => {
     res.render("signup")    
 });
 
+router.get("/apartment-success", (req, res) => {
+    res.render("success/user-apartment")    
+});
+
 
 export default router;
