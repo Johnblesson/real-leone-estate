@@ -67,8 +67,12 @@ router.get("/signup", (req, res) => {
     res.render("signup")    
 });
 
-router.get("/apartment-success", (req, res) => {
+router.get("/user-apartment-success", (req, res) => {
     res.render("success/user-apartment")    
+});
+
+router.get("/admin-apartment-success", (req, res) => {
+    res.render("success/admin-apartment")    
 });
 
 
