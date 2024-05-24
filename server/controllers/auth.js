@@ -63,7 +63,7 @@ export const signUp = async (req, res) => {
       // Save user data to the database
       const savedData = await userData.save();
       console.log(savedData);
-      res.redirect('/'); // Redirect to homepage after successful signup
+      res.redirect('/login'); // Redirect to homepage after successful signup
       // res.status(201).json({ message: 'Signed up successfully' });
   } catch (error) {
       console.error(error);
