@@ -255,7 +255,20 @@
           value="<%= apartment.address2 %>"
           class="formbold-form-input"
         />
-      </div>   
+      </div> 
+      
+      <div class="formbold-mb-3">
+        <label for="createdBy" class="formbold-form-label"> Created By </label>
+
+        <input
+          type="text"
+          name="createdBy"
+          id="createdBy"
+          value="<%= apartment.createdBy %>"
+          class="formbold-form-input formbold-mb-3"
+        />
+      </div>  
+
       <button class="formbold-btn">Update Apartment</button>
     </form>
   </div>
