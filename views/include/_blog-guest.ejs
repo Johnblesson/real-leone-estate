@@ -80,6 +80,7 @@
   <ul class="property-list has-scrollbar">
     <% apartments.forEach(apt => { %>
       <li class="property-item">
+        <a href="/login">
         <div class="property-card">
           <figure class="card-banner">
 
@@ -122,7 +123,7 @@
             </div> 
             <!-- Dynamic title -->
             <h3 class="h3 card-title">
-              <a href="#"><%= apt.title %></a>
+              <a href="/login"><%= apt.title %></a>
             </h3>
             <!-- Dynamic description -->
             <p class="card-text">
@@ -134,6 +135,7 @@
                 <strong>Apartment ID (AID): AID<%= apt.aid %></strong>
                 <a href="/login">
                   <span>Contact site: Administrator</span>
+                  <span>Apply</span>
                 </a>
               </li>
             </ul>
@@ -163,6 +165,7 @@
             </div>
           </div>
         </div>
+      </a>
       </li>
     <% }); %>
   </ul>

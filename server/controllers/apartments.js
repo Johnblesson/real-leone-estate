@@ -1,4 +1,5 @@
 import Apartments from '../models/apartments.js';
+import Application from '../models/apply.js';
 import User from '../models/auth.js';
 
 // Controller function to create a new apartment
@@ -154,6 +155,10 @@ export const apartmentDisplay = async (req, res) => {
         apartment.photoUrl = apartment.photo; // Set photoUrl to the value of photo
       }
     });
+
+    // const { aid } = req.params; // Extract the apartment ID from the route parameters
+    // // Count the number of applications with the specified applyAid
+    // const applicationCount = await Application.countDocuments({ applyAid: aid });
 
     res.render("all-properties", {
       apartments,

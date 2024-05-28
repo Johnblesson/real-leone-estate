@@ -13,7 +13,9 @@
 
 <div class="formbold-main-wrapper">
   <div class="formbold-form-wrapper">
-    
+    <pre style="text-align: center; font: 0.6em sans-serif;">Apply for apartment. 
+      Make sure you input your correct informations.
+    </pre>
 <form action="/apply" method="POST">
 
       <div class="formbold-mb-3 formbold-input-wrapp">
@@ -53,7 +55,7 @@
             id="apply-aid"
             placeholder="Apartment ID"
             class="formbold-form-input"
-            value="<%= aid %>"
+            value="<%= 'AID' + aid %>"
             readonly
           />
         </div>
@@ -100,6 +102,7 @@
           name="comments"
           id="comments"
           class="formbold-form-input"
+          placeholder="Add few comments"
         ></textarea>
       </div>
 

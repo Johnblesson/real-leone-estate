@@ -80,6 +80,7 @@
   <ul class="property-list has-scrollbar">
     <% apartments.forEach(apt => { %>
       <li class="property-item">
+        <a href="/admin-application-form?aid=<%= apt.aid %>&location=<%= apt.location %>">
         <div class="property-card">
           <figure class="card-banner">
            
@@ -118,7 +119,7 @@
             </div>
           </figure>
 
-          <a href="/application-form?aid=<%= apt.aid %>&location=<%= apt.location %>">
+          <a href="/admin-application-form?aid=<%= apt.aid %>&location=<%= apt.location %>">
           <div class="card-content">
             <!-- Dynamic price -->
             <div class="card-price">
@@ -126,7 +127,7 @@
             </div> 
             <!-- Dynamic title -->
             <h3 class="h3 card-title">
-              <a href="/application-form?aid=<%= apt.aid %>&location=<%= apt.location %>"><%= apt.title %></a> <!-- Link to detail page -->
+              <a href="/admin-application-form?aid=<%= apt.aid %>&location=<%= apt.location %>"><%= apt.title %></a> <!-- Link to detail page -->
             </h3>
             <!-- Dynamic description -->
             <p class="card-text">
@@ -136,8 +137,9 @@
               <!-- Placeholder for square footage -->
               <li class="card-item">
                 <strong>Apartment ID (AID): AID<%= apt.aid %></strong>
-                <a href="/admin-application-form?aid=<%= apt.aid %>&location=<%= apt.location %>">
+                <a href="/admin-admin-application-form?aid=<%= apt.aid %>&location=<%= apt.location %>">
                   <span>Contact site: Administrator</span>
+                  <span>Apply</span>
                 </a>
               </li>
             </ul>
@@ -167,6 +169,7 @@
             </div>
           </div>
         </div>
+      </a>
       </li>
     <% }); %>
   </ul>
