@@ -60,9 +60,9 @@ export const signUp = async (req, res) => {
           status: req.body.status,
           sudo: req.body.sudo,
           accountant: req.body.accountant,
-          termsConditions: req.body.termsConditions,
-          serviceFee: req.body.serviceFee,
-          privacyPolicy: req.body.privacyPolicy,
+          // termsConditions: req.body.termsConditions,
+          // serviceFee: req.body.serviceFee,
+          // privacyPolicy: req.body.privacyPolicy,
           createdAt: new Date(), // Assuming createdAt and updatedAt are Date objects
           updatedAt: new Date()
       });
