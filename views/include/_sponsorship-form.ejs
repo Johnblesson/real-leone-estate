@@ -91,8 +91,9 @@
           type="text"
           name="aid"
           id="aid"
-          value="<%= apartment.aid %>"
+          value="<%= 'AID' + apartment.aid %>"
           class="formbold-form-input"
+          readonly
         />
       </div>
     </div>
@@ -125,14 +126,7 @@
       <div class="formbold-mb-3 formbold-input-wrapp">
         <label for="location" class="formbold-form-label"> Location </label>
 
-        <div>
-          <select id="area" class="formbold-form-input" name="area">
-            <option value="" disabled selected hidden>Select Area</option>
-            <option value="Western Area Urban" <%= apartment.area === 'Western Area Urban' ? 'selected' : '' %>>Western Area Urban</option>
-            <option value="Western Area Rural" <%= apartment.area === 'Western Area Rural' ? 'selected' : '' %>>Western Area Rural</option>
-            <option value="Others" <%= apartment.area !== 'Western Area Urban' && apartment.area !== 'Western Area Rural' ? 'selected' : '' %>>Others</option>
-          </select>          
-        </select>
+        <div>         
           <input
             type="text"
             name="location"
@@ -142,6 +136,17 @@
             readonly
           />
         </div>
+      </div>
+
+      <div class="formbold-mb-3 formbold-input-wrapp">
+        <label for="address" class="formbold-form-label"> Created by </label>
+    <input
+      type="text"
+      name="createdBy"
+      class="formbold-form-input"
+      value="<%= apartment.createdBy %>"
+        readonly
+    />
       </div>
   
       <button class="formbold-btn">Update Apartment</button>

@@ -87,6 +87,7 @@
         <table class="fl-table">
             <thead>
             <tr>
+                <th>AID</th>
                 <th>Created by</th>
                 <th>Phone No.</th>
                 <th>Location</th>
@@ -97,6 +98,7 @@
             <tbody>
                 <% apartments.forEach(apartment => { %>
             <tr>
+                <td class="hover"><%= 'AID' +  apartment.aid %></td>
                 <td class="hover"><%= apartment.createdBy %></td>
                 <td class="hover"><%= apartment.phone %></td>
                 <td class="hover"><%= apartment.location %></td>
