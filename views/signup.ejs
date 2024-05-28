@@ -8,7 +8,14 @@
     <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
     <title>Sign Up</title>
     <style>
-
+        a {
+            text-decoration: none;
+            color: #151cea;
+        }
+        a:hover {
+            color: #000;
+            text-decoration: none;
+        }	
     </style>
 </head>
 <body>
@@ -19,6 +26,7 @@
             </a> -->
             <form action="/signup" method="post" enctype="multipart/form-data">
                 <h1>Create Account</h1>
+                <pre style="text-align: center; font: 0.6em sans-serif;">Check out the<a href="/registration-process-statement"> Registration Statement Process</a></pre>
                 <input type="text" name="fullname" placeholder="Full Name" required>
                 <input type="text" name="username" placeholder="Username" required>
                 <input type="email" name="email" placeholder="Email" required>
@@ -30,7 +38,7 @@
                 <input type="file" name="photo" accept="image/*">
 
                 <div>
-                    <input type="checkbox" id="terms" name="terms" required>
+                    <input type="checkbox" id="terms" name="termsConditions" required>
                     <label for="terms">I agree to the <a href="/terms-and-conditions">Terms and Conditions</a></label>
                 </div>
         

@@ -42,6 +42,18 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
+    termsConditions: {
+        type: Boolean,
+        required: true
+      },
+      serviceFee: {
+        type: Boolean,
+        required: true
+      },
+      privacyPolicy: {
+        type: Boolean,
+        required: true
+      },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
 }, {
