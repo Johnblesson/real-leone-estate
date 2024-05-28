@@ -148,10 +148,12 @@
             <div>
               <!-- Dynamic user fullname -->
               <p class="author-name"> Created by:
-                <a href=""><%= apt.createdBy %></a>
+                <a href="#"><%= apt.createdBy %></a>
               </p>
               <!-- Dynamic user bio -->
-              <p class="author-title"></p>
+              <p class="author-title">
+                Created At: <%= apt.formattedCreatedAt %> (<%= apt.daysAgo %> days ago)
+              </p>
             </div>
           </div>
           <div class="card-footer-actions">

@@ -1,6 +1,7 @@
 import Apartments from '../models/apartments.js';
 import Application from '../models/apply.js';
 import User from '../models/auth.js';
+import moment from 'moment';
 
 // Controller function to create a new apartment
 export const createApartment = async (req, res) => {
@@ -127,6 +128,61 @@ export const deleteApartmentById = async (req, res) => {
 };
 
 
+// // Controller to display all properties for users
+// export const apartmentDisplay = async (req, res) => {
+//   const getTimeOfDay = () => {
+//     const currentHour = new Date().getHours();
+//     if (currentHour >= 5 && currentHour < 12) {
+//       return 'Good Morning';
+//     } else if (currentHour >= 12 && currentHour < 18) {
+//       return 'Good Afternoon';
+//     } else {
+//       return 'Good Evening';
+//     }
+//   };
+
+//   try {
+//     // Find all verified apartments and sort them by sponsored status and createdAt timestamp in descending order
+//     const apartments = await Apartments.find({ verification: 'verified' }).sort({ sponsored: -1, createdAt: -1 });
+
+//     const greeting = getTimeOfDay();
+//     const user = req.isAuthenticated() ? req.user : null;
+
+//     // Ensure photoUrl is set properly for each apartment
+//     apartments.forEach(apartment => {
+//       if (!apartment.photo) {
+//         apartment.photoUrl = ''; // Initialize an empty string if no photo is available
+//       } else {
+//         apartment.photoUrl = apartment.photo; // Set photoUrl to the value of photo
+//       }
+//     });
+
+//     const apartmenT = await Apartments.find();
+
+//     // Format the createdAt date and calculate days ago for each apartment
+//     apartmenT.forEach(apt => {
+//       apt.formattedCreatedAt = moment(apt.createdAt).format('DD-MM-YYYY HH:mm');
+//       apt.daysAgo = moment().diff(moment(apt.createdAt), 'days');
+//     });
+
+//     // Render the all-properties view template with the apartments data
+//     res.render("all-properties", {
+//       apartments,
+//       greeting,
+//       user,
+//       apartmenT,
+//       formattedCreatedAt,
+//       daysAgo
+//     });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send("An error occurred while fetching apartments.");
+//   }
+// };
+
+// import moment from 'moment';
+// import Apartments from './models/Apartments'; // Adjust the path as necessary
+
 // Controller to display all properties for users
 export const apartmentDisplay = async (req, res) => {
   const getTimeOfDay = () => {
@@ -147,29 +203,28 @@ export const apartmentDisplay = async (req, res) => {
     const greeting = getTimeOfDay();
     const user = req.isAuthenticated() ? req.user : null;
 
-    // Ensure photoUrl is set properly for each apartment
+    // Process each apartment to set photoUrl, formattedCreatedAt, and daysAgo
     apartments.forEach(apartment => {
-      if (!apartment.photo) {
-        apartment.photoUrl = ''; // Initialize an empty string if no photo is available
-      } else {
-        apartment.photoUrl = apartment.photo; // Set photoUrl to the value of photo
-      }
+      // Ensure photoUrl is set properly
+      apartment.photoUrl = apartment.photo || ''; // Use empty string if no photo is available
+
+      // Format the createdAt date and calculate days ago
+      apartment.formattedCreatedAt = moment(apartment.createdAt).format('DD-MM-YYYY HH:mm');
+      apartment.daysAgo = moment().diff(moment(apartment.createdAt), 'days');
     });
 
-    // const { aid } = req.params; // Extract the apartment ID from the route parameters
-    // // Count the number of applications with the specified applyAid
-    // const applicationCount = await Application.countDocuments({ applyAid: aid });
-
+    // Render the all-properties view template with the apartments data
     res.render("all-properties", {
       apartments,
       greeting,
-      user,
+      user
     });
   } catch (error) {
     console.error(error);
     res.status(500).send("An error occurred while fetching apartments.");
   }
 };
+
 
 
 // Controller function to get all apartments

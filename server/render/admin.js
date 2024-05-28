@@ -1,5 +1,6 @@
 import Apartments from "../models/apartments.js";
 import User from "../models/auth.js";
+import moment from "moment";
 
 
 // Admin
@@ -69,48 +70,6 @@ export const adminFeatures = async (req, res) => {
     }
   };
 
-//  // Blog Page
-// export const adminBlog = async (req, res) => {
-//     const locals = {
-//       title: "Home Page",
-//       description: "This is the home page of the System.",
-//     };
-  
-//     // Function to determine the time of the day
-//   const getTimeOfDay = () => {
-//     const currentHour = new Date().getHours();
-  
-//     if (currentHour >= 5 && currentHour < 12) {
-//       return 'Good Morning';
-//     } else if (currentHour >= 12 && currentHour < 18) {
-//       return 'Good Afternoon';
-//     } else {
-//       return 'Good Evening';
-//     }
-//   };
-//     try {
-//       const user = req.isAuthenticated() ? req.user : null;
-
-//       const apartment = await Apartments.find();
-//       let relativePath = ''; // Declare relativePath outside the if block
-  
-//       // Transform the photo path to match the URL served by Express
-//     if (apartment && apartment.apartmentsPhoto) {
-//       const photoPath = apartment.apartmentsPhoto.replace(/\\/g, '/'); // Replace backslashes with forward slashes
-//       relativePath = photoPath.replace('public/assets/', '/assets/'); // Remove "public/assets/" prefix and add "/assets/" route prefix
-//     }
-  
-//        // Determine the time of the day
-//       const greeting = getTimeOfDay();
-  
-//       // Render the index page with the receptions and latestStorage data
-//       res.render('admin-blog', { locals, user, greeting, apartment, relativePath });
-//     } catch (error) {
-//       console.error('Error rendering the page:', error);
-//       res.status(500).send('Internal Server Error');
-//     }
-//   };
-
 // Controller function to render guest page
 export const adminBlog = async (req, res) => {
   const getTimeOfDay = () => {
@@ -130,19 +89,18 @@ export const adminBlog = async (req, res) => {
 
     const user = req.isAuthenticated() ? req.user : null;
 
-    apartments.forEach(apartment => {
-      if (apartment.photo) {
-        // Convert buffer to base64 string
-        const base64Photo = apartment.photo.toString('base64');
-        // Create a data URL
-        apartment.photoDataUrl = `data:image/jpeg;base64,${base64Photo}`;
-      } else {
-        apartment.photoDataUrl = '';
-      }
+     // Process each apartment to set photoUrl, formattedCreatedAt, and daysAgo
+     apartments.forEach(apartment => {
+      // Ensure photoUrl is set properly
+      apartment.photoUrl = apartment.photo || ''; // Use empty string if no photo is available
+
+      // Format the createdAt date and calculate days ago
+      apartment.formattedCreatedAt = moment(apartment.createdAt).format('DD-MM-YYYY HH:mm');
+      apartment.daysAgo = moment().diff(moment(apartment.createdAt), 'days');
     });
 
     const greeting = getTimeOfDay();
-    res.render('admin-blog', { greeting, apts, user, apartments });
+    res.render('admin-blog', { greeting, apts, user, apartments, apT });
   } catch (error) {
     console.error('Error rendering the page:', error);
     res.status(500).send('Internal Server Error');

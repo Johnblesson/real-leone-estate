@@ -1,5 +1,6 @@
 import Apartments from "../models/apartments.js";
 import User from "../models/auth.js";
+import moment from "moment";
 
 export const homeRoute = async (req, res) => {
   const getTimeOfDay = () => {
@@ -22,13 +23,14 @@ export const homeRoute = async (req, res) => {
     const greeting = getTimeOfDay();
     const user = req.isAuthenticated() ? req.user : null;
 
-     // Ensure photoUrl is set properly for each apartment
-     apartments.forEach(apartment => {
-      if (!apartment.photo) {
-        apartment.photoUrl = ''; // Initialize an empty string if no photo is available
-      } else {
-        apartment.photoUrl = apartment.photo; // Set photoUrl to the value of photo
-      }
+     // Process each apartment to set photoUrl, formattedCreatedAt, and daysAgo
+    apartments.forEach(apartment => {
+      // Ensure photoUrl is set properly
+      apartment.photoUrl = apartment.photo || ''; // Use empty string if no photo is available
+
+      // Format the createdAt date and calculate days ago
+      apartment.formattedCreatedAt = moment(apartment.createdAt).format('DD-MM-YYYY HH:mm');
+      apartment.daysAgo = moment().diff(moment(apartment.createdAt), 'days');
     });
 
     res.render("index", {
@@ -66,13 +68,14 @@ export const homeRoute = async (req, res) => {
       const greeting = getTimeOfDay();
       const user = req.isAuthenticated() ? req.user : null;
   
-       // Ensure photoUrl is set properly for each apartment
-    apartments.forEach(apartment => {
-      if (!apartment.photo) {
-        apartment.photoUrl = ''; // Initialize an empty string if no photo is available
-      } else {
-        apartment.photoUrl = apartment.photo; // Set photoUrl to the value of photo
-      }
+      // Process each apartment to set photoUrl, formattedCreatedAt, and daysAgo
+      apartments.forEach(apartment => {
+      // Ensure photoUrl is set properly
+      apartment.photoUrl = apartment.photo || ''; // Use empty string if no photo is available
+
+      // Format the createdAt date and calculate days ago
+      apartment.formattedCreatedAt = moment(apartment.createdAt).format('DD-MM-YYYY HH:mm');
+      apartment.daysAgo = moment().diff(moment(apartment.createdAt), 'days');
     });
   
       res.render("index-admin", {
@@ -168,13 +171,14 @@ export const allAdminProperties = async (req, res) => {
     const greeting = getTimeOfDay();
     const user = req.isAuthenticated() ? req.user : null;
 
-     // Ensure photoUrl is set properly for each apartment
-     apartments.forEach(apartment => {
-      if (!apartment.photo) {
-        apartment.photoUrl = ''; // Initialize an empty string if no photo is available
-      } else {
-        apartment.photoUrl = apartment.photo; // Set photoUrl to the value of photo
-      }
+    // Process each apartment to set photoUrl, formattedCreatedAt, and daysAgo
+    apartments.forEach(apartment => {
+      // Ensure photoUrl is set properly
+      apartment.photoUrl = apartment.photo || ''; // Use empty string if no photo is available
+
+      // Format the createdAt date and calculate days ago
+      apartment.formattedCreatedAt = moment(apartment.createdAt).format('DD-MM-YYYY HH:mm');
+      apartment.daysAgo = moment().diff(moment(apartment.createdAt), 'days');
     });
 
     res.render("all-admin-properties", {
@@ -321,25 +325,24 @@ export const blog = async (req, res) => {
     // Fetch all verified apartments from the database
     const apartments = await Apartments.find({ verification: 'verified' });
 
-    // Ensure photoUrl is set properly for each apartment
+    const user = req.isAuthenticated() ? req.user : null;
+
+    // Process each apartment to set photoUrl, formattedCreatedAt, and daysAgo
     apartments.forEach(apartment => {
-      if (!apartment.photo) {
-        apartment.photoUrl = ''; // Initialize an empty string if no photo is available
-      } else {
-        apartment.photoUrl = apartment.photo; // Set photoUrl to the value of photo
-      }
+      // Ensure photoUrl is set properly
+      apartment.photoUrl = apartment.photo || ''; // Use empty string if no photo is available
+
+      // Format the createdAt date and calculate days ago
+      apartment.formattedCreatedAt = moment(apartment.createdAt).format('DD-MM-YYYY HH:mm');
+      apartment.daysAgo = moment().diff(moment(apartment.createdAt), 'days');
     });
 
-    // Determine the time of the day
     const greeting = getTimeOfDay();
-
-    // Check if the user is authenticated and get their ID
-    const user = req.isAuthenticated() ? req.user : null;
 
     res.render("index-admin", { // Assuming your main admin page is index-admin.ejs
       apartments,
       greeting,
-      user
+      user,
     });
   } catch (error) {
     console.error(error);
@@ -493,13 +496,14 @@ export const guestPage = async (req, res) => {
 
     const user = req.isAuthenticated() ? req.user : null;
 
-     // Ensure photoUrl is set properly for each apartment
-     apartments.forEach(apartment => {
-      if (!apartment.photo) {
-        apartment.photoUrl = ''; // Initialize an empty string if no photo is available
-      } else {
-        apartment.photoUrl = apartment.photo; // Set photoUrl to the value of photo
-      }
+     // Process each apartment to set photoUrl, formattedCreatedAt, and daysAgo
+    apartments.forEach(apartment => {
+      // Ensure photoUrl is set properly
+      apartment.photoUrl = apartment.photo || ''; // Use empty string if no photo is available
+
+      // Format the createdAt date and calculate days ago
+      apartment.formattedCreatedAt = moment(apartment.createdAt).format('DD-MM-YYYY HH:mm');
+      apartment.daysAgo = moment().diff(moment(apartment.createdAt), 'days');
     });
 
     const greeting = getTimeOfDay();
@@ -509,6 +513,7 @@ export const guestPage = async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 };
+
 
 
 // Controller to display a single apartment's details
