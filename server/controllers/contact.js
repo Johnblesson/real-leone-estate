@@ -118,7 +118,7 @@ export const getContactForm = async (req, res) => {
 export const deleteMessage = async (req, res) => {
     try {
       await Contacts.deleteOne({ _id: req.params.id });
-      res.render("delete-messages");
+      res.render("success/delete-messages");
     } catch (error) {
       console.log(error);
     }
