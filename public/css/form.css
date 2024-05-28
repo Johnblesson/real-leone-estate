@@ -135,6 +135,59 @@ select.formbold-form-input,
   width: 45%;
 }
 
+.formbold-main-wrapper {
+  padding: 20px;
+  max-width: 600px;
+  margin: auto;
+}
+.formbold-form-wrapper {
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 5px;
+  background: #f9f9f9;
+}
+.formbold-form-label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: block;
+}
+.formbold-form-input,
+.formbold-form-select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+.formbold-input-flex {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+}
+.formbold-mb-3 {
+  margin-bottom: 15px;
+}
+.formbold-form-file-flex {
+  margin-bottom: 15px;
+}
+.formbold-btn {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background: hsl(9, 100%, 62%);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.formbold-btn:hover {
+  background: hsl(9, 74%, 55%);
+}
+.formbold-input-wrapp {
+  margin-bottom: 15px;
+}
+
 /* Media Queries */
 @media only screen and (max-width: 768px) {
     .formbold-form-wrapper {

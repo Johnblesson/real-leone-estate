@@ -1,370 +1,308 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="./css/login.css">
-    <style>
-        @media only screen and (max-width: 600px) {
-            /* Adjustments for mobile devices */
-            .form-container {
-                width: 100%;
-            }
-            .toggle-container {
-                display: none; /* Hide the toggle container on mobile */
-            }
-            .form-container.sign-in {
-                display: block; /* Show only the sign-in form initially */
-            }
-            .form-container.sign-up {
-                display: none; /* Hide the sign-up form initially */
-            }
-        }
-    </style>
-    <title>Login</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apartment Form</title>
+  <link rel="stylesheet" href="./css/form.css">
 </head>
-
 <body>
+<div class="formbold-main-wrapper">
+ 
+  <div class="formbold-form-wrapper">
+    
+    <form action="/create-apartment" method="POST" enctype="multipart/form-data">
+      <div class="formbold-input-flex">
+        <input
+            type="hidden"
+            name="aid"
+            id="aid"
+            class="formbold-form-input"
+          />
+        </div>
 
-    <div class="container" id="container">
-        <div class="form-container sign-up" id="sign-up">
-            <form action="/signup" method="post" enctype="multipart/form-data">
-                <h1>Create Account</h1>
-                <div class="social-icons">
-                    <a href="" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
-                </div>
-                <span>or use your email for registration</span>
-                <input type="text" name="fullname" placeholder="Full Name" required>
-                <input type="text" name="username" placeholder="Username" required>
-                <input type="email" name="email" placeholder="Email" required>
-                <input type="text" name="phone" placeholder="Phone Number" required>
-                <input type="password" id="password" name="password" placeholder="Password" required>
-                <!-- Add the file input for photo upload -->
-                <input type="file" name="photo" accept="image/*">
-                <button>Sign Up</button>
-                <p>Already have an account? <a href="#sign-in" class="switch-form">Login</a></p>
-            </form>
+      <div class="formbold-mb-3 formbold-input-wrapp">
+        <label for="title" class="formbold-form-label"> Title </label>
+        <div>
+          <input
+            type="text"
+            name="title"
+            id="title"
+            placeholder="Title"
+            class="formbold-form-input"
+          />
         </div>
-        <div class="form-container sign-in" id="sign-in">
-            <form action="/login" method="post">
-                <h1>Login</h1>
-                <div class="social-icons">
-                    <a href="" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
-                </div>
-                <span>or use your email password</span>
-                <input type="username" name="username" placeholder="Username">
-                <input type="password" name="password" placeholder="Password">
-                <a href="#">Forget Your Password?</a>
-                <button>Login</button>
-                <p>Don't have an account? <a href="#sign-up" class="switch-form">Sign Up</a></p>
-            </form>
+      </div>
+      
+      <div>
+        <label for="typeOfProperty" class="formbold-form-label"> Type of Property </label>
+        <div>
+          <select id="typeOfProperty" class="formbold-form-input" name="typeOfProperty">
+            <option value="" disabled selected hidden>Select Type</option>
+            <option value="Apartment">Apartment</option>
+            <option value="Land">Land</option>
+            <option value="Shop">Shop</option>
+            <option value="Shop">Other</option>
+        </select>
+      </div>
+      </div>
+      
+      <div class="formbold-mb-3 formbold-input-wrapp">
+        <label for="price" class="formbold-form-label"> Price </label>
+        <div>
+          <input
+            type="Number"
+            name="price"
+            id="price"
+            placeholder="price"
+            class="formbold-form-input"
+          />
         </div>
-        <div class="toggle-container">
-            <div class="toggle">
-                <div class="toggle-panel toggle-left">
-                    <h1>Welcome Back!</h1>
-                    <p>Enter your personal details to use all of site features</p>
-                    <button class="hidden" id="login">Login</button>
-                </div>
-                <div class="toggle-panel toggle-right">
-                    <h1>Hello, Friend!</h1>
-                    <p>Register with your personal details to use all of site features</p>
-                    <button class="hidden" id="register">Sign Up</button>
-                </div>
-            </div>
+      </div>
+
+      <div>     
+        <div>
+          <label for="status" class="formbold-form-label">Status:</label>
+          <div>
+          <select id="status" class="formbold-form-input" name="status">
+            <option value="" disabled selected hidden>Select Status</option>
+            <option value="Sell">Sell</option>
+            <option value="Rent">Rent</option>
+            <option value="Least">Least</option>
+            <option value="Others">Others</option>
+          </select>
         </div>
+        </div>
+      </div>
+
+      <div>
+      <!-- Duration field initially hidden -->
+      <div id="durationField" style="display: none;">
+        <label for="duration" class="formbold-form-label">Duration:</label>
+        <select id="duration" class="formbold-form-input" name="duration">
+          <option value="" disabled selected hidden>Select Duration</option>
+          <option value="/ Monthly">Monthly</option>
+          <option value="/ Yearly">Yearly</option>
+        </select>
+      </div>
+      </div>
+
+      <div>
+        <div>
+        <label for="currency" class="formbold-form-label">Currency:</label>
+        <select id="currency" class="formbold-form-input" name="currency">
+          <option value="" disabled selected>Select your currency</option>
+          <option value="SLL">Sierra Leonean Leone (SLL)</option>
+          <option value="USD">United States Dollar (USD)</option>
+          <option value="GBP">British Pound Sterling (GBP)</option>
+        </select>
+      </div> 
+    </div>     
+
+      <div class="formbold-mb-3 formbold-input-wrapp">
+        <label for="phone" class="formbold-form-label"> Phone: </label>
+        <div>
+          <input
+            type="text"
+            name="phone"
+            id="phone"
+            placeholder="Phone number"
+            class="formbold-form-input"
+          />
+        </div>
+      </div>
+
+      <div class="formbold-mb-3 formbold-input-wrapp">
+        <label for="location" class="formbold-form-label"> Area </label>
+        <div>
+          <select id="area" class="formbold-form-input" name="area">
+            <option value="" disabled selected hidden>Select Area</option>
+            <option value="Western Area Urban">Western Area Urban</option>
+            <option value="Western Area Urban">Western Area Rural</option>
+            <option value="Others">Others</option>
+        </select>
+        </div>
+      </div>
+
+      <div class="formbold-mb-3 formbold-input-wrapp">
+        <label for="location" class="formbold-form-label"> Location </label>
+        <div>
+          <input
+          type="text"
+          name="location"
+          id="location"
+          placeholder="Location"
+          class="formbold-form-input"
+         />
+  </div>
+  </div>
+
+      <div class="formbold-input-flex">
+        <div>
+          <label for="bedrooms" class="formbold-form-label"> Bedrooms </label>
+          <input
+            type="number"
+            name="bedrooms"
+            id="bedrooms"
+            placeholder="Bedrooms"
+            class="formbold-form-input"
+          />
+        </div>
+
+        <div>
+          <label for="bathrooms" class="formbold-form-label"> Bathrooms </label>
+          <input
+            type="number"
+            name="bathrooms"
+            id="bathrooms"
+            placeholder="bathrooms"
+            class="formbold-form-input"
+          />
+        </div>
+
+      </div>
+
+      <div class="formbold-mb-3 formbold-input-wrapp">
+        <label for="negotiation" class="formbold-form-label"> Negotiation: </label>
+        <div>
+          <select id="negotiation" class="formbold-form-input" name="negotiation">
+            <option value="" disabled selected hidden>Select Negotiation</option>
+            <option value="Negotiable">Negotiable</option>
+            <option value="Non Negotiable">Non Negotiable</option>
+        </select>
+        </div>
+      </div>
+
+      <div class="formbold-mb-3">
+        <label for="address" class="formbold-form-label"> Address </label>
+
+        <input
+          type="text"
+          name="address"
+          id="address"
+          placeholder="Street address"
+          class="formbold-form-input formbold-mb-3"
+        />
+        <input
+          type="text"
+          name="address2"
+          id="address2"
+          placeholder="Street address line 2"
+          class="formbold-form-input"
+        />
+      </div>
+
+      <div class="formbold-mb-3 formbold-input-wrapp">
+        <label for="createdBy" class="formbold-form-label"> Created by: </label>
+        <div>
+          <input
+            type="text"
+            name="createdBy"
+            value="<%= user.fullname  %>"
+            class="formbold-form-input"
+            readonly
+          />
+        </div>
+      </div>
+
+      <div class="formbold-mb-3">
+        <label for="description" class="formbold-form-label">
+            Description
+        </label>
+        <textarea
+          rows="6"
+          name="description"
+          id="description"
+          class="formbold-form-input"
+        ></textarea>
+      </div>
+
+      <!-- <div class="formbold-form-file-flex">
+        <label for="photo" class="formbold-form-label">
+          Upload Property Image
+        </label>
+        <input
+          type="file"
+          name="photo"
+          id="photo"
+          class="formbold-form-file"
+        />
+      </div> -->
+
+      <div class="formbold-form-file-flex">
+        <label for="photo" class="formbold-form-label">
+          Upload Property Image
+        </label>
+        <input
+          type="file"
+          name="photo"
+          id="photo"
+          class="formbold-form-file"
+          multiple
+        />
     </div>
 
-    <script src="./js/login.js"></script>
-    <script>
-        // JavaScript to toggle between signup and login forms
-        const signUpForm = document.querySelector('.sign-up');
-        const signInForm = document.querySelector('.sign-in');
-        const switchForms = document.querySelectorAll('.switch-form');
+     <!-- Container for file name previews -->
+     <!-- <div id="fileNameContainer" class="formbold-file-name-container"></div> -->
 
-        switchForms.forEach(switchForm => {
-            switchForm.addEventListener('click', function (event) {
-                event.preventDefault(); // Prevent default anchor behavior
-                if (signUpForm.style.display === 'block') {
-                    signUpForm.style.display = 'none';
-                    signInForm.style.display = 'block';
-                } else {
-                    signUpForm.style.display = 'block';
-                    signInForm.style.display = 'none';
-                }
-            });
-        });
-    </script>
-</body>
+    <button type="submit" class="formbold-btn">Create Post</button>
+    </form>
+  </div>
+</div>
+<script>
+  // Get the status select element
+  const statusSelect = document.getElementById('status');
+  // Get the duration field
+  const durationField = document.getElementById('durationField');
 
-</html>
-
-
-
-<style>
-    .property-list {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Three columns */
-    gap: 20px; /* Adjust the gap between grid items */
-    padding: 15px;
-    list-style: none;
-  }
-  
-  .property-item {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .property-card {
-    display: flex;
-    flex-direction: column;
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .card-banner img {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-  
-  .card-content {
-    padding: 16px;
-  }
-  
-  .card-footer {
-    padding: 16px;
-    border-top: 1px solid #ddd;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .card-author {
-    display: flex;
-    align-items: center;
-  }
-  
-  .card-author .author-name a {
-    color: #333;
-    text-decoration: none;
-  }
-  
-  .card-footer-actions {
-    display: flex;
-    gap: 8px;
-  }
-  
-  .top-right {
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: hsl(9, 100%, 62%);
-  }
-  
-  .top-left{
-    position: absolute;
-    top: 0;
-    right: 0;
-  }
-  
-  /* Media query for mobile devices */
-  @media (max-width: 768px) {
-    .property-list {
-      grid-template-columns: repeat(1, 1fr); /* One column on mobile devices */
+  // Add event listener to the status select element
+  statusSelect.addEventListener('change', function() {
+    // Check if the selected value is "Rent"
+    if (statusSelect.value === 'Rent') {
+      // If "Rent" is selected, show the duration field
+      durationField.style.display = 'block';
+    } else {
+      // If any other option is selected, hide the duration field
+      durationField.style.display = 'none';
     }
-  }
-  
-  </style>
-  
-  <ul class="property-list has-scrollbar">
-    <% apartments.forEach(apt => { %>
-      <li class="property-item">
-        <div class="property-card">
-          <figure class="card-banner">
-            <!-- Dynamic image source -->
-            <% if (apt.relativePath) { %>
-              <img src="<%= apt.relativePath %>" alt="<%= apt.title %>" />
-            <% } else { %>
-              <!-- Default image placeholder if photo doesn't exist -->
-              <img src="/path/to/default/image.jpg" alt="default image" />
-            <% } %>
-  
-            <!-- Dynamic badge indicating availability -->
-          <div class="card-badge top-right"><%= apt.availabilty %></div>
-  
-            <!-- Dynamic badge indicating status (e.g., For Rent, For Sale) -->
-           <!-- Dynamic badge indicating status -->
-          <div class="card-badge green top-left"><%= apt.status %></div>
-  
-            <div class="banner-actions">
-              <!-- Button with location information -->
-              <button class="banner-actions-btn">
-                <ion-icon name="location"></ion-icon>
-                <address><%= apt.location %></address>
-              </button>
-              <!-- Button with number of bedrooms -->
-              <button class="banner-actions-btn">
-                <ion-icon name="bed-outline"></ion-icon>
-                <span><%= apt.bedrooms %></span>
-              </button>
-              <!-- Button with number of bathrooms -->
-              <button class="banner-actions-btn">
-                <ion-icon name="man-outline"></ion-icon>
-                <span><%= apt.bathrooms %></span>
-              </button>
-            </div>
-          </figure>
-          <div class="card-content">
-            <!-- Dynamic price -->
-            <div class="card-price">
-              <strong><%= apt.currency %> <%= apt.price.toLocaleString('en-US', { maximumFractionDigits: 2 }) %></strong><%= apt.duration %> <pre><%= apt.negotiation %></pre>
-            </div> 
-            <!-- Dynamic title -->
-            <h3 class="h3 card-title">
-              <a href="#"><%= apt.title %></a>
-            </h3>
-            <!-- Dynamic description -->
-            <p class="card-text">
-              <%= apt.description %>
-            </p>
-            <ul class="card-list">
-              <!-- Placeholder for square footage -->
-              <li class="card-item">
-                <strong>Apartment ID (AID): AID<%= apt.aid %></strong>
-                <a href="/admin-application-form?aid=<%= apt.aid %>&location=<%= apt.location %>">
-                  <span>Contact site: Administrator</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div class="card-footer">
-            <div class="card-author">
-              <div>
-                <!-- Dynamic user fullname -->
-                <p class="author-name"> Created by:
-                  <a href=""><%= apt.createdBy %></a>
-                </p>
-                <!-- Dynamic user bio -->
-                <p class="author-title"></p>
-              </div>
-            </div>
-            <div class="card-footer-actions">
-              <!-- Action buttons (placeholders) -->
-              <button class="card-footer-actions-btn">
-                <ion-icon name="resize-outline"></ion-icon>
-              </button>
-              <button class="card-footer-actions-btn">
-                <ion-icon name="heart-outline"></ion-icon>
-              </button>
-              <button class="card-footer-actions-btn">
-                <ion-icon name="add-circle-outline"></ion-icon>
-              </button>
-            </div>
-          </div>
-        </div>
-      </li>
-    <% }); %>
-  </ul>
-  
+  });
+</script>
 
+<script>
+document.querySelector('form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const formData = new FormData(this);
 
+    fetch('/create-apartment', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        // Handle the response as needed
+    })
+    .catch(error => {
+        console.error('Error1:', error);
+    });
+});
+</script>
 
+<!-- <script>
+  document.getElementById('photos').addEventListener('change', function(event) {
+    const files = event.target.files;
+    const fileNameContainer = document.getElementById('fileNameContainer');
+    fileNameContainer.innerHTML = ''; // Clear previous previews
 
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
 
-  <ul class="property-list has-scrollbar">
-    <% apartments.forEach(apt => { %>
-      <li class="property-item">
-        <div class="property-card">
-          <figure class="card-banner">  
-          
-            <% apartments.photoUrls.forEach(photoUrl => { %>
-              <img src="<%= photoUrl %>" alt="Apartment Photo">
-            <% }); %>
-            
-            <!-- Dynamic badge indicating availability -->
-          <div class="card-badge top-right"><%= apt.availabilty %></div>
-  
-           <!-- Dynamic badge indicating status -->
-          <div class="card-badge green top-left"><%= apt.status %></div>
-  
-            <div class="banner-actions">
-              <!-- Button with location information -->
-              <button class="banner-actions-btn">
-                <ion-icon name="location"></ion-icon>
-                <address><%= apt.location %></address>
-              </button>
-              <!-- Button with number of bedrooms -->
-              <button class="banner-actions-btn">
-                <ion-icon name="bed-outline"></ion-icon>
-                <span><%= apt.bedrooms %></span>
-              </button>
-              <!-- Button with number of bathrooms -->
-              <button class="banner-actions-btn">
-                <ion-icon name="man-outline"></ion-icon>
-                <span><%= apt.bathrooms %></span>
-              </button>
-            </div>
-          </figure>
-          <div class="card-content">
-            <!-- Dynamic price -->
-            <div class="card-price">
-              <strong><%= apt.currency %> <%= apt.price.toLocaleString('en-US', { maximumFractionDigits: 2 }) %></strong><%= apt.duration %> <pre><%= apt.negotiation %></pre>
-            </div> 
-            <!-- Dynamic title -->
-            <h3 class="h3 card-title">
-              <a href="#"><%= apt.title %></a>
-            </h3>
-            <!-- Dynamic description -->
-            <p class="card-text">
-              <%= apt.description %>
-            </p>
-            <ul class="card-list">
-              <!-- Placeholder for square footage -->
-              <li class="card-item">
-                <strong>Apartment ID (AID): AID<%= apt.aid %></strong>
-                <a href="/application-form?aid=<%= apt.aid %>&location=<%= apt.location %>">
-                  <span>Contact site: Administrator</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div class="card-footer">
-            <div class="card-author">
-              <div>
-                <!-- Dynamic user fullname -->
-                <p class="author-name"> Created by:
-                  <a href=""><%= apt.createdBy %></a>
-                </p>
-                <!-- Dynamic user bio -->
-                <p class="author-title"></p>
-              </div>
-            </div>
-            <div class="card-footer-actions">
-              <!-- Action buttons (placeholders) -->
-              <button class="card-footer-actions-btn">
-                <ion-icon name="resize-outline"></ion-icon>
-              </button>
-              <button class="card-footer-actions-btn">
-                <ion-icon name="heart-outline"></ion-icon>
-              </button>
-              <button class="card-footer-actions-btn">
-                <ion-icon name="add-circle-outline"></ion-icon>
-              </button>
-            </div>
-          </div>
-        </div>
-      </li>
-    <% }); %>
-  </ul>
+      const fileName = document.createElement('p');
+      fileName.textContent = file.name;
+      fileNameContainer.appendChild(fileName);
+    }
+  });
+</script> -->
+
+</body>
+</html>
