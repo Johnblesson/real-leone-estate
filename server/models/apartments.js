@@ -35,7 +35,7 @@ const apartmentSchema = new mongoose.Schema({
         required: true,
     },
     photo: {
-        type: String, // Or Buffer if storing Base64 data
+        type: String,
     },
     bedrooms: {
         type: Number,
@@ -88,10 +88,10 @@ const apartmentSchema = new mongoose.Schema({
 
 // Define a virtual property to format the price with commas
 apartmentSchema.virtual('formattedPrice').get(function() {
-    // Format the price with commas
     return this.price.toLocaleString();
 });
 
 const Apartments = mongoose.model('apartments', apartmentSchema);
 
 export default Apartments;
+

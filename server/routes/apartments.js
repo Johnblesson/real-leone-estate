@@ -22,12 +22,13 @@ import {
     editSponsorship,
 } from '../controllers/apartments.js';
 
-import { allAdminProperties } from '../render/render.js'
+import { allAdminProperties, apartmentDetail } from '../render/render.js'
 import ensureAuthenticated from '../middlewares/auth.js';
 import { isAdmin } from '../middlewares/isAdmin.js';
 import { checkSudoMiddleware } from '../middlewares/sudo.js'
 import upload from '../upload/upload.js';
 
+// router.post('/create-apartment', upload.single('photo'), createApartment);
 router.post('/create-apartment', upload.single('photo'), createApartment);
 router.get('/apartments', ensureAuthenticated, getAllApartments);
 router.get('/edit-apartment', ensureAuthenticated, editapartment);
@@ -44,6 +45,7 @@ router.patch('/update-admin-apartments/:id', ensureAuthenticated, isAdmin, updat
 router.get('/view-apartmet-details/:id', ensureAuthenticated, isAdmin, viewapartment);
 router.get("/edit-admin-apartment/:id", ensureAuthenticated, isAdmin, adminEditApartments);
 router.patch("/edit-admin-apartment/:id", ensureAuthenticated, isAdmin, updateAdminApartments);
+router.get('/apartment-detail/:id', apartmentDetail);
 
 // router.get('/properties', properties);
 

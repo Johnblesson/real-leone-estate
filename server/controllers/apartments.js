@@ -2,13 +2,23 @@ import Apartments from '../models/apartments.js';
 import User from '../models/auth.js';
 
 // Controller function to create a new apartment
-const createApartment = async (req, res) => {
+export const createApartment = async (req, res) => {
   try {
     // Check if req.file exists and has a value
     if (!req.file) {
-      // Handle the case where no file was uploaded
       return res.status(400).json({ error: 'No file uploaded' });
     }
+
+    // Log req.file to ensure it contains the file information
+    console.log('Uploaded file:', req.file);
+
+    // Check if req.file.location contains the S3 URL
+    if (!req.file.location) {
+      return res.status(400).json({ error: 'File location not found' });
+    }
+
+    // Log req.file.location to ensure it contains the S3 URL
+    console.log('File location:', req.file.location);
 
     const user = await User.find();
 
@@ -27,7 +37,7 @@ const createApartment = async (req, res) => {
       bedrooms: req.body.bedrooms,
       bathrooms: req.body.bathrooms,
       description: req.body.description,
-      photo: req.file ? req.file.path : '', // Store the file path if file exists
+      photo: req.file.location, // Use S3 URL
       phone: req.body.phone,
       area: req.body.area,
       address: req.body.address,
@@ -58,8 +68,9 @@ const createApartment = async (req, res) => {
 };
 
 
+
 // Controller function to get all apartments
-const getAllApartments = async (req, res) => {
+export const getAllApartments = async (req, res) => {
   try {
     const apartments = await Apartments.find();
     res.status(200).json(apartments);
@@ -69,7 +80,7 @@ const getAllApartments = async (req, res) => {
 };
 
 // Controller function to get a single apartment by ID
-const getApartmentById = async (req, res) => {
+export const getApartmentById = async (req, res) => {
   try {
     const apartment = await Apartments.findById(req.params.id);
     if (!apartment) {
@@ -83,7 +94,7 @@ const getApartmentById = async (req, res) => {
 };
 
 // Controller function to update an apartment by ID
-const updateApartmentById = async (req, res) => {
+export const updateApartmentById = async (req, res) => {
   try {
     const updatedApartment = await Apartments.findByIdAndUpdate(
       req.params.id,
@@ -101,7 +112,7 @@ const updateApartmentById = async (req, res) => {
 };
 
 // Controller function to delete an apartment by ID
-const deleteApartmentById = async (req, res) => {
+export const deleteApartmentById = async (req, res) => {
   try {
     const deletedApartment = await Apartments.findByIdAndDelete(req.params.id);
     if (!deletedApartment) {
@@ -114,11 +125,11 @@ const deleteApartmentById = async (req, res) => {
   }
 };
 
-// Display all properties for users
+
+// Controller to display all properties for users
 export const apartmentDisplay = async (req, res) => {
   const getTimeOfDay = () => {
     const currentHour = new Date().getHours();
-
     if (currentHour >= 5 && currentHour < 12) {
       return 'Good Morning';
     } else if (currentHour >= 12 && currentHour < 18) {
@@ -129,19 +140,18 @@ export const apartmentDisplay = async (req, res) => {
   };
 
   try {
-    const apts = await Apartments.findOne({ _id: req.params.id });
     // Find all verified apartments and sort them by sponsored status and createdAt timestamp in descending order
     const apartments = await Apartments.find({ verification: 'verified' }).sort({ sponsored: -1, createdAt: -1 });
 
     const greeting = getTimeOfDay();
     const user = req.isAuthenticated() ? req.user : null;
 
+    // Ensure photoUrl is set properly for each apartment
     apartments.forEach(apartment => {
-      if (apartment.photo) {
-        const photoPath = apartment.photo.replace(/\\/g, '/');
-        apartment.relativePath = photoPath.replace('public/assets/', '/assets/');
+      if (!apartment.photo) {
+        apartment.photoUrl = ''; // Initialize an empty string if no photo is available
       } else {
-        apartment.relativePath = '';
+        apartment.photoUrl = apartment.photo; // Set photoUrl to the value of photo
       }
     });
 
@@ -149,7 +159,6 @@ export const apartmentDisplay = async (req, res) => {
       apartments,
       greeting,
       user,
-      apts,
     });
   } catch (error) {
     console.error(error);
@@ -659,12 +668,3 @@ export const updateAdminSponsorship = async (req, res) => {
   }
 };
 
-
-
-export {
-  createApartment,
-  getAllApartments,
-  getApartmentById,
-  updateApartmentById,
-  deleteApartmentById,
-};

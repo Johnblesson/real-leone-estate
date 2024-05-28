@@ -83,11 +83,11 @@
       <div class="property-card">
         <figure class="card-banner">
           <!-- Dynamic image source -->
-          <% if (apt.relativePath) { %>
-            <img src="<%= apt.relativePath %>" alt="<%= apt.title %>" />
+          <!-- Dynamic image -->
+          <% if (apt.photoUrl) { %>
+            <img src="<%= apt.photoUrl %>" alt="Apartment Photo">
           <% } else { %>
-            <!-- Default image placeholder if photo doesn't exist -->
-            <img src="/path/to/default/image.jpg" alt="default image" />
+            <p>No photo available</p>
           <% } %>
 
           <!-- Dynamic badge indicating availability -->

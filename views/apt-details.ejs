@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= apartment.title %></title>
+  <style>
+    .property-detail {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .property-detail img {
+      width: 100%;
+      height: auto;
+      display: block;
+      margin-bottom: 20px;
+    }
+
+    .property-detail h1 {
+      margin-bottom: 10px;
+    }
+
+    .property-detail .price {
+      font-size: 1.5em;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .property-detail .description {
+      margin-bottom: 20px;
+    }
+
+    .property-detail .details {
+      margin-bottom: 20px;
+    }
+
+    .property-detail .details li {
+      list-style: none;
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="property-detail">
+    <% if (apartment.photoUrl) { %>
+      <img src="<%= apartment.photoUrl %>" alt="Apartment Photo">
+    <% } else { %>
+      <p>No photo available</p>
+    <% } %>
+
+    <h1><%= apartment.title %></h1>
+    <div class="price">
+      <strong><%= apartment.currency %> <%= apartment.price.toLocaleString('en-US', { maximumFractionDigits: 2 }) %></strong><%= apartment.duration %> <pre><%= apartment.negotiation %></pre>
+    </div>
+    <div class="description">
+      <p><%= apartment.description %></p>
+    </div>
+    <ul class="details">
+      <li><strong>Location:</strong> <%= apartment.location %></li>
+      <li><strong>Bedrooms:</strong> <%= apartment.bedrooms %></li>
+      <li><strong>Bathrooms:</strong> <%= apartment.bathrooms %></li>
+      <li><strong>Availability:</strong> <%= apartment.availabilty %></li>
+      <li><strong>Status:</strong> <%= apartment.status %></li>
+      <li><strong>Created by:</strong> <%= apartment.createdBy %></li>
+    </ul>
+  </div>
+</body>
+</html>

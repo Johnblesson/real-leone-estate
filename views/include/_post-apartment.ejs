@@ -11,7 +11,7 @@
  
   <div class="formbold-form-wrapper">
     
-    <form action="create-apartment" method="POST" enctype="multipart/form-data">
+    <form action="/create-apartment" method="POST" enctype="multipart/form-data">
       <div class="formbold-input-flex">
         <input
             type="hidden"
@@ -200,7 +200,7 @@
         ></textarea>
       </div>
 
-      <div class="formbold-form-file-flex">
+      <!-- <div class="formbold-form-file-flex">
         <label for="photo" class="formbold-form-label">
           Upload Property Image
         </label>
@@ -210,9 +210,25 @@
           id="photo"
           class="formbold-form-file"
         />
-      </div>
+      </div> -->
 
-      <button class="formbold-btn">Create Post</button>
+      <div class="formbold-form-file-flex">
+        <label for="photo" class="formbold-form-label">
+          Upload Property Image
+        </label>
+        <input
+          type="file"
+          name="photo"
+          id="photo"
+          class="formbold-form-file"
+          multiple
+        />
+    </div>
+
+     <!-- Container for file name previews -->
+     <!-- <div id="fileNameContainer" class="formbold-file-name-container"></div> -->
+
+    <button type="submit" class="formbold-btn">Create Post</button>
     </form>
   </div>
 </div>
@@ -234,6 +250,42 @@
     }
   });
 </script>
+
+<script>
+document.querySelector('form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const formData = new FormData(this);
+
+    fetch('/create-apartment', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        // Handle the response as needed
+    })
+    .catch(error => {
+        console.error('Error1:', error);
+    });
+});
+</script>
+
+<!-- <script>
+  document.getElementById('photos').addEventListener('change', function(event) {
+    const files = event.target.files;
+    const fileNameContainer = document.getElementById('fileNameContainer');
+    fileNameContainer.innerHTML = ''; // Clear previous previews
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+
+      const fileName = document.createElement('p');
+      fileName.textContent = file.name;
+      fileNameContainer.appendChild(fileName);
+    }
+  });
+</script> -->
 
 </body>
 </html>

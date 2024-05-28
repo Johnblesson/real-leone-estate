@@ -16,3 +16,7 @@ date posted (value)
 # contact info
 tel
 address
+
+https://homehub-sl.s3.eu-west-1.amazonaws.com/photo-1716805234347-429529222.jpg
+
+https://homehub-sl.s3.eu-west-1.amazonaws.com/photo-1716805276840-937208386.jpg
