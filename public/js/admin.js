@@ -81,7 +81,7 @@ var barChartOptions = {
     theme: 'dark',
   },
   xaxis: {
-    categories: ['Laptop', 'Phone', 'Monitor', 'Headphones', 'Camera'],
+    categories: ['Hill Station', 'Regent', 'Jui', 'Spur Loop', 'Spur Road'],
     title: {
       style: {
         color: '#f5f7ff',

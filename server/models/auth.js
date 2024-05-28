@@ -11,7 +11,6 @@ const userSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: true,
     },
     phone: {
         type: String,
@@ -22,8 +21,7 @@ const userSchema = new mongoose.Schema({
         required: true,
     },
     photo: {
-        type: String, // Or Buffer if storing Base64 data
-        required: true,
+        type: String,
     },
     bio: String, // Bio is not required by default, so no need to specify required property
     role: {

@@ -30,6 +30,22 @@ export const signUp = async (req, res) => {
       const saltRounds = 10;
       const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
 
+       // Check if req.file exists and has a value
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+
+    // Log req.file to ensure it contains the file information
+    // console.log('Uploaded file:', req.file);
+
+    // Check if req.file.location contains the S3 URL
+    if (!req.file.location) {
+      return res.status(400).json({ error: 'File location not found' });
+    }
+
+    // Log req.file.location to ensure it contains the S3 URL
+    // console.log('File location:', req.file.location);
+
       // Create a new User object with form data
       const userData = new User({
           fullname: req.body.fullname,
@@ -38,7 +54,8 @@ export const signUp = async (req, res) => {
           phone: req.body.phone,
           bio: req.body.bio,
           password: hashedPassword,
-          photo: req.file ? req.file.path : '', // Store the file path if file exists
+          // photo: req.file ? req.file.path : '', // Store the file path if file exists
+          photo:  req.file.location, // Use S3 URL
           role: req.body.role,
           status: req.body.status,
           sudo: req.body.sudo,

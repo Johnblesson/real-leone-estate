@@ -16,12 +16,11 @@
         <div class="cols__container">
             <div class="left__col">
                 <div class="img__container">
-                    <% if (users.photo) { %>
-                        <img src="<%= relativePath %>" alt="profile" />
-                    <% } else { %>
-                        <!-- Default image placeholder if photo doesn't exist -->
-                        <img src="/path/to/default/image.jpg" alt="profile" />
-                    <% } %>
+                    <% if (users.photoUrl) { %>
+                        <img src="<%= users.photoUrl %>" alt="Apartment Photo">
+                      <% } else { %>
+                        <p>No photo available</p>
+                      <% } %>
                     <span></span>
                 </div>
                 <h2><%= users.fullname %></h2>
