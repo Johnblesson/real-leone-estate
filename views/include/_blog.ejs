@@ -115,6 +115,7 @@
             </button>
           </div>
         </figure>
+        <a href="/application-form?aid=<%= apt.aid %>&location=<%= apt.location %>">
         <div class="card-content">
           <!-- Dynamic price -->
           <div class="card-price">
@@ -122,7 +123,7 @@
           </div> 
           <!-- Dynamic title -->
           <h3 class="h3 card-title">
-            <a href="#"><%= apt.title %></a>
+            <a href="/application-form?aid=<%= apt.aid %>&location=<%= apt.location %>"><%= apt.title %></a> <!-- Link to detail page -->
           </h3>
           <!-- Dynamic description -->
           <p class="card-text">
@@ -137,7 +138,7 @@
               </a>
             </li>
           </ul>
-        </div>
+        </div></a>
         <div class="card-footer">
           <div class="card-author">
             <div>
