@@ -19,8 +19,11 @@
             id="aid"
             class="formbold-form-input"
           />
+        </div>
+
+      <div class="formbold-mb-3 formbold-input-wrapp">
+        <label for="title" class="formbold-form-label"> Title </label>
         <div>
-          <label for="title" class="formbold-form-label"> Title </label>
           <input
             type="text"
             name="title"
@@ -29,8 +32,10 @@
             class="formbold-form-input"
           />
         </div>
-        <div>
-          <label for="typeOfProperty" class="formbold-form-label"> Type of Property </label>
+      </div>
+      
+      <div>
+        <label for="typeOfProperty" class="formbold-form-label"> Type of Property </label>
           <select id="typeOfProperty" class="formbold-form-input" name="typeOfProperty">
             <option value="" disabled selected hidden>Select Type</option>
             <option value="Apartment">Apartment</option>
@@ -38,23 +43,22 @@
             <option value="Shop">Shop</option>
             <option value="Shop">Other</option>
         </select>
-        </div>
-
       </div>
-
-      <div class="formbold-input-flex">
+      
+      <div class="formbold-mb-3 formbold-input-wrapp">
+        <label for="price" class="formbold-form-label"> Price </label>
         <div>
-          <label for="price" class="formbold-form-label">Price:</label>
           <input
-            type="number"
+            type="Number"
             name="price"
             id="price"
-            placeholder="Price"
+            placeholder="price"
             class="formbold-form-input"
-            required
           />
-        </div>       
-      
+        </div>
+      </div>
+
+      <div>     
         <div>
           <label for="status" class="formbold-form-label">Status:</label>
           <select id="status" class="formbold-form-input" name="status">
@@ -65,16 +69,18 @@
             <option value="Others">Others</option>
           </select>
         </div>
-      
-        <!-- Duration field initially hidden -->
-        <div id="durationField" style="display: none;">
-          <label for="duration" class="formbold-form-label">Duration:</label>
-          <select id="duration" class="formbold-form-input" name="duration">
-            <option value="" disabled selected hidden>Select Duration</option>
-            <option value="/ Monthly">Monthly</option>
-            <option value="/ Yearly">Yearly</option>
-          </select>
-        </div>
+      </div>
+
+      <div>
+      <!-- Duration field initially hidden -->
+      <div id="durationField" style="display: none;">
+        <label for="duration" class="formbold-form-label">Duration:</label>
+        <select id="duration" class="formbold-form-input" name="duration">
+          <option value="" disabled selected hidden>Select Duration</option>
+          <option value="/ Monthly">Monthly</option>
+          <option value="/ Yearly">Yearly</option>
+        </select>
+      </div>
       </div>
 
       <div>
@@ -101,8 +107,7 @@
       </div>
 
       <div class="formbold-mb-3 formbold-input-wrapp">
-        <label for="location" class="formbold-form-label"> Location </label>
-
+        <label for="location" class="formbold-form-label"> Area </label>
         <div>
           <select id="area" class="formbold-form-input" name="area">
             <option value="" disabled selected hidden>Select Area</option>
@@ -110,15 +115,19 @@
             <option value="Western Area Urban">Western Area Rural</option>
             <option value="Others">Others</option>
         </select>
-          <input
-            type="text"
-            name="location"
-            id="location"
-            placeholder="Location"
-            class="formbold-form-input"
-          />
         </div>
       </div>
+
+      <div class="formbold-mb-3 formbold-input-wrapp">
+        <label for="location" class="formbold-form-label"> Location </label>
+      <input
+      type="text"
+      name="location"
+      id="location"
+      placeholder="Location"
+      class="formbold-form-input"
+    />
+  </div>
 
       <div class="formbold-input-flex">
         <div>

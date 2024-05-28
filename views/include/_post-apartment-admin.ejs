@@ -11,7 +11,7 @@
  
   <div class="formbold-form-wrapper">
     
-    <form action="create-apartment" method="POST" enctype="multipart/form-data">
+    <form action="/create-apartment" method="POST" enctype="multipart/form-data">
       <div class="formbold-input-flex">
         <input
             type="hidden"
@@ -19,8 +19,11 @@
             id="aid"
             class="formbold-form-input"
           />
+        </div>
+
+      <div class="formbold-mb-3 formbold-input-wrapp">
+        <label for="title" class="formbold-form-label"> Title </label>
         <div>
-          <label for="title" class="formbold-form-label"> Title </label>
           <input
             type="text"
             name="title"
@@ -29,32 +32,33 @@
             class="formbold-form-input"
           />
         </div>
-        <div>
-          <label for="typeOfProperty" class="formbold-form-label"> Type of Property </label>
+      </div>
+      
+      <div>
+        <label for="typeOfProperty" class="formbold-form-label"> Type of Property </label>
           <select id="typeOfProperty" class="formbold-form-input" name="typeOfProperty">
             <option value="" disabled selected hidden>Select Type</option>
             <option value="Apartment">Apartment</option>
             <option value="Land">Land</option>
             <option value="Shop">Shop</option>
-            <option value="Other">Other</option>
+            <option value="Shop">Other</option>
         </select>
-        </div>
-
       </div>
-
-      <div class="formbold-input-flex">
+      
+      <div class="formbold-mb-3 formbold-input-wrapp">
+        <label for="price" class="formbold-form-label"> Price </label>
         <div>
-          <label for="price" class="formbold-form-label">Price:</label>
           <input
-            type="number"
+            type="Number"
             name="price"
             id="price"
-            placeholder="Price"
+            placeholder="price"
             class="formbold-form-input"
-            required
           />
-        </div>       
-      
+        </div>
+      </div>
+
+      <div>     
         <div>
           <label for="status" class="formbold-form-label">Status:</label>
           <select id="status" class="formbold-form-input" name="status">
@@ -65,16 +69,18 @@
             <option value="Others">Others</option>
           </select>
         </div>
-      
-        <!-- Duration field initially hidden -->
-        <div id="durationField" style="display: none;">
-          <label for="duration" class="formbold-form-label">Duration:</label>
-          <select id="duration" class="formbold-form-input" name="duration">
-            <option value="" disabled selected hidden>Select Duration</option>
-            <option value="/ Monthly">Monthly</option>
-            <option value="/ Yearly">Yearly</option>
-          </select>
-        </div>
+      </div>
+
+      <div>
+      <!-- Duration field initially hidden -->
+      <div id="durationField" style="display: none;">
+        <label for="duration" class="formbold-form-label">Duration:</label>
+        <select id="duration" class="formbold-form-input" name="duration">
+          <option value="" disabled selected hidden>Select Duration</option>
+          <option value="/ Monthly">Monthly</option>
+          <option value="/ Yearly">Yearly</option>
+        </select>
+      </div>
       </div>
 
       <div>
@@ -101,8 +107,7 @@
       </div>
 
       <div class="formbold-mb-3 formbold-input-wrapp">
-        <label for="location" class="formbold-form-label"> Location </label>
-
+        <label for="location" class="formbold-form-label"> Area </label>
         <div>
           <select id="area" class="formbold-form-input" name="area">
             <option value="" disabled selected hidden>Select Area</option>
@@ -110,15 +115,19 @@
             <option value="Western Area Urban">Western Area Rural</option>
             <option value="Others">Others</option>
         </select>
-          <input
-            type="text"
-            name="location"
-            id="location"
-            placeholder="Location"
-            class="formbold-form-input"
-          />
         </div>
       </div>
+
+      <div class="formbold-mb-3 formbold-input-wrapp">
+        <label for="location" class="formbold-form-label"> Location </label>
+      <input
+      type="text"
+      name="location"
+      id="location"
+      placeholder="Location"
+      class="formbold-form-input"
+    />
+  </div>
 
       <div class="formbold-input-flex">
         <div>
@@ -200,7 +209,7 @@
         ></textarea>
       </div>
 
-      <div class="formbold-form-file-flex">
+      <!-- <div class="formbold-form-file-flex">
         <label for="photo" class="formbold-form-label">
           Upload Property Image
         </label>
@@ -210,9 +219,25 @@
           id="photo"
           class="formbold-form-file"
         />
-      </div>
+      </div> -->
 
-      <button type="submit" class="formbold-btn">Create Post</button>
+      <div class="formbold-form-file-flex">
+        <label for="photo" class="formbold-form-label">
+          Upload Property Image
+        </label>
+        <input
+          type="file"
+          name="photo"
+          id="photo"
+          class="formbold-form-file"
+          multiple
+        />
+    </div>
+
+     <!-- Container for file name previews -->
+     <!-- <div id="fileNameContainer" class="formbold-file-name-container"></div> -->
+
+    <button type="submit" class="formbold-btn">Create Post</button>
     </form>
   </div>
 </div>
@@ -234,6 +259,42 @@
     }
   });
 </script>
+
+<script>
+document.querySelector('form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const formData = new FormData(this);
+
+    fetch('/create-apartment', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        // Handle the response as needed
+    })
+    .catch(error => {
+        console.error('Error1:', error);
+    });
+});
+</script>
+
+<!-- <script>
+  document.getElementById('photos').addEventListener('change', function(event) {
+    const files = event.target.files;
+    const fileNameContainer = document.getElementById('fileNameContainer');
+    fileNameContainer.innerHTML = ''; // Clear previous previews
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+
+      const fileName = document.createElement('p');
+      fileName.textContent = file.name;
+      fileNameContainer.appendChild(fileName);
+    }
+  });
+</script> -->
 
 </body>
 </html>
