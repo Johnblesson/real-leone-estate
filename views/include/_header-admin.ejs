@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HomeHub - Admin</title>
+  <title>HomeHub - <%= user ? user.role : '' %></title>
   <style>
     .header-bottom-actions {
       display: flex;
@@ -61,7 +61,13 @@
             <a href="/administrator" class="header-top-link">
               <ion-icon name=""></ion-icon>
 
-              <span><%= greeting %> Administrator | <%= user ? user.username : '' %></span>
+              <span><%= greeting %> Administrator | <%= user ? user.username : '' %>
+                <% if (sudo) { %>
+                  <p>(Owner)</p>
+              <% } else { %>
+                  <p></p> <!-- Empty paragraph -->
+              <% } %>
+              </span>
             </a>
           </li>
 

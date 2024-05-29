@@ -5,7 +5,7 @@ import Application from "../models/apply.js";
 export const createApplication = async (req, res) => {
   try {
     // Extracting data from request body
-    const { phone, location, applyAid, username, address, address2, createdBy, comments } = req.body;
+    const { phone, location, applyAid, username, address, address2, createdBy, comments, assignedStaff } = req.body;
 
     // Create a new Application object with form data
     const applicationForm = new Application({
@@ -17,6 +17,7 @@ export const createApplication = async (req, res) => {
       address2,
       createdBy,
       comments,
+      assignedStaff,
       createdAt: new Date(), // Assuming createdAt and updatedAt are Date objects
       updatedAt: new Date()
     });

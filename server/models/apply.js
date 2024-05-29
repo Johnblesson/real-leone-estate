@@ -9,6 +9,7 @@ const applySchema = new mongoose.Schema({
     address2: String,
     createdBy : String,
     comments : String,
+    assignedStaff: String,
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
 }, {
