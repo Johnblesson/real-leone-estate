@@ -101,6 +101,40 @@ export const getContactForm = async (req, res) => {
     }
   };
 
+// Get admin contact form
+export const getAdminContactForm = async (req, res) => {
+
+  // Function to determine the time of the day
+  const getTimeOfDay = () => {
+    const currentHour = new Date().getHours();
+
+    if (currentHour >= 5 && currentHour < 12) {
+      return 'Good Morning';
+    } else if (currentHour >= 12 && currentHour < 18) {
+      return 'Good Afternoon';
+    } else {
+      return 'Good Evening';
+    }
+  };
+
+  try {
+    // Determine the time of the day
+    const greeting = getTimeOfDay();
+
+    // Check if the user is authenticated
+    const user = req.isAuthenticated() ? req.user : null;
+
+    // Render the apply page with the necessary data
+    res.render('contact-admin', {
+      user,
+      greeting,
+    });
+  } catch (error) {
+    console.error('Error rendering the page:', error);
+    res.status(500).send('Internal Server Error');
+  }
+};
+
   export const messageView = async (req, res) => {
     try {
       const contact = await Contacts.findOne({ _id: req.params.id });

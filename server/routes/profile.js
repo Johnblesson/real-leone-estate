@@ -6,12 +6,12 @@ import ensureAuthenticated from "../middlewares/auth.js";
 import { isAdmin } from "../middlewares/isAdmin.js";
 
 router.get('/profile/:id', ensureAuthenticated, profile);
-router.get('/admin-profile/:id', ensureAuthenticated, adminprofile);
+router.get('/admin-profile/:id', ensureAuthenticated, isAdmin, adminprofile);
 
-router.get("/update-profile/:id", ensureAuthenticated, updateprofile); //updateadminprofile
-router.get("/update-admin-profile/:id", ensureAuthenticated, updateadminprofile); //updateadminprofile
+router.get("/update-profile/:id", ensureAuthenticated, updateprofile);
+router.get("/update-admin-profile/:id", ensureAuthenticated, isAdmin, updateadminprofile);
 router.patch('/update-profile/:id', ensureAuthenticated, ensureAuthenticated, updateUser);
-router.patch('/update-admin-profile/:id', ensureAuthenticated, ensureAuthenticated, updateUser);
+router.patch('/update-admin-profile/:id', ensureAuthenticated, ensureAuthenticated, isAdmin, updateUser);
 
 router.get('/view/:id', view);
 

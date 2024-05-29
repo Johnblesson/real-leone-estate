@@ -7,6 +7,6 @@ import { isAdmin } from "../middlewares/isAdmin.js";
 
 // Home Page Route
 router.get("/home", ensureAuthenticated, homeRoute);
-router.get("/admin-home", ensureAuthenticated, adminHomeRoute);
+router.get("/admin-home", ensureAuthenticated, isAdmin, adminHomeRoute);
 
 export default router

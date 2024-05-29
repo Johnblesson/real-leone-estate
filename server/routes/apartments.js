@@ -40,7 +40,7 @@ router.get('/apartments/:id', ensureAuthenticated, getApartmentById);
 router.put('/apartments/:id', ensureAuthenticated, isAdmin, updateApartmentById);
 router.delete('/delete-apartments/:id', ensureAuthenticated, isAdmin, checkSudoMiddleware, deleteApartmentById);
 router.get('/delete-apartments/:id', ensureAuthenticated, isAdmin, checkSudoMiddleware, deleteApartmentById);
-router.patch('/update-apartments/:id', ensureAuthenticated, updateApartments);
+router.patch('/update-apartments/:id', ensureAuthenticated, isAdmin, updateApartments);
 router.patch('/update-admin-apartments/:id', ensureAuthenticated, isAdmin, updateAdminApartments);
 router.get('/view-apartmet-details/:id', ensureAuthenticated, isAdmin, viewapartment);
 router.get("/edit-admin-apartment/:id", ensureAuthenticated, isAdmin, adminEditApartments);
@@ -49,12 +49,12 @@ router.get('/apartment-detail/:id', apartmentDetail);
 
 // router.get('/properties', properties);
 
-router.get('/verify-apartment', checkSudoMiddleware, isAdmin, adminVerifyApartment);
+router.get('/verify-apartment', ensureAuthenticated, isAdmin, adminVerifyApartment);
 
-router.get('/verify-update-apartment/:id', checkSudoMiddleware, isAdmin, ensureAuthenticated, verifyUpdateApartment);
+router.get('/verify-update-apartment/:id', isAdmin, ensureAuthenticated, verifyUpdateApartment);
 
-router.get('/sponsorship', sponsorship)
-router.get('/edit-sponsorship/:id', editSponsorship)
-router.patch('/update-admin-sponsorship/:id', ensureAuthenticated, isAdmin, updateAdminSponsorship);
+router.get('/sponsorship', isAdmin, ensureAuthenticated, sponsorship)
+router.get('/edit-sponsorship/:id', isAdmin, ensureAuthenticated, editSponsorship)
+router.patch('/update-admin-sponsorship/:id', ensureAuthenticated, isAdmin, checkSudoMiddleware, updateAdminSponsorship);
 
 export default router;

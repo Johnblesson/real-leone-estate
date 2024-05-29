@@ -75,5 +75,4 @@ router.get("/admin-apartment-success", (req, res) => {
     res.render("success/admin-apartment")    
 });
 
-
 export default router;

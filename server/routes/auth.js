@@ -1,7 +1,7 @@
 import { Router } from "express";
 const router = Router();
 
-import { signUp, logIn, edituser, updateUser, deleteUser, viewChangePwdPage, changePassword, googleAuthCallback, googleAuth } from "../controllers/auth.js";
+import { signUp, logIn, edituser, updateUser, deleteUser, viewChangePwdPage, changePassword, googleAuthCallback, googleAuth, getSudoOnly, getAdminOnly } from "../controllers/auth.js";
 import { getLoginPage } from "../controllers/auth.js";
 import upload from "../upload/upload.js";
 import ensureAuthenticated from "../middlewares/auth.js";
@@ -36,5 +36,9 @@ router.get('/logout', (req, res) => {
 router.get('/forbidden', (req, res) => {
     res.render('404');
 });
+
+// Sudo only
+router.get("/sudo-only", getSudoOnly)
+router.get("/admin-only", getAdminOnly)
 
 export default router;

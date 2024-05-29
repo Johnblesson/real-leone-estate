@@ -9,7 +9,8 @@ export const isAdmin = (req, res, next) => {
         next();
       } else {
         // User does not have ADMIN role, send a forbidden response
-        res.status(403).json({ msg: "You don't have permission to access this resource." });
+        // res.status(403).json({ msg: "You don't have permission to access this resource." });
+        res.redirect('/admin-only');
       }
     } catch (err) {
       res.status(500).json({ error: err.message });

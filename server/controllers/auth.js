@@ -411,3 +411,48 @@ export const changePassword = async (req, res) => {
     res.status(500).send('An error occurred while changing password.');
   }
 };
+
+
+
+// Get sudo only Page Controller 404
+export const getSudoOnly = (req, res) => {
+  const ip =
+    req.headers['cf-conneting-ip'] ||
+    req.headers['x-real-ip'] ||
+    req.headers['x-forwarded-for'] ||
+    req.socket.remoteAddress || '';
+
+  const timestamp = new Date().toISOString();
+  console.log('ip address:', ip, 'attempt accessing the sudo-only route', timestamp);
+  res.render('404-sudo', {
+  });
+};
+
+// Get sudo only Page Controller
+export const getAdminOnly = (req, res) => {
+  const ip =
+    req.headers['cf-conneting-ip'] ||
+    req.headers['x-real-ip'] ||
+    req.headers['x-forwarded-for'] ||
+    req.socket.remoteAddress || '';
+
+  const timestamp = new Date().toISOString();
+  console.log('ip address:', ip, 'attempt accessing the admin-only route', timestamp);
+  res.render('404-admin', {
+  });
+};
+
+
+const goBack = async (req, res) => {
+  const user = User.find()
+  try {
+    if (user.role === 'admin') {
+      redirect('/admin-home')
+    } else {
+      redirect('/home')
+    }
+  } catch {
+    console.error(error);
+    res.status(500).send('An error occurred while going back.');
+  }
+  }
