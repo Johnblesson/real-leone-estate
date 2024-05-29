@@ -7,7 +7,7 @@ import { isAdmin } from "../middlewares/isAdmin.js";
 import cacheMiddleware from "../middlewares/cacheMiddleware.js"
 
 // Home Page Route
-router.get("/home", cacheMiddleware, ensureAuthenticated, homeRoute);
-router.get("/admin-home", cacheMiddleware, ensureAuthenticated, isAdmin, adminHomeRoute);
+router.get("/home", ensureAuthenticated, homeRoute);
+router.get("/admin-home", ensureAuthenticated, isAdmin, adminHomeRoute);
 
 export default router
