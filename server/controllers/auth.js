@@ -442,17 +442,18 @@ export const getAdminOnly = (req, res) => {
   });
 };
 
-
-const goBack = async (req, res) => {
-  const user = User.find()
+// Go back function
+export const goBack = async (req, res) => {
   try {
+    const user = await User.findById(req.user.id);
     if (user.role === 'admin') {
-      redirect('/admin-home')
+      res.redirect('/admin-home');
     } else {
-      redirect('/home')
+      res.redirect('/home');
     }
-  } catch {
+  } catch (error) {
     console.error(error);
     res.status(500).send('An error occurred while going back.');
   }
-  }
+};
+

@@ -1,7 +1,7 @@
 import { Router } from "express";
 const router = Router();
 
-import { signUp, logIn, edituser, updateUser, deleteUser, viewChangePwdPage, changePassword, googleAuthCallback, googleAuth, getSudoOnly, getAdminOnly } from "../controllers/auth.js";
+import { signUp, logIn, edituser, updateUser, deleteUser, viewChangePwdPage, changePassword, googleAuthCallback, googleAuth, getSudoOnly, getAdminOnly, goBack } from "../controllers/auth.js";
 import { getLoginPage } from "../controllers/auth.js";
 import upload from "../upload/upload.js";
 import ensureAuthenticated from "../middlewares/auth.js";
@@ -40,5 +40,8 @@ router.get('/forbidden', (req, res) => {
 // Sudo only
 router.get("/sudo-only", getSudoOnly)
 router.get("/admin-only", getAdminOnly)
+
+// Route to handle goBack
+router.get('/go-back', goBack);
 
 export default router;

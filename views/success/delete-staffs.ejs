@@ -59,13 +59,14 @@
             <p>Staff details have been deleted successfully.</p>
         </div>
         <div class="add-another-reception">
-            <a href="#" onclick="goBack()">Go Back</a>
+            <a href="/go-back" id="go-back-link">Go Back</a>
         </div>
     </div>
 </body>
 <script>
-    function goBack() {
+    document.getElementById('go-back-link').addEventListener('click', function(event) {
+        event.preventDefault();
         window.history.back();
-    }
+    });
 </script>
 </html>
