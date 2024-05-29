@@ -7,71 +7,72 @@ import { getAllUsers } from "../controllers/auth.js"
 import ensureAuthenticated from "../middlewares/auth.js";
 import { isAdmin } from "../middlewares/isAdmin.js";
 import { isAccountant } from "../middlewares/isAccountant.js";
+import cacheMiddleware from "../middlewares/cacheMiddleware.js"
 
 // Add more routes here
 // router.get("/all-properties", ensureAuthenticated, allProperties );
 
-router.get("/", guestPage)
+router.get("/", cacheMiddleware, guestPage)
 
-router.get("/sell-properties", ensureAuthenticated, );
+router.get("/sell-properties", cacheMiddleware, ensureAuthenticated, );
 
-router.get("/rent-properties", ensureAuthenticated, );
+router.get("/rent-properties", cacheMiddleware, ensureAuthenticated, );
 
-router.get("/about", ensureAuthenticated, about);
+router.get("/about", cacheMiddleware, ensureAuthenticated, about);
 
-router.get("/features", ensureAuthenticated, features);
+router.get("/features", cacheMiddleware, ensureAuthenticated, features);
 
-router.get("/service", ensureAuthenticated, service);
+router.get("/service", cacheMiddleware, ensureAuthenticated, service);
 
-router.get("/blog", ensureAuthenticated, blog);
+router.get("/blog", cacheMiddleware, ensureAuthenticated, blog);
 
-router.get('/create-apartment', ensureAuthenticated, getPostApartment)
+router.get('/create-apartment', cacheMiddleware, ensureAuthenticated, getPostApartment)
 
-router.get('/create-apartment-admin', ensureAuthenticated, isAdmin, getPostApartmentAdmin)
+router.get('/create-apartment-admin', cacheMiddleware, ensureAuthenticated, isAdmin, getPostApartmentAdmin)
 
 router.get('/listed-properties', listedProperties)
 
-router.get('/all-users', isAdmin, ensureAuthenticated, getAllUsers)
+router.get('/all-users', isAdmin, cacheMiddleware, ensureAuthenticated, getAllUsers)
 
 // Post apartments success message
-router.get('/admin-apartment-success', (req, res) => {
+router.get('/admin-apartment-success', cacheMiddleware, (req, res) => {
     res.render('success/admin-apartment')
 })
 
-router.get('/apartment-success', (req, res) => {
+router.get('/apartment-success', cacheMiddleware, (req, res) => {
     res.render('success/user-apartment')
 })
 
-router.get("/services-fee-agreement", (req, res) => {
+router.get("/services-fee-agreement", cacheMiddleware, (req, res) => {
     res.render("service-fee-agreement")
 })
 
-router.get("/privacy-policy", (req, res) => {
+router.get("/privacy-policy", cacheMiddleware, (req, res) => {
     res.render("privacy-policy")
 })
 
 // Admin routes
-router.get("/admin-about", ensureAuthenticated, adminAbout);
+router.get("/admin-about", cacheMiddleware, ensureAuthenticated, adminAbout);
 
-router.get("/admin-features", ensureAuthenticated, adminFeatures);
+router.get("/admin-features", cacheMiddleware, ensureAuthenticated, adminFeatures);
 
-router.get("/admin-service", ensureAuthenticated, adminService);
+router.get("/admin-service", cacheMiddleware, ensureAuthenticated, adminService);
 
-router.get("/admin-blog", ensureAuthenticated, adminBlog);
+router.get("/admin-blog", cacheMiddleware, ensureAuthenticated, adminBlog);
 
 router.get("/terms-and-conditions", termsConditions)
 
 router.get("/registration-process-statement", registrationProcessStatement)
 
-router.get("/signup", (req, res) => {
+router.get("/signup", cacheMiddleware, (req, res) => {
     res.render("signup")    
 });
 
-router.get("/user-apartment-success", (req, res) => {
+router.get("/user-apartment-success", cacheMiddleware, (req, res) => {
     res.render("success/user-apartment")    
 });
 
-router.get("/admin-apartment-success", (req, res) => {
+router.get("/admin-apartment-success", cacheMiddleware, (req, res) => {
     res.render("success/admin-apartment")    
 });
 

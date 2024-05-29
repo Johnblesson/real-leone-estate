@@ -7,12 +7,13 @@ import upload from "../upload/upload.js";
 import ensureAuthenticated from "../middlewares/auth.js";
 import { isAdmin } from "../middlewares/isAdmin.js";
 import { checkSudoMiddleware } from "../middlewares/sudo.js";
+import cacheMiddleware from "../middlewares/cacheMiddleware.js"
 
 //Auth Routes
 router.post("/signup", upload.single("photo"), signUp);
 router.post("/login", logIn);
 
-router.get("/login", getLoginPage);
+router.get("/login", cacheMiddleware, getLoginPage);
 
 router.get("/edit-user/:id", ensureAuthenticated, isAdmin, edituser);
 router.patch("/edit-user/:id", ensureAuthenticated, isAdmin, checkSudoMiddleware, updateUser)
