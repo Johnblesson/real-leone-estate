@@ -30,7 +30,7 @@ router.patch("/update-password/:id", ensureAuthenticated, changePassword)
 // Logout route
 router.get('/logout', (req, res) => {
     req.session.destroy();
-    res.redirect('/'); 
+    res.redirect('/login'); 
 });
 
 // 404 Route
