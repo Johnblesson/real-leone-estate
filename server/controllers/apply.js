@@ -196,6 +196,9 @@ export const adminApplication = async (req, res) => {
     // Check if the user is authenticated
     const user = req.isAuthenticated() ? req.user : null;
 
+    // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+    const sudo = user && user.sudo ? user.sudo : false;
+
     // Render the apply page with the necessary data
     res.render('apply-admin', {
       user,
@@ -203,6 +206,7 @@ export const adminApplication = async (req, res) => {
       apartment,
       aid: apartmentId,
       location: location,
+      sudo,
     });
   } catch (error) {
     console.error('Error rendering the page:', error);

@@ -20,6 +20,8 @@ import {
     sponsorship,
     updateAdminSponsorship,
     editSponsorship,
+    searchApartment,
+    searchApartmentAdmin,
 } from '../controllers/apartments.js';
 
 import { allAdminProperties, apartmentDetail } from '../render/render.js'
@@ -48,6 +50,10 @@ router.patch("/edit-admin-apartment/:id", ensureAuthenticated, isAdmin, updateAd
 router.get('/apartment-detail/:id', apartmentDetail);
 
 // router.get('/properties', properties);
+
+// search for apartments
+router.get("/search", searchApartment)
+router.get("/search-admin", searchApartmentAdmin)
 
 router.get('/verify-apartment', ensureAuthenticated, isAdmin, adminVerifyApartment);
 

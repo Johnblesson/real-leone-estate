@@ -727,3 +727,117 @@ export const updateAdminSponsorship = async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
+
+
+// Controller to display the search apartment page
+export const searchApartment = async (req, res) => {
+  const getTimeOfDay = () => {
+    const currentHour = new Date().getHours();
+    if (currentHour >= 5 && currentHour < 12) {
+      return 'Good Morning';
+    } else if (currentHour >= 12 && currentHour < 18) {
+      return 'Good Afternoon';
+    } else {
+      return 'Good Evening';
+    }
+  };
+
+  try {
+    // Get the search query from the request
+    const { location } = req.query;
+
+    // Find all verified apartments and sort them by sponsored status and createdAt timestamp in descending order
+    let apartments = await Apartments.find({ verification: 'verified' }).sort({ sponsored: -1, createdAt: -1 });
+
+    // Filter apartments by location if a location is specified
+    if (location) {
+      apartments = apartments.filter(apartment => apartment.location === location);
+    }
+
+    // Get unique locations for the dropdown
+    const locations = [...new Set(apartments.map(apartment => apartment.location))];
+
+    const greeting = getTimeOfDay();
+    const user = req.isAuthenticated() ? req.user : null;
+
+    // Process each apartment to set photoUrl, formattedCreatedAt, and daysAgo
+    apartments.forEach(apartment => {
+      // Ensure photoUrl is set properly
+      apartment.photoUrl = apartment.photo || ''; // Use empty string if no photo is available
+
+      // Format the createdAt date and calculate days ago
+      apartment.formattedCreatedAt = moment(apartment.createdAt).format('DD-MM-YYYY HH:mm');
+      apartment.daysAgo = moment().diff(moment(apartment.createdAt), 'days');
+    });
+
+    // Render the search view template with the apartments and locations data
+    res.render("search", {
+      apartments,
+      locations,
+      greeting,
+      user
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("An error occurred while fetching apartments.");
+  }
+};
+
+
+// Controller to display the search apartment admin page
+export const searchApartmentAdmin = async (req, res) => {
+  const getTimeOfDay = () => {
+    const currentHour = new Date().getHours();
+    if (currentHour >= 5 && currentHour < 12) {
+      return 'Good Morning';
+    } else if (currentHour >= 12 && currentHour < 18) {
+      return 'Good Afternoon';
+    } else {
+      return 'Good Evening';
+    }
+  };
+
+  try {
+    // Get the search query from the request
+    const { location } = req.query;
+
+    // Find all verified apartments and sort them by sponsored status and createdAt timestamp in descending order
+    let apartments = await Apartments.find({ verification: 'verified' }).sort({ sponsored: -1, createdAt: -1 });
+
+    // Filter apartments by location if a location is specified
+    if (location) {
+      apartments = apartments.filter(apartment => apartment.location === location);
+    }
+
+    // Get unique locations for the dropdown
+    const locations = [...new Set(apartments.map(apartment => apartment.location))];
+
+    const greeting = getTimeOfDay();
+    const user = req.isAuthenticated() ? req.user : null;
+
+    // Process each apartment to set photoUrl, formattedCreatedAt, and daysAgo
+    apartments.forEach(apartment => {
+      // Ensure photoUrl is set properly
+      apartment.photoUrl = apartment.photo || ''; // Use empty string if no photo is available
+
+      // Format the createdAt date and calculate days ago
+      apartment.formattedCreatedAt = moment(apartment.createdAt).format('DD-MM-YYYY HH:mm');
+      apartment.daysAgo = moment().diff(moment(apartment.createdAt), 'days');
+    });
+
+     // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+     const sudo = user && user.sudo ? user.sudo : false;
+
+    // Render the search view template with the apartments and locations data
+    res.render("search-admin", {
+      apartments,
+      locations,
+      greeting,
+      user,
+      sudo
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("An error occurred while fetching apartments.");
+  }
+};

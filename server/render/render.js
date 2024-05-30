@@ -146,8 +146,11 @@ const getTimeOfDay = () => {
      // Determine the time of the day
     const greeting = getTimeOfDay();
 
+      // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+      const sudo = user && user.sudo ? user.sudo : false;
+
     // Render the index page with the receptions and latestStorage data
-    res.render('post-apartment-admin', { user, greeting});
+    res.render('post-apartment-admin', { user, greeting, sudo });
   } catch (error) {
     console.error('Error rendering the page:', error);
     res.status(500).send('Internal Server Error');
@@ -185,11 +188,15 @@ export const allAdminProperties = async (req, res) => {
       apartment.daysAgo = moment().diff(moment(apartment.createdAt), 'days');
     });
 
+      // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+      const sudo = user && user.sudo ? user.sudo : false;
+
     res.render("all-admin-properties", {
       apartments,
       greeting,
       user,
       apts,
+      sudo
     });
   } catch (error) {
     console.error(error);
