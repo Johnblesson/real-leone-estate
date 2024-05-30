@@ -47,7 +47,7 @@ router.put('/apartments/:id', ensureAuthenticated, isAdmin, updateApartmentById)
 router.delete('/delete-apartments/:id', ensureAuthenticated, isAdmin, checkSudoMiddleware, deleteApartmentById);
 router.get('/delete-apartments/:id', ensureAuthenticated, isAdmin, checkSudoMiddleware, deleteApartmentById);
 router.patch('/update-apartments/:id', ensureAuthenticated, isAdmin, updateApartments);
-router.patch('/update-admin-apartments/:id', ensureAuthenticated, isAdmin, updateAdminApartments);
+router.patch('/update-admin-apartments/:id', ensureAuthenticated, checkSudoMiddleware, isAdmin, updateAdminApartments);
 router.get('/view-apartmet-details/:id', ensureAuthenticated, isAdmin, viewapartment);
 router.get("/edit-admin-apartment/:id", ensureAuthenticated, isAdmin, adminEditApartments);
 router.patch("/edit-admin-apartment/:id", ensureAuthenticated, isAdmin, updateAdminApartments);
@@ -69,7 +69,7 @@ router.patch('/update-admin-sponsorship/:id', ensureAuthenticated, isAdmin, chec
 
 // availabilty
 router.get('/availability', isAdmin, ensureAuthenticated, availabilty)
-router.get('/edit-availability/:id', isAdmin , ensureAuthenticated, editAvaliabilty)
+router.get('/edit-availability/:id', isAdmin, ensureAuthenticated, editAvaliabilty)
 router.patch('/update-admin-availability/:id', ensureAuthenticated, isAdmin, checkSudoMiddleware, updateAdminAvaliability);
 
 
