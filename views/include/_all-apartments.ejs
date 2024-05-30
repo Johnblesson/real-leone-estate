@@ -150,20 +150,20 @@
                 <th>Location</th>
                 <th>Address</th>
                 <th>Negotiation</th>
-                <th>Avaliablity</th>
+                <th>Availability</th>
                 <th>Verification</th>
-                <!-- <th>Sponsored</th> -->
+                <th>Sponsored</th>
                 <th>Actions</th> <!-- New column for actions -->
             </tr>
             </thead>
             <tbody>
                 <% apartments.forEach(apartment => { %>
             <tr>
-                <td class="hover">AID<%= apartment.aid %></td>
+                <td class="hover role-green-bg">AID<%= apartment.aid %></td>
                 <td class="hover"><%= apartment.createdBy %></td>
                 <td class="hover"><%= apartment.title %></td>
-                <td class="hover"><%= apartment.phone %></td>
-                <td class="hover"><%= apartment.location %></td>
+                <td class="hover role-pink-bg"><%= apartment.phone %></td>
+                <td class="hover role-green-bg"><%= apartment.location %></td>
                 <td class="hover"><%= apartment.address %></td>
                 <td class="hover"><%= apartment.negotiation %></td>
                 <td class="hover"><%= apartment.availabilty %></td>

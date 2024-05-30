@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
-  <title>Sponsorship Update</title>
+  <title>Avaliability Form</title>
     <!-- 
     - custom css link
   -->
@@ -84,7 +83,7 @@
   <!-- Learn More: https://formbold.com -->
   <div class="formbold-form-wrapper">
     
-    <form action="/update-admin-sponsorship/<%= apartment._id %>?_method=PATCH" method="POST">
+    <form action="/update-admin-availability/<%= apartment._id %>?_method=PATCH" method="POST">
       <div class="formbold-mb-3">
       <div>
         <label for="aid" class="formbold-form-label"> AID </label>
@@ -101,13 +100,13 @@
 
     <div class="formbold-mb-3">
         <div>
-          <label for="sponsored" class="formbold-form-label"> Sponsored </label>
-          <select id="sponsored" class="formbold-form-input" name="sponsored">
-            <option value="" disabled selected hidden>Select Sponsored</option>
-            <option value="false">False</option>
-            <option value="true">True</option>
-        </select>
-        </div>
+            <label for="avaliablity" class="formbold-form-label"> Availability: </label>
+            <select id="availabilty" class="formbold-form-input" name="availabilty">
+              <option value="" disabled selected hidden>Select Availability</option>
+              <option value="Avaliable">Available</option>
+              <option value="Not Availabile">Not Available</option>
+          </select>
+          </div>
     </div>
 
       <div class="formbold-mb-3 formbold-input-wrapp">
@@ -150,7 +149,7 @@
     />
       </div>
   
-      <button class="formbold-btn">Update Apartment</button>
+      <button class="formbold-btn">Update Availability</button>
     </form>
   </div>
 </div>

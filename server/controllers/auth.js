@@ -329,6 +329,9 @@ const getTimeOfDay = () => {
 
   const user = req.isAuthenticated() ? req.user : null;
 
+  // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+  const sudo = user && user.sudo ? user.sudo : false;
+
   // Determine the time of the day
   const greeting = getTimeOfDay();
 
@@ -345,6 +348,7 @@ const getTimeOfDay = () => {
           users, // Pass user data to the template if needed
           greeting, // Greeting message for admin
           user,
+          sudo
       });
   } else if (role === 'user') {
       // Render the user update password page

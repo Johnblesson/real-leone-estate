@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Apartment Form</title>
+  <title>Update Apartment</title>
     <!-- 
     - custom css link
   -->
@@ -94,6 +94,7 @@
           id="aid"
           value="<%= apartment.aid %>"
           class="formbold-form-input"
+          readonly
         />
       </div>
     </div>
@@ -131,7 +132,7 @@
             id="price"
             value="<%= apartment.price %>"
             class="formbold-form-input"
-            required
+            readonly
             />
         </div>
 
@@ -220,11 +221,11 @@
 
       <div class="formbold-input-flex">
         <div>
-          <label for="avaliablity" class="formbold-form-label"> Avaliablity: </label>
+          <label for="avaliablity" class="formbold-form-label"> Availability: </label>
           <select id="availabilty" class="formbold-form-input" name="availabilty">
-            <option value="" disabled selected hidden>Select Avaliablity</option>
-            <option value="Avaliable">Avaliable</option>
-            <option value="Not Availabile">Not Availabile</option>
+            <option value="" disabled selected hidden>Select Availability</option>
+            <option value="Avaliable">Available</option>
+            <option value="Not Availabile">Not Available</option>
         </select>
         </div>
           <div>
@@ -266,6 +267,7 @@
           id="createdBy"
           value="<%= apartment.createdBy %>"
           class="formbold-form-input formbold-mb-3"
+          readonly
         />
       </div>  
 

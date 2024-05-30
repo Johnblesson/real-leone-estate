@@ -93,7 +93,7 @@
                 <th>Phone No.</th>
                 <th>AID</th>
                 <th>Apartment Location</th>
-                <th>Address</th>
+                <th>Applicant Address</th>
                 <th>Assigned Staff</th>
                 <th>Actions</th> <!-- New column for actions -->
             </tr>
@@ -104,8 +104,8 @@
                 <td class="hover"><%= apply.createdBy %></td>
                 <td class="hover"><%= apply.username %></td>
                 <td class="hover"><%= apply.phone %></td>
-                <td class="hover"><%= apply.applyAid %></td>
-                <td class="hover"><%= apply.location %></td>
+                <td class="hover role-green-bg"><%= 'AID' + apply.applyAid %></td>
+                <td class="hover role-green-bg"><%= apply.location %></td>
                 <td class="hover"><%= apply.address %></td>
                 <td class="hover"><%= apply.assignedStaff %></td>
 

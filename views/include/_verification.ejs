@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Apartment Form</title>
+  <title>Update Verification</title>
     <!-- 
     - custom css link
   -->
@@ -85,7 +85,19 @@
   <div class="formbold-form-wrapper">
     
     <form action="/edit-admin-apartment/<%= apartment._id %>?_method=PATCH" method="POST">
-        <div class="formbold-input-flex">
+      <div class="formbold-mb-3">
+        <div>
+          <label for="aid" class="formbold-form-label"> AID: </label>
+          <input
+            type="text"
+            name="aid"
+            id="aid"
+            value="<%= apartment.aid %>"
+            class="formbold-form-input"
+          />
+        </div>
+      </div>
+        <div class="formbold-mb-3">
             <div>
               <label for="verification" class="formbold-form-label"> Verification </label>
               <select id="verification" class="formbold-form-input" name="verification">

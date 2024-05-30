@@ -22,6 +22,10 @@ import {
     editSponsorship,
     searchApartment,
     searchApartmentAdmin,
+    availabilty,
+    editAvaliabilty,
+    updateAdminAvaliability
+
 } from '../controllers/apartments.js';
 
 import { allAdminProperties, apartmentDetail } from '../render/render.js'
@@ -56,11 +60,17 @@ router.get("/search", searchApartment)
 router.get("/search-admin", searchApartmentAdmin)
 
 router.get('/verify-apartment', ensureAuthenticated, isAdmin, adminVerifyApartment);
-
 router.get('/verify-update-apartment/:id', isAdmin, ensureAuthenticated, verifyUpdateApartment);
 
+// sponsorship
 router.get('/sponsorship', isAdmin, ensureAuthenticated, sponsorship)
 router.get('/edit-sponsorship/:id', isAdmin, ensureAuthenticated, editSponsorship)
 router.patch('/update-admin-sponsorship/:id', ensureAuthenticated, isAdmin, checkSudoMiddleware, updateAdminSponsorship);
+
+// availabilty
+router.get('/availability', isAdmin, ensureAuthenticated, availabilty)
+router.get('/edit-availability/:id', isAdmin , ensureAuthenticated, editAvaliabilty)
+router.patch('/update-admin-availability/:id', ensureAuthenticated, isAdmin, checkSudoMiddleware, updateAdminAvaliability);
+
 
 export default router;

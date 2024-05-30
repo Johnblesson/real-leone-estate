@@ -9,8 +9,10 @@ export const mainAdmin = async (req, res) => {
         const usersCount = await User.countDocuments();
         const applicationsCount = await Applications.countDocuments();
 
+        const user = req.isAuthenticated() ? req.user : null;
+
         // Render the administrator template and pass counts as data
-        res.render('administrator', { apartmentsCount, usersCount, applicationsCount });
+        res.render('administrator', { apartmentsCount, usersCount, applicationsCount, user });
     } catch (error) {
         console.log(error);
         // Handle errors appropriately, such as sending an error response
