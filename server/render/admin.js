@@ -28,9 +28,12 @@ export const adminAbout = async (req, res) => {
   
        // Determine the time of the day
       const greeting = getTimeOfDay();
+
+        // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+     const sudo = user && user.sudo ? user.sudo : false;
   
       // Render the index page with the receptions and latestStorage data
-      res.render('admin-about', { locals, user, greeting});
+      res.render('admin-about', { locals, user, greeting, sudo });
     } catch (error) {
       console.error('Error rendering the page:', error);
       res.status(500).send('Internal Server Error');
@@ -61,9 +64,12 @@ export const adminFeatures = async (req, res) => {
   
        // Determine the time of the day
       const greeting = getTimeOfDay();
+
+      // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+     const sudo = user && user.sudo ? user.sudo : false;
   
       // Render the index page with the receptions and latestStorage data
-      res.render('admin-features', { locals, user, greeting});
+      res.render('admin-features', { locals, user, greeting, sudo });
     } catch (error) {
       console.error('Error rendering the page:', error);
       res.status(500).send('Internal Server Error');
@@ -99,8 +105,11 @@ export const adminBlog = async (req, res) => {
       apartment.daysAgo = moment().diff(moment(apartment.createdAt), 'days');
     });
 
+    // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+    const sudo = user && user.sudo ? user.sudo : false;
+
     const greeting = getTimeOfDay();
-    res.render('admin-blog', { greeting, apts, user, apartments, apT });
+    res.render('admin-blog', { greeting, apts, user, apartments, sudo });
   } catch (error) {
     console.error('Error rendering the page:', error);
     res.status(500).send('Internal Server Error');
@@ -128,12 +137,15 @@ export const adminService = async (req, res) => {
   };
     try {
       const user = req.isAuthenticated() ? req.user : null;
+
+      // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+      const sudo = user && user.sudo ? user.sudo : false;
   
        // Determine the time of the day
       const greeting = getTimeOfDay();
   
       // Render the index page with the receptions and latestStorage data
-      res.render('admin-service', { locals, user, greeting});
+      res.render('admin-service', { locals, user, greeting, sudo });
     } catch (error) {
       console.error('Error rendering the page:', error);
       res.status(500).send('Internal Server Error');
