@@ -62,16 +62,12 @@
                 </p>
         </div>
         <div class="add-another-reception">
-            <a href="home">Go Back</a>
+            <!-- <a href="home">Go Back</a> -->
+            <a href="/go-back" id="go-back-link">Go Back</a>
             <!-- <a href="#" onclick="goBack()">Go Back</a> -->
         </div>
     </div>
 </body>
-<script>
-    function goBack() {
-        window.history.back();
-    }
-</script>
 <script>
     function openWhatsApp() {
       const phoneNumber = '+23279969094'; 
@@ -80,4 +76,11 @@
       window.open(url, '_blank');
     }
   </script>
+
+<script>
+    document.getElementById('go-back-link').addEventListener('click', function(event) {
+        event.preventDefault();
+        window.history.back();
+    });
+</script>
 </html>
