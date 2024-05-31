@@ -127,7 +127,11 @@
             </h3>
             <!-- Dynamic description -->
             <p class="card-text">
-              <%= apt.description %>
+              <% if (apt.description && apt.description.length > 250) { %>
+                <%= apt.description.substring(0, 250) + "..." %>
+            <% } else { %>
+                <%= apt.description %>
+            <% } %>
             </p>
             <ul class="card-list">
               <!-- Placeholder for square footage -->

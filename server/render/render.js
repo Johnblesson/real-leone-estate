@@ -1,6 +1,7 @@
 import Apartments from "../models/apartments.js";
 import User from "../models/auth.js";
 import moment from "moment";
+import mongoose from 'mongoose';
 
 export const homeRoute = async (req, res) => {
   const getTimeOfDay = () => {
@@ -526,7 +527,6 @@ export const guestPage = async (req, res) => {
 };
 
 
-
 // Controller to display a single apartment's details
 export const apartmentDetail = async (req, res) => {
   const getTimeOfDay = () => {
@@ -539,30 +539,98 @@ export const apartmentDetail = async (req, res) => {
       return 'Good Evening';
     }
   };
+
   try {
+    const { id } = req.params;
+
+    // Validate ObjectId
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).send("Invalid apartment ID");
+    }
+
     const apartments = await Apartments.find({ verification: 'verified' }).sort({ sponsored: -1, createdAt: -1 });
-    const apartment = await Apartments.findById(req.params.id);
+    const apartment = await Apartments.findById(id);
 
     if (!apartment) {
       return res.status(404).send("Apartment not found");
     }
 
-     // Ensure photoUrl is set properly for each apartment
-     apartments.forEach(apartment => {
-      if (!apartment.photo) {
-        apartment.photoUrl = ''; // Initialize an empty string if no photo is available
-      } else {
-        apartment.photoUrl = apartment.photo; // Set photoUrl to the value of photo
-      }
-    });
+    // Ensure photoUrl is set properly for the current apartment
+    const updatedApartment = {
+      ...apartment._doc,
+      photoUrl: apartment.photo || '' // Set photoUrl to the value of photo or an empty string
+    };
 
     const user = req.isAuthenticated() ? req.user : null;
     const greeting = getTimeOfDay();
-    res.render("apt-details", {
-      apartment,
+
+    // Format the createdAt date and calculate days ago
+    updatedApartment.formattedCreatedAt = moment(updatedApartment.createdAt).format('DD-MM-YYYY HH:mm');
+    updatedApartment.daysAgo = moment().diff(moment(updatedApartment.createdAt), 'days');
+
+    res.render("apartment-detail", {
+      apartment: updatedApartment,
       apartments,
       user,
       greeting,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("An error occurred while fetching the apartment details.");
+  }
+};
+
+
+// Controller to display a single apartment's details
+export const adminApartmentDetail = async (req, res) => {
+  const getTimeOfDay = () => {
+    const currentHour = new Date().getHours();
+    if (currentHour >= 5 && currentHour < 12) {
+      return 'Good Morning';
+    } else if (currentHour >= 12 && currentHour < 18) {
+      return 'Good Afternoon';
+    } else {
+      return 'Good Evening';
+    }
+  };
+
+  try {
+    const { id } = req.params;
+
+    // Validate ObjectId
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).send("Invalid apartment ID");
+    }
+
+    const apartments = await Apartments.find({ verification: 'verified' }).sort({ sponsored: -1, createdAt: -1 });
+    const apartment = await Apartments.findById(id);
+
+    if (!apartment) {
+      return res.status(404).send("Apartment not found");
+    }
+
+    // Ensure photoUrl is set properly for the current apartment
+    const updatedApartment = {
+      ...apartment._doc,
+      photoUrl: apartment.photo || '' // Set photoUrl to the value of photo or an empty string
+    };
+
+    const user = req.isAuthenticated() ? req.user : null;
+    const greeting = getTimeOfDay();
+
+    // Format the createdAt date and calculate days ago
+    updatedApartment.formattedCreatedAt = moment(updatedApartment.createdAt).format('DD-MM-YYYY HH:mm');
+    updatedApartment.daysAgo = moment().diff(moment(updatedApartment.createdAt), 'days');
+
+    // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+    const sudo = user && user.sudo ? user.sudo : false;
+
+    res.render("apartment-detail-admin", {
+      apartment: updatedApartment,
+      apartments,
+      user,
+      greeting,
+      sudo
     });
   } catch (error) {
     console.error(error);

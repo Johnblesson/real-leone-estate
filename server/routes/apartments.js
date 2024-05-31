@@ -25,10 +25,9 @@ import {
     availabilty,
     editAvaliabilty,
     updateAdminAvaliability
-
 } from '../controllers/apartments.js';
 
-import { allAdminProperties, apartmentDetail } from '../render/render.js'
+import { allAdminProperties, apartmentDetail, adminApartmentDetail } from '../render/render.js'
 import ensureAuthenticated from '../middlewares/auth.js';
 import { isAdmin } from '../middlewares/isAdmin.js';
 import { checkSudoMiddleware } from '../middlewares/sudo.js'
@@ -51,7 +50,8 @@ router.patch('/update-admin-apartments/:id', ensureAuthenticated, checkSudoMiddl
 router.get('/view-apartmet-details/:id', ensureAuthenticated, isAdmin, viewapartment);
 router.get("/edit-admin-apartment/:id", ensureAuthenticated, isAdmin, adminEditApartments);
 router.patch("/edit-admin-apartment/:id", ensureAuthenticated, isAdmin, updateAdminApartments);
-router.get('/apartment-detail/:id', apartmentDetail);
+router.get("/apartment-detail/:id", apartmentDetail);
+router.get("/apartment-detail-admin/:id", adminApartmentDetail)
 
 // router.get('/properties', properties);
 
@@ -71,6 +71,5 @@ router.patch('/update-admin-sponsorship/:id', ensureAuthenticated, isAdmin, chec
 router.get('/availability', isAdmin, ensureAuthenticated, availabilty)
 router.get('/edit-availability/:id', isAdmin, ensureAuthenticated, editAvaliabilty)
 router.patch('/update-admin-availability/:id', ensureAuthenticated, isAdmin, checkSudoMiddleware, updateAdminAvaliability);
-
 
 export default router;

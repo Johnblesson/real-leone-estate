@@ -1,239 +1,85 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Search Apartments</title>
-  <style>
-    /* body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    } */
+<div class="detail-page">
+  <div class="property-card">
+    <figure class="card-banner">
+      <% if (apartment.photoUrl) { %>
+        <img src="<%= apartment.photoUrl %>" alt="Apartment Photo">
+      <% } else { %>
+        <p>No photo available</p>
+      <% } %>
+      <!-- Dynamic badge indicating availability -->
+      <div class="card-badge top-right"><%= apartment.availabilty %></div>
 
-    h1 {
-      text-align: center;
-      margin-top: 20px;
-      color: #333;
-    }
+      <!-- Dynamic badge indicating status -->
+      <div class="card-badge top-left"><%= apartment.status %></div>
+    </figure>
 
-    .search-container {
-      text-align: center;
-      margin: 20px;
-    }
+    <div class="card-content">
+      <!-- Dynamic price -->
+      <div class="card-price">
+        <strong><%= apartment.currency %> <%= apartment.price.toLocaleString('en-US', { maximumFractionDigits: 2 }) %></strong> <%= apartment.duration %> <pre><%= apartment.negotiation %></pre>
+      </div>
+      <!-- Dynamic title -->
+      <h3 class="h3 card-title">
+        <%= apartment.title %>
+      </h3>
+      <!-- Dynamic description -->
+      <p class="card-text">
+        <%= apartment.description %>
+      </p>
 
-    .search-container form {
-      display: inline-block;
-      margin: 0 auto;
-    }
-
-    .search-container input[type="text"] {
-      padding: 10px;
-      font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      width: 300px;
-    }
-
-    .search-container button {
-      padding: 10px 20px;
-      font-size: 16px;
-      border: none;
-      border-radius: 4px;
-      background-color: #28a745;
-      color: #fff;
-      cursor: pointer;
-      margin-left: 10px;
-    }
-
-    .search-container button:hover {
-      background-color: #218838;
-    }
-
-    .property-list {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr); /* Three columns */
-      gap: 20px; /* Adjust the gap between grid items */
-      padding: 15px;
-      list-style: none;
-    }
-
-    .property-item {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .property-card {
-      display: flex;
-      flex-direction: column;
-      background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    .card-banner img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    .card-content {
-      padding: 16px;
-    }
-
-    .card-footer {
-      padding: 16px;
-      border-top: 1px solid #ddd;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .card-author {
-      display: flex;
-      align-items: center;
-    }
-
-    .card-author .author-name a {
-      color: #333;
-      text-decoration: none;
-    }
-
-    .card-footer-actions {
-      display: flex;
-      gap: 8px;
-    }
-
-    .top-right {
-      position: absolute;
-      top: 0;
-      left: 0;
-      background-color: hsl(9, 100%, 62%);
-    }
-
-    .top-left {
-      position: absolute;
-      top: 0;
-      right: 0;
-    }
-
-    /* Media query for mobile devices */
-    @media (max-width: 768px) {
-      .property-list {
-        grid-template-columns: repeat(1, 1fr);
-      }
-    }
-  </style>
-</head>
-<body>
-  <h1>Search Apartments</h1>
-  <div class="search-container">
-    <form method="GET" action="/search">
-      <input type="text" name="location" placeholder="Enter location here">
-      <button type="submit">Search</button>
-    </form>
-  </div>
-
-  <ul class="property-list has-scrollbar">
-    <% apartments.forEach(apt => { %>
-      <li class="property-item">
-        <a href="/application-form?aid=<%= apt.aid %>&location=<%= apt.location %>">
-          <div class="property-card">
-            <figure class="card-banner">
-              <% if (apt.photoUrl) { %>
-                <img src="<%= apt.photoUrl %>" alt="Apartment Photo">
-              <% } else { %>
-                <p>No photo available</p>
-              <% } %>
-
-              <div class="card-badge top-right"><%= apt.availabilty %></div>
-              <div class="card-badge green top-left"><%= apt.status %></div>
-
-              <div class="banner-actions">
-                <button class="banner-actions-btn">
-                  <ion-icon name="location"></ion-icon>
-                  <address><%= apt.location %></address>
-                </button>
-                <button class="banner-actions-btn">
-                  <ion-icon name="bed-outline"></ion-icon>
-                  <span><%= apt.bedrooms %></span>
-                </button>
-                <button class="banner-actions-btn">
-                  <ion-icon name="man-outline"></ion-icon>
-                  <span><%= apt.bathrooms %></span>
-                </button>
-              </div>
-            </figure>
-
-            <div class="card-content">
-              <div class="card-price">
-                <strong><%= apt.currency %> <%= apt.price.toLocaleString('en-US', { maximumFractionDigits: 2 }) %></strong><%= apt.duration %> <pre><%= apt.negotiation %></pre>
-              </div>
-              <h3 class="h3 card-title">
-                <a href="/application-form?aid=<%= apt.aid %>&location=<%= apt.location %>"><%= apt.title %></a>
-              </h3>
-              <p class="card-text">
-                <%= apt.description %>
-              </p>
-              <ul class="card-list">
-                <li class="card-item">
-                  <strong>Apartment ID (AID): AID<%= apt.aid %></strong>
-                  <a href="/application-form?aid=<%= apt.aid %>&location=<%= apt.location %>">
-                    <span>Contact site: Administrator</span>
-                    <span>Apply</span>
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div class="card-footer">
-              <div class="card-author">
-                <div>
-                  <p class="author-name">Created by:
-                    <a href="#"><%= apt.createdBy %></a>
-                  </p>
-                  <p class="author-title">
-                    Created At: <%= apt.formattedCreatedAt %> (<%= apt.daysAgo %> days ago)
-                  </p>
-                </div>
-              </div>
-              <div class="card-footer-actions">
-                <button class="card-footer-actions-btn">
-                  <ion-icon name="resize-outline"></ion-icon>
-                </button>
-                <button class="card-footer-actions-btn">
-                  <ion-icon name="heart-outline"></ion-icon>
-                </button>
-                <button class="card-footer-actions-btn">
-                  <ion-icon name="add-circle-outline"></ion-icon>
-                </button>
-              </div>
-            </div>
-          </div>
+      <h3 class="h3 card-title">
+        Apartment Details
+      </h3>
+     
+      <div class="card-text">
+      <p><strong>Location:</strong> <%= apartment.location %></p>
+      <p><strong>Bedrooms:</strong> <%= apartment.bedrooms %></p>
+      <p><strong>Bathrooms:</strong> <%= apartment.bathrooms %></p>
+      <p><strong>Square Footage:</strong> <%= apartment.squareFootage %> sq ft</p>
+      <p><strong>Price:</strong> <%= apartment.currency %> <%= apartment.price.toLocaleString('en-US', { maximumFractionDigits: 2 }) %> <%= apartment.duration %></p>
+      <p><strong>Negotiation:</strong> <%= apartment.negotiation %></p>
+      <p><strong>Status:</strong> <%= apartment.status %></p>
+      <p><strong>Availability:</strong> <%= apartment.availabilty %></p>
+      </div>
+  
+    <ul class="card-list">
+      <!-- Placeholder for square footage -->
+      <li class="card-item">
+        <strong>Apartment ID (AID): AID<%= apartment.aid %></strong>
+        <a href="/application-form?aid=<%= apartment.aid %>&location=<%= apartment.location %>">
+          <span>Contact site: Administrator</span>
+          <span>Apply</span>
         </a>
       </li>
-    <% }); %>
-  </ul>
-</body>
-</html>
-
-<div class="search-container">
-  <form method="GET" action="/search">
-    <select name="location">
-      <option value="">Select location</option>
-      <% locations.forEach(loc => { %>
-        <option value="<%= loc %>"><%= loc %></option>
-      <% }); %>
-    </select>
-    <button type="submit">Search</button>
-  </form>
-  <form method="GET" action="/search">
-      <input type="text" name="location" placeholder="Enter location here">
-      <button type="submit">Search</button>
-    </form>
+    </ul>
+  
+    <div class="card-footer">
+      <!-- <div class="card-list"> -->
+      <div class="card-author">
+        <div>
+          <!-- Dynamic user fullname -->
+          <p class="author-name"> Created by:
+            <a href="#"><%= apartment.createdBy %></a>
+          </p>
+          <!-- Dynamic user bio -->
+          <p class="author-title">
+            Created At: <%= apartment.formattedCreatedAt %> (<%= apartment.daysAgo %> days ago)
+          </p>
+        </div>
+      </div>
+      <div class="card-footer-actions">
+        <!-- Action buttons (placeholders) -->
+        <button class="card-footer-actions-btn">
+          <ion-icon name="resize-outline"></ion-icon>
+        </button>
+        <button class="card-footer-actions-btn">
+          <ion-icon name="heart-outline"></ion-icon>
+        </button>
+        <button class="card-footer-actions-btn">
+          <ion-icon name="add-circle-outline"></ion-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+  
 </div>

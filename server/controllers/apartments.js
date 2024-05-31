@@ -955,3 +955,6 @@ export const searchApartmentAdmin = async (req, res) => {
     res.status(500).send("An error occurred while fetching apartments.");
   }
 };
+
+
+// detail

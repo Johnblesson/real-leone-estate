@@ -1,0 +1,173 @@
+<link rel="stylesheet" href="/css/style.css">
+
+<style>
+.property-list.has-scrollbar {
+  display: flex;
+  justify-content: center; /* Center the content horizontally */
+  align-items: center; /* Center the content vertically */
+  height: 100vh; /* Make the container full viewport height */
+}
+
+.property-item {
+  width: 100%; /* Take up full width */
+  max-width: 1200px; /* Limit the maximum width */
+  margin: auto; /* Center the item horizontally */
+}
+
+.property-card {
+  width: 100%; /* Take up full width */
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.top-right {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: hsl(9, 100%, 62%);
+  }
+
+  .top-left {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  .apartment-links-container {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #f5f5f5;
+  border-radius: 5px;
+  font-size: 12px;
+}
+
+.apartment-links-container p {
+  margin: 0;
+}
+
+.apartment-links-container a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.apartment-links-container a:hover {
+  text-decoration: underline;
+}
+
+
+/* Add any other styles as needed */
+</style>
+  
+<div class="property-list has-scrollbar">
+  <div class="property-item">
+      <div class="property-card">
+          <figure class="card-banner">
+              <% if (apartment.photoUrl) { %>
+                  <img src="<%= apartment.photoUrl %>" alt="Apartment Photo">
+              <% } else { %>
+                  <p>No photo available</p>
+              <% } %>
+              <!-- Dynamic badge indicating availability -->
+              <div class="card-badge top-right"><%= apartment.availabilty %></div>
+              <!-- Dynamic badge indicating status -->
+              <div class="card-badge green top-left"><%= apartment.status %></div>
+              <div class="banner-actions">
+                  <!-- Button with location information -->
+                  <button class="banner-actions-btn">
+                      <ion-icon name="location"></ion-icon>
+                      <address><%= apartment.location %></address>
+                  </button>
+                  <!-- Button with number of bedrooms -->
+                  <button class="banner-actions-btn">
+                      <ion-icon name="bed-outline"></ion-icon>
+                      <span><%= apartment.bedrooms %></span>
+                  </button>
+                  <!-- Button with number of bathrooms -->
+                  <button class="banner-actions-btn">
+                      <ion-icon name="man-outline"></ion-icon>
+                      <span><%= apartment.bathrooms %></span>
+                  </button>
+              </div>
+          </figure>
+          <div class="card-content">
+              <!-- Dynamic price -->
+              <div class="card-price">
+                  <strong><%= apartment.currency %> <%= apartment.price.toLocaleString('en-US', { maximumFractionDigits: 2 }) %></strong><%= apartment.duration %> <pre><%= apartment.negotiation %></pre>
+              </div> 
+              <!-- Dynamic title -->
+              <h3 class="h3 card-title">
+                  <%= apartment.title %>
+              </h3>
+              <!-- Dynamic description -->
+              <p class="card-text">
+                <strong>Description:</strong>
+                  <%= apartment.description %>
+              </p>
+
+              <h3 class="h3 card-title">
+                Apartment Details
+              </h3>
+             
+              <div class="card-text">
+              <p><strong>Location:</strong> <%= apartment.location %></p>
+              <p><strong>Bedrooms:</strong> <%= apartment.bedrooms %></p>
+              <p><strong>Bathrooms:</strong> <%= apartment.bathrooms %></p>
+              <p><strong>Square Footage:</strong> <%= apartment.squareFootage %> sq ft</p>
+              <p><strong>Price:</strong> <%= apartment.currency %> <%= apartment.price.toLocaleString('en-US', { maximumFractionDigits: 2 }) %> <%= apartment.duration %></p>
+              <p><strong>Negotiation:</strong> <%= apartment.negotiation %></p>
+              <p><strong>Status:</strong> <%= apartment.status %></p>
+              <p><strong>Availability:</strong> <%= apartment.availabilty %></p>
+              </div>
+
+              <ul class="card-list">
+                  <!-- Placeholder for square footage -->
+                  <li class="card-item">
+                      <strong>Apartment ID (AID): AID<%= apartment.aid %></strong>
+                      <a href="/application-form?aid=<%= apartment.aid %>&location=<%= apartment.location %>">
+                          <span>Contact site: Administrator</span>
+                          <span>Apply for Apartment</span>
+                      </a>
+                  </li>
+              </ul>
+          </div>
+
+          
+          <div class="apartment-links-container">
+            <p>Before you apply for this apartment, make sure you have read the following:</p>
+              <a href="/terms-and-conditions">Terms and Conditions</a>
+              <a href="/services-fee-agreement">Service Fee Agreement</a>
+              <a href="/privacy-policy">Privacy Policy</a>
+            
+          </div>
+          
+          
+          <div class="card-footer">
+              <div class="card-author">
+                  <div>
+                      <!-- Dynamic user fullname -->
+                      <p class="author-name"> Created by:
+                          <a href="#"><%= apartment.createdBy %></a> 
+                      </p>
+                      <!-- Dynamic user bio -->
+                      <p class="author-title">
+                          Created At: <%= apartment.formattedCreatedAt %> (<%= apartment.daysAgo %> days ago)
+                      </p>
+                  </div>
+              </div>
+              <div class="card-footer-actions">
+                  <!-- Action buttons (placeholders) -->
+                  <button class="card-footer-actions-btn">
+                      <ion-icon name="resize-outline"></ion-icon>
+                  </button>
+                  <button class="card-footer-actions-btn">
+                      <ion-icon name="heart-outline"></ion-icon>
+                  </button>
+                  <button class="card-footer-actions-btn">
+                      <ion-icon name="add-circle-outline"></ion-icon>
+                  </button>
+              </div>
+          </div> 
+      </div>
+  </div>
+</div>

@@ -67,6 +67,12 @@ app.use(passport.session());
 // Middleware to parse "_method" query parameter
 app.use(methodOverride('_method'));
 
+// // Error handling middleware
+// app.use((err, req, res, next) => {
+//   console.error(err.stack);
+//   res.status(500).send('Something went wrong!');
+// });
+
 // Use the viewRoutes
 app.use(viewRoutes);
 app.use(authRoutes);
