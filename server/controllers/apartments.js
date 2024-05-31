@@ -12,7 +12,7 @@ export const createApartment = async (req, res) => {
     }
 
     // Log req.file to ensure it contains the file information
-    console.log('Uploaded file:', req.file);
+    // console.log('Uploaded file:', req.file);
 
     // Check if req.file.location contains the S3 URL
     if (!req.file.location) {
@@ -20,7 +20,7 @@ export const createApartment = async (req, res) => {
     }
 
     // Log req.file.location to ensure it contains the S3 URL
-    console.log('File location:', req.file.location);
+    // console.log('File location:', req.file.location);
 
     const user = await User.find();
 
