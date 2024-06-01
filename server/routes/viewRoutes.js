@@ -52,13 +52,13 @@ router.get("/privacy-policy", cacheMiddleware, (req, res) => {
 })
 
 // Admin routes
-router.get("/admin-about", cacheMiddleware, ensureAuthenticated, adminAbout);
+router.get("/admin-about", cacheMiddleware, ensureAuthenticated, isAdmin, adminAbout);
 
-router.get("/admin-features", cacheMiddleware, ensureAuthenticated, adminFeatures);
+router.get("/admin-features", cacheMiddleware, ensureAuthenticated, isAdmin, adminFeatures);
 
-router.get("/admin-service", cacheMiddleware, ensureAuthenticated, adminService);
+router.get("/admin-service", cacheMiddleware, ensureAuthenticated,  isAdmin, adminService);
 
-router.get("/admin-blog", cacheMiddleware, ensureAuthenticated, adminBlog);
+router.get("/admin-blog", cacheMiddleware, ensureAuthenticated,  isAdmin, adminBlog);
 
 router.get("/terms-and-conditions", termsConditions)
 
@@ -68,7 +68,7 @@ router.get("/signup", cacheMiddleware, (req, res) => {
     res.render("signup")    
 });
 
-router.get("/user-apartment-success", cacheMiddleware, (req, res) => {
+router.get("/user-apartment-success", ensureAuthenticated, cacheMiddleware, (req, res) => {
     res.render("success/user-apartment")    
 });
 

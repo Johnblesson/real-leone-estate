@@ -81,12 +81,16 @@ export const adminHomeRoute = async (req, res) => {
     // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
     const sudo = user && user.sudo ? user.sudo : false;
 
+    // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+    const accountant = user && user.accountant ? user.accountant : false;
+
     res.render("index-admin", {
       apartments,
       greeting,
       user,
       apts,
       sudo,
+      accountant,
     });
   } catch (error) {
     console.error(error);

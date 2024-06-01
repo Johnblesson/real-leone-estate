@@ -79,9 +79,10 @@
   </header>
 
   <div class="formbold-main-wrapper">
+    
     <!-- Author: FormBold Team -->
     <!-- Learn More: https://formbold.com -->
-    <div class="formbold-form-wrapper">
+    <div class="formbold-form-wrapper"> <h3>UPDATE APPLICATION</h3>
       
   <form action="/update-admin-application/<%= apply._id %>?_method=PATCH" method="POST">
 
@@ -178,15 +179,28 @@
           </div>
 
           <div class="formbold-mb-3 formbold-input-wrapp">
-            <label for="assignedStaff" class="formbold-form-label"> Assigned Staff: </label>
+            <label for="assignedStaff" class="formbold-form-label">Assigned Staff:</label>
             <div>
               <input
                 type="text"
                 name="assignedStaff"
                 id="assignedStaff"
-                value="<%= apply.assignedStaff %>"
+                value="<%= apply.staffInCharge %>"
                 class="formbold-form-input"
+                readonly
               />
+            </div>
+          </div>
+
+          <div class="formbold-mb-3 formbold-input-wrapp">
+            <label for="staffInCharge" class="formbold-form-label"> Staff in Charge: </label>
+            <div>
+              <select name="staffInCharge" class="formbold-form-input" id="staffInCharge">
+                <% staffNames.forEach(staffName => { %>
+                  <option value="" disabled selected hidden>Select Staff</option>
+                  <option value="<%= staffName %>"><%= staffName %></option>
+                <% }); %>
+              </select>
             </div>
           </div>
           

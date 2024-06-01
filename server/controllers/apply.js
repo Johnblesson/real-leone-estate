@@ -1,5 +1,6 @@
 import Apartments from "../models/apartments.js";
 import Application from "../models/apply.js";
+import Staffs from "../models/staffs.js";
 
 // Controller function to create a new application
 export const createApplication = async (req, res) => {
@@ -18,6 +19,7 @@ export const createApplication = async (req, res) => {
       createdBy,
       comments,
       assignedStaff,
+      staffInCharge,
       createdAt: new Date(), // Assuming createdAt and updatedAt are Date objects
       updatedAt: new Date()
     });
@@ -98,11 +100,15 @@ export const editApplication = async (req, res) => {
 
     const user = req.isAuthenticated() ? req.user : null;
 
+    // Fetch all staffs name
+    const staffNames = await Staffs.distinct('staffName');
+
     res.render("edit-application", {
       locals,
       apply,
       greeting,
       user,
+      staffNames,
     });
   } catch (error) {
     // Handle errors gracefully

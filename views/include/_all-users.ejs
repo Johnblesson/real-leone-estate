@@ -95,6 +95,7 @@
                 <th>Email</th>
                 <th>Role</th>
                 <th>Sudo</th>
+                <th>Accountant</th>
                 <th>Status</th>
                 <th>Actions</th> <!-- New column for actions -->
             </tr>
@@ -108,6 +109,7 @@
                 <td class="hover"><%= user.email %></td>
                 <td class="hover <%= user.role === 'admin' ? 'role-pink-bg' : (user.role === 'user' ? 'role-green-bg' : '') %>"><%= user.role %></td>
                 <td class="hover"><%= user.sudo %></td>
+                <td class="hover"><%= user.accountant %></td>
                 <td class="hover <%= user.status === 'active' ? 'status-green-bg' : (user.status === 'inactive' ? 'status-red-bg' : '') %>"><%= user.status %></td>
                
                 <td class="hover px-6 py-4 whitespace-nowrap">

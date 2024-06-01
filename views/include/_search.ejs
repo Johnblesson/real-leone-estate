@@ -14,7 +14,7 @@
   <div class="search-container">
     <form method="GET" action="/search">
       <select name="location">
-        <option value="">Select location</option>
+        <option value="">Select all location</option>
         <% locations.forEach(loc => { %>
           <option value="<%= loc %>"><%= loc %></option>
         <% }); %>
