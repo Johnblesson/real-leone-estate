@@ -92,6 +92,95 @@
 // };
 
 
+
+// import express from 'express';
+// import mongoose from 'mongoose';
+// const app = express();
+// import User from '../models/auth.js';
+// import { body, validationResult } from 'express-validator';
+// import bcrypt from 'bcrypt';
+// import jwt from 'jsonwebtoken';
+// import passport from '../passport/passport-config.js';
+
+// // Sign Up Controller
+// export const signUp = async (req, res) => {
+//   // Validation checks
+//   const errors = validationResult(req);
+//   if (!errors.isEmpty()) {
+//       return res.status(400).render('signup', { error: errors.array().map(err => err.msg).join(', ') });
+//   }
+
+//   req.session = req.session || {};
+
+//   // Create a session
+//   req.session.user = {
+//       isSignUp: true,
+//       isLogin: true,
+//   };
+
+//   try {
+//       const { password } = req.body;
+//       if (!password) {
+//           return res.status(400).render('signup', { error: 'Password is required' });
+//       }
+
+//       const saltRounds = 10;
+//       const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+//       if (!req.file) {
+//           return res.status(400).render('signup', { error: 'No file uploaded' });
+//       }
+
+//       if (!req.file.location) {
+//           return res.status(400).render('signup', { error: 'File location not found' });
+//       }
+
+//       // Create a new User object with form data
+//       const userData = new User({
+//           fullname: req.body.fullname,
+//           username: req.body.username,
+//           email: req.body.email,
+//           phone: req.body.phone,
+//           bio: req.body.bio,
+//           password: hashedPassword,
+//           photo: req.file.location,
+//           role: req.body.role,
+//           status: req.body.status,
+//           sudo: req.body.sudo,
+//           accountant: req.body.accountant,
+//           createdAt: new Date(),
+//           updatedAt: new Date()
+//       });
+
+//       // Check for duplicate usernames
+//       const existingUser = await User.findOne({ username: userData.username });
+//       if (existingUser) {
+//           return res.status(400).render('signup', { error: 'Username is already taken' });
+//       }
+
+//       // Ensure the password contains at least one uppercase letter, one lowercase letter, and is at least 6 characters long
+//       if (!/^(?=.*[a-z])(?=.*[A-Z]).{6,}$/.test(password)) {
+//           return res.status(400).render('signup', {
+//               error: 'Password must be at least 6 characters long and contain both uppercase and lowercase letters.',
+//           });
+//       }
+
+//       // Save user data to the database
+//       const savedData = await userData.save();
+//       console.log(savedData);
+//       res.redirect('/login'); // Redirect to login page after successful signup
+//   } catch (error) {
+//       console.error(error);
+//       res.status(500).render('signup', { error: 'An error occurred while signing up.' });
+//   }
+// };
+
+
+// // Route to render the signup page
+// export const getSignUpPage = (req, res) => {
+//   res.render('signup', { error: null });
+// };
+
 import express from 'express';
 import mongoose from 'mongoose';
 const app = express();
@@ -134,6 +223,19 @@ export const signUp = async (req, res) => {
           return res.status(400).render('signup', { error: 'File location not found' });
       }
 
+      // Check for duplicate usernames
+      const existingUser = await User.findOne({ username: req.body.username });
+      if (existingUser) {
+          return res.status(400).render('signup', { error: 'Username is already taken' });
+      }
+
+      // Ensure the password contains at least one uppercase letter, one lowercase letter, and is at least 6 characters long
+      if (!/^(?=.*[a-z])(?=.*[A-Z]).{6,}$/.test(password)) {
+          return res.status(400).render('signup', {
+              error: 'Password must be at least 6 characters long and contain both uppercase and lowercase letters.',
+          });
+      }
+
       // Create a new User object with form data
       const userData = new User({
           fullname: req.body.fullname,
@@ -151,19 +253,6 @@ export const signUp = async (req, res) => {
           updatedAt: new Date()
       });
 
-      // Check for duplicate usernames
-      const existingUser = await User.findOne({ username: userData.username });
-      if (existingUser) {
-          return res.status(400).render('signup', { error: 'Username is already taken' });
-      }
-
-      // Ensure the password contains at least one uppercase letter, one lowercase letter, and is at least 6 characters long
-      if (!/^(?=.*[a-z])(?=.*[A-Z]).{6,}$/.test(password)) {
-          return res.status(400).render('signup', {
-              error: 'Password must be at least 6 characters long and contain both uppercase and lowercase letters.',
-          });
-      }
-
       // Save user data to the database
       const savedData = await userData.save();
       console.log(savedData);
@@ -178,8 +267,6 @@ export const signUp = async (req, res) => {
 export const getSignUpPage = (req, res) => {
   res.render('signup', { error: null });
 };
-
-
 
 
 // Google Oauth

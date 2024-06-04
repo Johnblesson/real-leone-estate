@@ -196,12 +196,16 @@ export const allAdminProperties = async (req, res) => {
       // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
       const sudo = user && user.sudo ? user.sudo : false;
 
+      // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+    const accountant = user && user.accountant ? user.accountant : false;
+
     res.render("all-admin-properties", {
       apartments,
       greeting,
       user,
       apts,
-      sudo
+      sudo,
+      accountant,
     });
   } catch (error) {
     console.error(error);
@@ -629,12 +633,16 @@ export const adminApartmentDetail = async (req, res) => {
     // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
     const sudo = user && user.sudo ? user.sudo : false;
 
+      // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+      const accountant = user && user.accountant ? user.accountant : false;
+
     res.render("apartment-detail-admin", {
       apartment: updatedApartment,
       apartments,
       user,
       greeting,
-      sudo
+      sudo,
+      accountant,
     });
   } catch (error) {
     console.error(error);
