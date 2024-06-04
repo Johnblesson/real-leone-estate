@@ -64,9 +64,6 @@ router.get("/terms-and-conditions", termsConditions)
 
 router.get("/registration-process-statement", registrationProcessStatement)
 
-router.get("/signup", cacheMiddleware, (req, res) => {
-    res.render("signup")    
-});
 
 router.get("/user-apartment-success", ensureAuthenticated, cacheMiddleware, (req, res) => {
     res.render("success/user-apartment")    

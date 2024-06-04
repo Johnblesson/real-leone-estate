@@ -15,18 +15,25 @@
         a:hover {
             color: #000;
             text-decoration: none;
-        }	
+        }
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-bottom: 1em;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="form-container sign-up">
-            <!-- <a href="/home" class="logo">
-                <img src="./images/hub.png" alt="Homehub logo">
-            </a> -->
             <form action="/signup" method="post" enctype="multipart/form-data">
                 <h1>Create Account</h1>
                 <pre style="text-align: center; font: 0.6em sans-serif;">Check out the<a href="/registration-process-statement"> Registration Statement Process</a></pre>
+
+                <% if (error) { %>
+                    <div class="error-message"><%= error %></div>
+                <% } %>
+
                 <input type="text" name="fullname" placeholder="Full Name" required>
                 <input type="text" name="username" placeholder="Username" required>
                 <input type="email" name="email" placeholder="Email" required>
@@ -78,3 +85,4 @@
     </script>
 </body>
 </html>
+

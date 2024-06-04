@@ -1,85 +1,83 @@
-<div class="detail-page">
-  <div class="property-card">
-    <figure class="card-banner">
-      <% if (apartment.photoUrl) { %>
-        <img src="<%= apartment.photoUrl %>" alt="Apartment Photo">
-      <% } else { %>
-        <p>No photo available</p>
-      <% } %>
-      <!-- Dynamic badge indicating availability -->
-      <div class="card-badge top-right"><%= apartment.availabilty %></div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="./css/signup.css">
+    <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+    <title>Sign Up</title>
+    <style>
+        a {
+            text-decoration: none;
+            color: #151cea;
+        }
+        a:hover {
+            color: #000;
+            text-decoration: none;
+        }	
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container sign-up">
+            <!-- <a href="/home" class="logo">
+                <img src="./images/hub.png" alt="Homehub logo">
+            </a> -->
+            <form action="/signup" method="post" enctype="multipart/form-data">
+                <h1>Create Account</h1>
+                <pre style="text-align: center; font: 0.6em sans-serif;">Check out the<a href="/registration-process-statement"> Registration Statement Process</a></pre>
+                <input type="text" name="fullname" placeholder="Full Name" required>
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="text" name="phone" placeholder="Phone Number" required>
+                <div class="password-wrapper">
+                    <input type="password" name="password" id="password" placeholder="Password" required>
+                    <i class="toggle-password fas fa-eye-slash"></i>
+                </div>
+                <input type="file" name="photo" accept="image/*">
 
-      <!-- Dynamic badge indicating status -->
-      <div class="card-badge top-left"><%= apartment.status %></div>
-    </figure>
+                <div>
+                    <input type="checkbox" id="terms" name="termsConditions" required>
+                    <label for="terms">I agree to the <a href="/terms-and-conditions">Terms and Conditions</a></label>
+                </div>
+        
+                <div>
+                    <input type="checkbox" id="service_fee" name="service_fee" required>
+                    <label for="service_fee">I agree to the <a href="/services-fee-agreement">Service Fee Agreement</a></label>
+                </div>
+        
+                <div>
+                    <input type="checkbox" id="privacy_policy" name="privacy_policy" required>
+                    <label for="privacy_policy">I agree to the <a href="#">Privacy Policy</a></label>
+                </div>
 
-    <div class="card-content">
-      <!-- Dynamic price -->
-      <div class="card-price">
-        <strong><%= apartment.currency %> <%= apartment.price.toLocaleString('en-US', { maximumFractionDigits: 2 }) %></strong> <%= apartment.duration %> <pre><%= apartment.negotiation %></pre>
-      </div>
-      <!-- Dynamic title -->
-      <h3 class="h3 card-title">
-        <%= apartment.title %>
-      </h3>
-      <!-- Dynamic description -->
-      <p class="card-text">
-        <%= apartment.description %>
-      </p>
-
-      <h3 class="h3 card-title">
-        Apartment Details
-      </h3>
-     
-      <div class="card-text">
-      <p><strong>Location:</strong> <%= apartment.location %></p>
-      <p><strong>Bedrooms:</strong> <%= apartment.bedrooms %></p>
-      <p><strong>Bathrooms:</strong> <%= apartment.bathrooms %></p>
-      <p><strong>Square Footage:</strong> <%= apartment.squareFootage %> sq ft</p>
-      <p><strong>Price:</strong> <%= apartment.currency %> <%= apartment.price.toLocaleString('en-US', { maximumFractionDigits: 2 }) %> <%= apartment.duration %></p>
-      <p><strong>Negotiation:</strong> <%= apartment.negotiation %></p>
-      <p><strong>Status:</strong> <%= apartment.status %></p>
-      <p><strong>Availability:</strong> <%= apartment.availabilty %></p>
-      </div>
-  
-    <ul class="card-list">
-      <!-- Placeholder for square footage -->
-      <li class="card-item">
-        <strong>Apartment ID (AID): AID<%= apartment.aid %></strong>
-        <a href="/application-form?aid=<%= apartment.aid %>&location=<%= apartment.location %>">
-          <span>Contact site: Administrator</span>
-          <span>Apply</span>
-        </a>
-      </li>
-    </ul>
-  
-    <div class="card-footer">
-      <!-- <div class="card-list"> -->
-      <div class="card-author">
-        <div>
-          <!-- Dynamic user fullname -->
-          <p class="author-name"> Created by:
-            <a href="#"><%= apartment.createdBy %></a>
-          </p>
-          <!-- Dynamic user bio -->
-          <p class="author-title">
-            Created At: <%= apartment.formattedCreatedAt %> (<%= apartment.daysAgo %> days ago)
-          </p>
+                <button type="submit">Sign Up</button>
+                <p>Already have an account? <a href="/login">Login</a></p>
+            </form>
         </div>
-      </div>
-      <div class="card-footer-actions">
-        <!-- Action buttons (placeholders) -->
-        <button class="card-footer-actions-btn">
-          <ion-icon name="resize-outline"></ion-icon>
-        </button>
-        <button class="card-footer-actions-btn">
-          <ion-icon name="heart-outline"></ion-icon>
-        </button>
-        <button class="card-footer-actions-btn">
-          <ion-icon name="add-circle-outline"></ion-icon>
-        </button>
-      </div>
     </div>
-  </div>
-  
-</div>
+
+    <script>
+        const togglePassword = document.querySelector('.toggle-password');
+        const password = document.querySelector('#password');
+
+        togglePassword.addEventListener('click', function (e) {
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+
+            // Adjust input width when password is hidden
+            if (type === 'password') {
+                password.style.width = 'calc(100% - 40px)';
+            } else {
+                password.style.width = '100%';
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+
