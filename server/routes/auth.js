@@ -23,9 +23,6 @@ router.get("/update-password/:id", ensureAuthenticated, viewChangePwdPage)
 // router.get("/update-password-user/:id", ensureAuthenticated, viewChangePwdPageUser)
 router.patch("/update-password/:id", ensureAuthenticated, changePassword)
 
-
-router.get("/signup", cacheMiddleware, signUp);
-
 // google oauth
 // router.get('/auth/google', googleAuth);
 // router.get('/auth/google/callback', googleAuthCallback);

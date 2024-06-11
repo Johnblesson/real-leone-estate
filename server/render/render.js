@@ -151,11 +151,14 @@ const getTimeOfDay = () => {
      // Determine the time of the day
     const greeting = getTimeOfDay();
 
-      // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
-      const sudo = user && user.sudo ? user.sudo : false;
+    // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+    const sudo = user && user.sudo ? user.sudo : false;
+
+    // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+    const accountant = user && user.accountant ? user.accountant : false;
 
     // Render the index page with the receptions and latestStorage data
-    res.render('post-apartment-admin', { user, greeting, sudo });
+    res.render('post-apartment-admin', { user, greeting, sudo, accountant });
   } catch (error) {
     console.error('Error rendering the page:', error);
     res.status(500).send('Internal Server Error');
@@ -185,18 +188,18 @@ export const allAdminProperties = async (req, res) => {
 
     // Process each apartment to set photoUrl, formattedCreatedAt, and daysAgo
     apartments.forEach(apartment => {
-      // Ensure photoUrl is set properly
+    // Ensure photoUrl is set properly
       apartment.photoUrl = apartment.photo || ''; // Use empty string if no photo is available
 
-      // Format the createdAt date and calculate days ago
+    // Format the createdAt date and calculate days ago
       apartment.formattedCreatedAt = moment(apartment.createdAt).format('DD-MM-YYYY HH:mm');
       apartment.daysAgo = moment().diff(moment(apartment.createdAt), 'days');
     });
 
-      // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+    // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
       const sudo = user && user.sudo ? user.sudo : false;
 
-      // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+    // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
     const accountant = user && user.accountant ? user.accountant : false;
 
     res.render("all-admin-properties", {
@@ -264,8 +267,8 @@ export const allProperties = async (req, res) => {
     // About Page
 export const about = async (req, res) => {
     const locals = {
-      title: "Home Page",
-      description: "This is the home page of the System.",
+      title: "About Page",
+      description: "This is the about page of the System.",
     };
   
     // Function to determine the time of the day
@@ -281,20 +284,33 @@ export const about = async (req, res) => {
     }
   };
     try {
+    // Find all verified apartments and sort them by sponsored status and createdAt timestamp in descending order
+    const apartments = await Apartments.find({ verification: 'verified' }).sort({ sponsored: -1, createdAt: -1 });
+
+    // Process each apartment to set photoUrl, formattedCreatedAt, and daysAgo
+    apartments.forEach(apartment => {
+      // Ensure photoUrl is set properly to the first photo if it's an array
+      if (Array.isArray(apartment.photo) && apartment.photo.length > 0) {
+        apartment.photoUrl = apartment.photo[0];
+      } else {
+        apartment.photoUrl = apartment.photo || ''; // Use empty string if no photo is available
+      }
+    });
       const user = req.isAuthenticated() ? req.user : null;
   
        // Determine the time of the day
       const greeting = getTimeOfDay();
   
       // Render the index page with the receptions and latestStorage data
-      res.render('about', { locals, user, greeting});
+      res.render('about', { locals, user, greeting, apartments });
     } catch (error) {
       console.error('Error rendering the page:', error);
       res.status(500).send('Internal Server Error');
     }
   };
 
-    // Features Page
+
+// Features Page
 export const features = async (req, res) => {
     const locals = {
       title: "Home Page",
@@ -351,10 +367,6 @@ export const blog = async (req, res) => {
     apartments.forEach(apartment => {
       // Ensure photoUrl is set properly
       apartment.photoUrl = apartment.photo || ''; // Use empty string if no photo is available
-
-      // Format the createdAt date and calculate days ago
-      apartment.formattedCreatedAt = moment(apartment.createdAt).format('DD-MM-YYYY HH:mm');
-      apartment.daysAgo = moment().diff(moment(apartment.createdAt), 'days');
     });
 
     const greeting = getTimeOfDay();
@@ -633,8 +645,8 @@ export const adminApartmentDetail = async (req, res) => {
     // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
     const sudo = user && user.sudo ? user.sudo : false;
 
-      // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
-      const accountant = user && user.accountant ? user.accountant : false;
+     // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+     const accountant = user && user.accountant ? user.accountant : false;
 
     res.render("apartment-detail-admin", {
       apartment: updatedApartment,

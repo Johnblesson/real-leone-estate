@@ -9,6 +9,11 @@
 <body>
 <div class="formbold-main-wrapper">
   <div class="formbold-form-wrapper">
+    <pre style="text-align: center; font: 0.6em sans-serif;">
+      Enter the complete details of your property. 
+      Make sure you input your correct informations, 
+      we will get back to you as soon as possible.
+    </pre>
     <form action="/create-apartment" method="POST" enctype="multipart/form-data">
       <input type="hidden" name="aid" id="aid" class="formbold-form-input" />
 
@@ -120,9 +125,14 @@
       </div>
 
       <div class="formbold-form-file-flex">
-        <label for="photo" class="formbold-form-label"> Upload Property Image </label>
+        <label for="photo" class="formbold-form-label"> Upload Image </label>
         <input type="file" name="photo" id="photo" class="formbold-form-file" multiple />
       </div>
+<!-- 
+      <div class="formbold-form-file-flex">
+        <label for="video" class="formbold-form-label"> Upload Video (Optional) </label>
+        <input type="file" name="video" id="video" class="formbold-form-file" multiple />
+      </div> -->
 
       <button type="submit" class="formbold-btn">Create Post</button>
     </form>

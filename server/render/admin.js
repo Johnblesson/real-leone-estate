@@ -32,7 +32,7 @@ export const adminAbout = async (req, res) => {
         // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
      const sudo = user && user.sudo ? user.sudo : false;
 
-       // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+     // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
     const accountant = user && user.accountant ? user.accountant : false;
   
       // Render the index page with the receptions and latestStorage data
@@ -71,7 +71,7 @@ export const adminFeatures = async (req, res) => {
       // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
      const sudo = user && user.sudo ? user.sudo : false;
 
-       // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+     // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
     const accountant = user && user.accountant ? user.accountant : false;
   
       // Render the index page with the receptions and latestStorage data
@@ -114,8 +114,8 @@ export const adminBlog = async (req, res) => {
     // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
     const sudo = user && user.sudo ? user.sudo : false;
 
-      // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
-      const accountant = user && user.accountant ? user.accountant : false;
+    // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+    const accountant = user && user.accountant ? user.accountant : false;
 
     const greeting = getTimeOfDay();
     res.render('admin-blog', { greeting, apts, user, apartments, sudo, accountant });
@@ -147,16 +147,16 @@ export const adminService = async (req, res) => {
     try {
       const user = req.isAuthenticated() ? req.user : null;
 
-      // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+    // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
       const sudo = user && user.sudo ? user.sudo : false;
 
-        // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+    // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
     const accountant = user && user.accountant ? user.accountant : false;
   
-       // Determine the time of the day
-      const greeting = getTimeOfDay();
+    // Determine the time of the day
+    const greeting = getTimeOfDay();
   
-      // Render the index page with the receptions and latestStorage data
+    // Render the index page with the receptions and latestStorage data
       res.render('admin-service', { locals, user, greeting, sudo, accountant });
     } catch (error) {
       console.error('Error rendering the page:', error);

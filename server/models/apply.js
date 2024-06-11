@@ -10,7 +10,6 @@ const applySchema = new mongoose.Schema({
     createdBy : String,
     comments : String,
     assignedStaff: String,
-    staffInCharge: String,
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
 }, {

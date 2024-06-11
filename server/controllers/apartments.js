@@ -12,7 +12,7 @@ export const createApartment = async (req, res) => {
     }
 
     // Log req.file to ensure it contains the file information
-    // console.log('Uploaded file:', req.file);
+    console.log('Uploaded file:', req.file);
 
     // Check if req.file.location contains the S3 URL
     if (!req.file.location) {
@@ -20,7 +20,7 @@ export const createApartment = async (req, res) => {
     }
 
     // Log req.file.location to ensure it contains the S3 URL
-    // console.log('File location:', req.file.location);
+    console.log('File location:', req.file.location);
 
     const user = await User.find();
 
@@ -942,13 +942,17 @@ export const searchApartmentAdmin = async (req, res) => {
      // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
      const sudo = user && user.sudo ? user.sudo : false;
 
+      // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+    const accountant = user && user.accountant ? user.accountant : false;
+
     // Render the search view template with the apartments and locations data
     res.render("search-admin", {
       apartments,
       locations,
       greeting,
       user,
-      sudo
+      sudo,
+      accountant,
     });
   } catch (error) {
     console.error(error);

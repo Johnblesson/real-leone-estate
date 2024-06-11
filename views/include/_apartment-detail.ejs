@@ -92,6 +92,7 @@
           </figure>
           <div class="card-content">
               <!-- Dynamic price -->
+               <a href="/application-form?aid=<%= apartment.aid %>&location=<%= apartment.location %>">
               <div class="card-price">
                   <strong><%= apartment.currency %> <%= apartment.price.toLocaleString('en-US', { maximumFractionDigits: 2 }) %></strong><%= apartment.duration %> <pre><%= apartment.negotiation %></pre>
               </div> 
@@ -104,6 +105,7 @@
                 <strong>Description:</strong>
                   <%= apartment.description %>
               </p>
+              </a>
 
               <h3 class="h3 card-title">
                 Apartment Details
