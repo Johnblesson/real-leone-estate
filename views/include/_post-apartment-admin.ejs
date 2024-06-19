@@ -6,6 +6,22 @@
   <title>Apartment Form</title>
   <link rel="stylesheet" href="./css/form.css">
 </head>
+<style>
+  .file-input-container {
+    display: grid;
+    grid-template-columns: 1fr; /* One column for vertical alignment */
+    gap: 10px; /* Adjust the gap between input elements */
+  }
+
+  .formbold-form-file {
+    /* Add your styling for file inputs here */
+    /* Example styles */
+    border: 1px solid #ccc;
+    padding: 8px;
+    width: 100%; /* Make inputs full width */
+    box-sizing: border-box; /* Ensure padding and border are included in width */
+  }
+</style>
 <body>
 <div class="formbold-main-wrapper">
   <div class="formbold-form-wrapper">
@@ -125,8 +141,11 @@
       </div>
 
       <div class="formbold-form-file-flex">
-        <label for="photo" class="formbold-form-label"> Upload Property Image </label>
-        <input type="file" name="photo" id="photo" class="formbold-form-file" multiple />
+        <!-- <label for="photo" class="formbold-form-label"> Upload Property Image </label> -->
+        <!-- <input type="file" name="photo" id="photo" class="formbold-form-file" multiple /> -->
+        <input type="file" name="photo" class="formbold-form-file" required>
+        <input type="file" name="photo1" class="formbold-form-file" required>
+        <input type="file" name="photo2" class="formbold-form-file" required>
       </div>
 
       <button type="submit" class="formbold-btn">Create Post</button>

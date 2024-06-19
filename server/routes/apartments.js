@@ -31,10 +31,10 @@ import { allAdminProperties, apartmentDetail, adminApartmentDetail } from '../re
 import ensureAuthenticated from '../middlewares/auth.js';
 import { isAdmin } from '../middlewares/isAdmin.js';
 import { checkSudoMiddleware } from '../middlewares/sudo.js'
-import upload from '../upload/upload.js';
+import { uploadPhotos } from '../upload/upload.js';
 
 // router.post('/create-apartment', upload.single('photo'), createApartment);
-router.post('/create-apartment', upload.single('photo'), createApartment);
+router.post('/create-apartment', uploadPhotos, createApartment);
 router.get('/apartments', ensureAuthenticated, getAllApartments);
 router.get('/edit-apartment', ensureAuthenticated, editapartment);
 router.get('/admin-edit-apartment', ensureAuthenticated, isAdmin, admineditapartment);

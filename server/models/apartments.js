@@ -37,6 +37,12 @@ const apartmentSchema = new mongoose.Schema({
     photo: {
         type: String,
     },
+    photo1: {
+        type: String,
+    },
+    photo2: {
+        type: String,
+    },
     bedrooms: {
         type: Number,
         required: true,
@@ -79,6 +85,9 @@ const apartmentSchema = new mongoose.Schema({
     createdBy: {
         type: String,
         required: true,
+        // type: mongoose.Schema.Types.ObjectId,
+        // ref: 'User',
+        // required: true,
     },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }

@@ -546,10 +546,9 @@ export const guestPage = async (req, res) => {
   }
 };
 
-
 // Controller to display a single apartment's details
 export const apartmentDetail = async (req, res) => {
-  const getTimeOfDay = () => {
+    const getTimeOfDay = () => {
     const currentHour = new Date().getHours();
     if (currentHour >= 5 && currentHour < 12) {
       return 'Good Morning';
@@ -559,7 +558,6 @@ export const apartmentDetail = async (req, res) => {
       return 'Good Evening';
     }
   };
-
   try {
     const { id } = req.params;
 
@@ -568,18 +566,20 @@ export const apartmentDetail = async (req, res) => {
       return res.status(400).send("Invalid apartment ID");
     }
 
-    const apartments = await Apartments.find({ verification: 'verified' }).sort({ sponsored: -1, createdAt: -1 });
     const apartment = await Apartments.findById(id);
 
     if (!apartment) {
       return res.status(404).send("Apartment not found");
     }
 
-    // Ensure photoUrl is set properly for the current apartment
+    // Ensure photoUrls is set properly for the current apartment
     const updatedApartment = {
       ...apartment._doc,
-      photoUrl: apartment.photo || '' // Set photoUrl to the value of photo or an empty string
+      photoUrls: [apartment.photo, apartment.photo1, apartment.photo2].filter(Boolean) // Filter out undefined or empty strings
     };
+
+    // Fetch all apartments for other sections or navigation
+    const apartments = await Apartments.find({ verification: 'verified' }).sort({ sponsored: -1, createdAt: -1 });
 
     const user = req.isAuthenticated() ? req.user : null;
     const greeting = getTimeOfDay();
@@ -590,7 +590,7 @@ export const apartmentDetail = async (req, res) => {
 
     res.render("apartment-detail", {
       apartment: updatedApartment,
-      apartments,
+      apartments, // Ensure apartments are passed to the template
       user,
       greeting,
     });
@@ -600,64 +600,65 @@ export const apartmentDetail = async (req, res) => {
   }
 };
 
-
 // Controller to display a single apartment's details
 export const adminApartmentDetail = async (req, res) => {
   const getTimeOfDay = () => {
-    const currentHour = new Date().getHours();
-    if (currentHour >= 5 && currentHour < 12) {
-      return 'Good Morning';
-    } else if (currentHour >= 12 && currentHour < 18) {
-      return 'Good Afternoon';
-    } else {
-      return 'Good Evening';
-    }
+  const currentHour = new Date().getHours();
+  if (currentHour >= 5 && currentHour < 12) {
+    return 'Good Morning';
+  } else if (currentHour >= 12 && currentHour < 18) {
+    return 'Good Afternoon';
+  } else {
+    return 'Good Evening';
+  }
+};
+try {
+  const { id } = req.params;
+
+  // Validate ObjectId
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).send("Invalid apartment ID");
+  }
+
+  const apartment = await Apartments.findById(id);
+
+  if (!apartment) {
+    return res.status(404).send("Apartment not found");
+  }
+
+  // Ensure photoUrls is set properly for the current apartment
+  const updatedApartment = {
+    ...apartment._doc,
+    photoUrls: [apartment.photo, apartment.photo1, apartment.photo2].filter(Boolean) // Filter out undefined or empty strings
   };
 
-  try {
-    const { id } = req.params;
+  // Fetch all apartments for other sections or navigation
+  const apartments = await Apartments.find({ verification: 'verified' }).sort({ sponsored: -1, createdAt: -1 });
 
-    // Validate ObjectId
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(400).send("Invalid apartment ID");
-    }
+  const user = req.isAuthenticated() ? req.user : null;
+  const greeting = getTimeOfDay();
 
-    const apartments = await Apartments.find({ verification: 'verified' }).sort({ sponsored: -1, createdAt: -1 });
-    const apartment = await Apartments.findById(id);
+  // Format the createdAt date and calculate days ago
+  updatedApartment.formattedCreatedAt = moment(updatedApartment.createdAt).format('DD-MM-YYYY HH:mm');
+  updatedApartment.daysAgo = moment().diff(moment(updatedApartment.createdAt), 'days');
 
-    if (!apartment) {
-      return res.status(404).send("Apartment not found");
-    }
 
-    // Ensure photoUrl is set properly for the current apartment
-    const updatedApartment = {
-      ...apartment._doc,
-      photoUrl: apartment.photo || '' // Set photoUrl to the value of photo or an empty string
-    };
+  // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+  const sudo = user && user.sudo ? user.sudo : false;
 
-    const user = req.isAuthenticated() ? req.user : null;
-    const greeting = getTimeOfDay();
+  // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+  const accountant = user && user.accountant ? user.accountant : false;
 
-    // Format the createdAt date and calculate days ago
-    updatedApartment.formattedCreatedAt = moment(updatedApartment.createdAt).format('DD-MM-YYYY HH:mm');
-    updatedApartment.daysAgo = moment().diff(moment(updatedApartment.createdAt), 'days');
-
-    // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
-    const sudo = user && user.sudo ? user.sudo : false;
-
-     // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
-     const accountant = user && user.accountant ? user.accountant : false;
-
-    res.render("apartment-detail-admin", {
-      apartment: updatedApartment,
-      apartments,
-      user,
-      greeting,
-      sudo,
-      accountant,
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("An error occurred while fetching the apartment details.");
-  }
+  res.render("apartment-detail-admin", {
+    apartment: updatedApartment,
+    apartments, // Ensure apartments are passed to the template
+    user,
+    greeting,
+    sudo,
+    accountant,
+  });
+} catch (error) {
+  console.error(error);
+  res.status(500).send("An error occurred while fetching the apartment details.");
+}
 };

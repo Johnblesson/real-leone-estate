@@ -1,26 +1,35 @@
 import Apartments from '../models/apartments.js';
-import Application from '../models/apply.js';
 import User from '../models/auth.js';
 import moment from 'moment';
 
 // Controller function to create a new apartment
 export const createApartment = async (req, res) => {
   try {
-    // Check if req.file exists and has a value
-    if (!req.file) {
-      return res.status(400).json({ error: 'No file uploaded' });
+    // Check if all three required files are uploaded
+    if (!req.files || !req.files.photo || !req.files.photo[0] || !req.files.photo1 || !req.files.photo1[0] || !req.files.photo2 || !req.files.photo2[0]) {
+      return res.status(400).json({ error: 'All three photos are required' });
     }
 
-    // Log req.file to ensure it contains the file information
-    console.log('Uploaded file:', req.file);
+    // Log req.files to ensure it contains the file information
+    console.log('Uploaded files:', req.files);
 
-    // Check if req.file.location contains the S3 URL
-    if (!req.file.location) {
-      return res.status(400).json({ error: 'File location not found' });
+    const photo = req.files.photo[0];
+    const photo1 = req.files.photo1[0];
+    const photo2 = req.files.photo2[0];
+
+    // Check if files contain the location
+    if (!photo.location || !photo1.location || !photo2.location) {
+      return res.status(400).json({ error: 'File locations not found' });
     }
 
-    // Log req.file.location to ensure it contains the S3 URL
-    console.log('File location:', req.file.location);
+    // Log file locations to ensure they contain the S3 URLs
+    console.log('File locations:', photo.location, photo1.location, photo2.location);
+
+    // Find the user by username or email (assuming req.body.createdBy is the username or email)
+    // const user = await User.findOne({ username: req.body.createdBy });
+    // if (!user) {
+    //   return res.status(404).json({ error: 'User not found' });
+    // }
 
     const user = await User.find();
 
@@ -39,7 +48,9 @@ export const createApartment = async (req, res) => {
       bedrooms: req.body.bedrooms,
       bathrooms: req.body.bathrooms,
       description: req.body.description,
-      photo: req.file.location, // Use S3 URL
+      photo: photo.location, // Use S3 URL
+      photo1: photo1.location, // Use S3 URL
+      photo2: photo2.location, // Use S3 URL
       phone: req.body.phone,
       area: req.body.area,
       address: req.body.address,
@@ -56,13 +67,12 @@ export const createApartment = async (req, res) => {
     const savedApartment = await apartmentData.save();
 
     if (user.role === 'admin') {
-      res.redirect('/admin-apartment-success')
+      res.redirect('/admin-apartment-success');
     } else if (user.role === 'user') {
-      res.redirect('/apartment-success')
+      res.redirect('/apartment-success');
     } else {
-      res.redirect('/apartment-success')
+      res.redirect('/apartment-success');
     }
-    // res.status(201).render('success/apartment');
     console.log(savedApartment);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -128,61 +138,6 @@ export const deleteApartmentById = async (req, res) => {
 };
 
 
-// // Controller to display all properties for users
-// export const apartmentDisplay = async (req, res) => {
-//   const getTimeOfDay = () => {
-//     const currentHour = new Date().getHours();
-//     if (currentHour >= 5 && currentHour < 12) {
-//       return 'Good Morning';
-//     } else if (currentHour >= 12 && currentHour < 18) {
-//       return 'Good Afternoon';
-//     } else {
-//       return 'Good Evening';
-//     }
-//   };
-
-//   try {
-//     // Find all verified apartments and sort them by sponsored status and createdAt timestamp in descending order
-//     const apartments = await Apartments.find({ verification: 'verified' }).sort({ sponsored: -1, createdAt: -1 });
-
-//     const greeting = getTimeOfDay();
-//     const user = req.isAuthenticated() ? req.user : null;
-
-//     // Ensure photoUrl is set properly for each apartment
-//     apartments.forEach(apartment => {
-//       if (!apartment.photo) {
-//         apartment.photoUrl = ''; // Initialize an empty string if no photo is available
-//       } else {
-//         apartment.photoUrl = apartment.photo; // Set photoUrl to the value of photo
-//       }
-//     });
-
-//     const apartmenT = await Apartments.find();
-
-//     // Format the createdAt date and calculate days ago for each apartment
-//     apartmenT.forEach(apt => {
-//       apt.formattedCreatedAt = moment(apt.createdAt).format('DD-MM-YYYY HH:mm');
-//       apt.daysAgo = moment().diff(moment(apt.createdAt), 'days');
-//     });
-
-//     // Render the all-properties view template with the apartments data
-//     res.render("all-properties", {
-//       apartments,
-//       greeting,
-//       user,
-//       apartmenT,
-//       formattedCreatedAt,
-//       daysAgo
-//     });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).send("An error occurred while fetching apartments.");
-//   }
-// };
-
-// import moment from 'moment';
-// import Apartments from './models/Apartments'; // Adjust the path as necessary
-
 // Controller to display all properties for users
 export const apartmentDisplay = async (req, res) => {
   const getTimeOfDay = () => {
@@ -224,7 +179,6 @@ export const apartmentDisplay = async (req, res) => {
     res.status(500).send("An error occurred while fetching apartments.");
   }
 };
-
 
 
 // Controller function to get all apartments
