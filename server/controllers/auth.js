@@ -150,58 +150,58 @@ export const logIn = (req, res, next) => {
 
 
 // Get Login Page Controller
-// export const getLoginPage = (req, res) => {
-//   const ip =
-//     req.headers['cf-conneting-ip'] ||
-//     req.headers['x-real-ip'] ||
-//     req.headers['x-forwarded-for'] ||
-//     req.socket.remoteAddress || '';
-
-//   const timestamp = new Date().toISOString();
-//   console.log('ip address:', ip, '/', timestamp);
-//   // res.render('login');
-//   res.render('login', {
-//   });
-// 
-
-// Get Login Page Controller
-const GEOLOCATION_API_URL = process.env.GEOLOCATION_API_URL;
-const API_KEY = process.env.API_KEY;
-
-// Function to check if the IP address is private
-const isPrivateIP = (ip) => {
-  const privateRanges = [
-    /^10\./,
-    /^172\.(1[6-9]|2[0-9]|3[0-1])\./,
-    /^192\.168\./
-  ];
-  return privateRanges.some((range) => range.test(ip));
-};
-
-export const getLoginPage = async (req, res) => {
+export const getLoginPage = (req, res) => {
   const ip =
-    req.headers['cf-connecting-ip'] ||
+    req.headers['cf-conneting-ip'] ||
     req.headers['x-real-ip'] ||
     req.headers['x-forwarded-for'] ||
     req.socket.remoteAddress || '';
 
   const timestamp = new Date().toISOString();
-  console.log('IP address:', ip, '/', timestamp);
+  console.log('ip address:', ip, '/', timestamp);
+  // res.render('login');
+  res.render('login', {
+  });
+}
 
-  try {
-    if (ip && !isPrivateIP(ip)) {
-      const response = await axios.get(`${GEOLOCATION_API_URL}/${ip}?access_key=${API_KEY}`);
-      const locationData = response.data;
-      console.log('Location Data:', locationData);
-    } else {
-      console.log('Skipping geolocation for private IP address:', ip);
-    }
-  } catch (error) {
-    console.error('Error fetching location data:', error);
-  }
+// Get Login Page Controller
+// const GEOLOCATION_API_URL = process.env.GEOLOCATION_API_URL;
+// const API_KEY = process.env.API_KEY;
 
-  res.render('login', {});
-};
+// // Function to check if the IP address is private
+// const isPrivateIP = (ip) => {
+//   const privateRanges = [
+//     /^10\./,
+//     /^172\.(1[6-9]|2[0-9]|3[0-1])\./,
+//     /^192\.168\./
+//   ];
+//   return privateRanges.some((range) => range.test(ip));
+// };
+
+// export const getLoginPage = async (req, res) => {
+//   const ip =
+//     req.headers['cf-connecting-ip'] ||
+//     req.headers['x-real-ip'] ||
+//     req.headers['x-forwarded-for'] ||
+//     req.socket.remoteAddress || '';
+
+//   const timestamp = new Date().toISOString();
+//   console.log('IP address:', ip, '/', timestamp);
+
+//   try {
+//     if (ip && !isPrivateIP(ip)) {
+//       const response = await axios.get(`${GEOLOCATION_API_URL}/${ip}?access_key=${API_KEY}`);
+//       const locationData = response.data;
+//       console.log('Location Data:', locationData);
+//     } else {
+//       console.log('Skipping geolocation for private IP address:', ip);
+//     }
+//   } catch (error) {
+//     console.error('Error fetching location data:', error);
+//   }
+
+//   res.render('login', {});
+// };
 
 
 
