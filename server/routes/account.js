@@ -17,7 +17,21 @@ import {
     updateTransactions,
     getUpdateTransactions
 } from "../controllers/account.js";
-import { createNewStaffs, createNewSalaries, addStaffsForm, addSalariesForm, getAllStaffs, getAllSalaries, deleteStaffs, deleteSalaries } from "../controllers/staffs.js";
+
+import { 
+    createNewStaffs, 
+    createNewSalaries, 
+    addStaffsForm, 
+    addSalariesForm, 
+    getAllStaffs, 
+    getAllSalaries, 
+    deleteStaffs, 
+    deleteSalaries, 
+    editstaff, 
+    updatestaff,
+    viewstaff
+} from "../controllers/staffs.js";
+
 import ensureAuthenticated from "../middlewares/auth.js";
 import { isAdmin } from "../middlewares/isAdmin.js";
 import { isAccountant } from "../middlewares/isAccountant.js";
@@ -55,12 +69,15 @@ router.get("/add-staffs-form", ensureAuthenticated, isAccountant, isAdmin, addSt
 router.get("/add-salaries-form", ensureAuthenticated, isAccountant, isAdmin, addSalariesForm);
 router.get("/all-staffs", ensureAuthenticated, isAccountant, isAdmin, getAllStaffs);
 router.get("/all-salaries", ensureAuthenticated, isAccountant, isAdmin, getAllSalaries);
+router.patch("/update-staff/:id", ensureAuthenticated, checkSudoMiddleware, isAdmin, updatestaff);
+router.get("/edit-staff/:id", ensureAuthenticated, isAccountant, isAdmin, editstaff);
+router.get("/view-staff/:id", ensureAuthenticated, isAccountant, isAdmin, viewstaff);
 
 // Delete staffs
 router.delete("/delete-staffs/:id", ensureAuthenticated, isAccountant, isAdmin, checkSudoMiddleware, deleteStaffs)
 router.get("/delete-staffs/:id", ensureAuthenticated, isAccountant, isAdmin, checkSudoMiddleware, deleteStaffs)
 
-// Delete Salaries
+// Delete Salaries 
 router.delete("/delete-salaries/:id", ensureAuthenticated, isAccountant, isAdmin, checkSudoMiddleware, deleteSalaries)
 router.get("/delete-salaries/:id", ensureAuthenticated, isAccountant, isAdmin, checkSudoMiddleware, deleteSalaries)
 

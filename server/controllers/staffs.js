@@ -14,6 +14,7 @@ export const createNewStaffs = async (req, res) => {
         email,
         address,
         address2,
+        status,
         createdBy,
         username,  
         comments } = req.body;
@@ -27,6 +28,7 @@ export const createNewStaffs = async (req, res) => {
         email,
         address,
         address2,
+        status,
         createdBy,
         username,
         comments,
@@ -112,11 +114,19 @@ export const createNewSalaries = async (req, res) => {
   
       // Check if the user is authenticated
       const user = req.isAuthenticated() ? req.user : null;
+
+      // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+     const sudo = user && user.sudo ? user.sudo : false;
+
+     // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+    const accountant = user && user.accountant ? user.accountant : false;
   
       // Render the apply page with the necessary data
       res.render('add-staffs-form', {
         user,
         greeting,
+        sudo,
+        accountant
       });
     } catch (error) {
       console.error('Error rendering the page:', error);
@@ -152,13 +162,21 @@ export const createNewSalaries = async (req, res) => {
   
       // Check if the user is authenticated
       const user = req.isAuthenticated() ? req.user : null;
+
+      // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+     const sudo = user && user.sudo ? user.sudo : false;
+
+     // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+    const accountant = user && user.accountant ? user.accountant : false;
   
-      // Render the apply page with the necessary data
-      res.render('add-salary-form', {
+    // Render the apply page with the necessary data
+    res.render('add-salary-form', {
         user,
         greeting,
         staffNames,
         positions,
+        sudo,
+        accountant
       });
     } catch (error) {
       console.error('Error rendering the page:', error);
@@ -244,6 +262,89 @@ export const deleteSalaries = async (req, res) => {
   try {
     await Salaries.deleteOne({ _id: req.params.id });
     res.render("success/delete-salaries");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+// Function to determine the time of the day
+const getTimeOfDay = () => {
+  const currentHour = new Date().getHours();
+
+  if (currentHour >= 5 && currentHour < 12) {
+    return 'Good Morning';
+  } else if (currentHour >= 12 && currentHour < 18) {
+    return 'Good Afternoon';
+  } else {
+    return 'Good Evening';
+  }
+};
+
+// GET route handler for rendering the edit staff page
+export const editstaff = async (req, res) => {
+  try {
+    // Find the staff member by _id
+    const staffs = await Staffs.findOne({ _id: req.params.id });
+
+    // Determine the time of the day for greeting
+    const greeting = getTimeOfDay();
+
+    // Fetch authenticated user data from request (assuming it's set by middleware)
+    const user = req.isAuthenticated() ? req.user : null;
+
+    // Fetch additional user permissions or roles
+    const sudo = user && user.sudo ? user.sudo : false;
+    const accountant = user && user.accountant ? user.accountant : false;
+
+    // Render the edit-staff template with retrieved data
+    res.render("edit-staff", {
+      staffs,
+      greeting,
+      user,
+      sudo,
+      accountant
+    });
+  } catch (error) {
+    // Handle errors gracefully
+    console.error(error.message);
+    res.status(404).send("User not found");
+  }
+};
+
+
+
+// Update user data #Sudo Admin PATCH
+export const updatestaff = async (req, res) => {
+  try {
+    // Extract the User ID from the request parameters
+    const { id } = req.params;
+
+    // Find the User record by ID and update its fields
+    const updatedStaffs = await Staffs.findByIdAndUpdate(id, req.body, { new: true });
+
+    // Check if the User record exists
+    if (!updatedStaffs) {
+      return res.status(404).json({ message: 'Staff record not found' });
+    }
+
+    // Respond with the updated User record
+    // res.status(200).json(updatedStorage);
+    res.render('success/update-staffs');
+  } catch (error) {
+    console.error('Error updating User record:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+
+export const viewstaff = async (req, res) => {
+  try {
+    const staff = await Staffs.findOne({ _id: req.params.id });
+
+    res.render("view-staff", {
+      staff,
+    });
   } catch (error) {
     console.log(error);
   }

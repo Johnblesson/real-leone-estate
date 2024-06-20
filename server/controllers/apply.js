@@ -93,6 +93,9 @@ export const editApplication = async (req, res) => {
   try {
     const apply = await Application.findOne({ _id: req.params.id });
 
+    // Fetch all staffs name
+    const staffNames = await Staffs.distinct('staffName');
+
     // Determine the time of the day
     const greeting = getTimeOfDay();
 
@@ -103,6 +106,7 @@ export const editApplication = async (req, res) => {
       apply,
       greeting,
       user,
+      staffNames,
     });
   } catch (error) {
     // Handle errors gracefully

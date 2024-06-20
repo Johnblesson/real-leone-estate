@@ -13,7 +13,7 @@
         text-align: center;
         margin-top: 20px;
         padding: 10px;
-        border: 1px solid #ccc;
+        border: 1px solid #948989;
         border-radius: 5px;
     }
   
@@ -30,7 +30,7 @@
     }
   
     .status-green-bg {
-        background-color: rgb(7, 252, 85);
+        background-color: rgb(255, 255, 255);
     }
   
     .sudo-blue-bg {
@@ -81,6 +81,20 @@
         justify-content: center;
         height: 100vh;
     }
+
+    .status-circle {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+        }
+        .active-circle {
+            background-color: green;
+        }
+        .inactive-circle {
+            background-color: red;
+        }
   </style>
 <body>
 
@@ -110,7 +124,15 @@
                 <td class="hover <%= user.role === 'admin' ? 'role-pink-bg' : (user.role === 'user' ? 'role-green-bg' : '') %>"><%= user.role %></td>
                 <td class="hover"><%= user.sudo %></td>
                 <td class="hover"><%= user.accountant %></td>
-                <td class="hover <%= user.status === 'active' ? 'status-green-bg' : (user.status === 'inactive' ? 'status-red-bg' : '') %>"><%= user.status %></td>
+                <td class="hover <%= user.status === 'active' ? 'status-green-bg' : (user.status === 'inactive' ? 'status-red-bg' : '') %>">
+                    <% if (user.status === 'active') { %>
+                        <span class="status-circle active-circle"></span> Active
+                    <% } else if (user.status === 'inactive') { %>
+                        <span class="status-circle inactive-circle"></span> Inactive
+                    <% } else { %>
+                        <%= user.status %>
+                    <% } %>
+                </td>
                
                 <td class="hover px-6 py-4 whitespace-nowrap">
                     <!-- Add icons with links to your delete, view, and update routes -->

@@ -136,6 +136,20 @@
             color: #6c757d;
             background-color: transparent;
         }
+
+        .status-circle {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+        }
+        .active-circle {
+            background-color: green;
+        }
+        .inactive-circle {
+            background-color: red;
+        }
   </style>
 <body>
     <h2>All Staffs</h2>
@@ -158,6 +172,7 @@
                 <th>Phone</th>
                 <th>Email</th>
                 <th>Address</th>
+                <th>Staff Status</th>
                 <th>Created By</th>
                 <th>Actions</th> <!-- New column for actions -->
             </tr>
@@ -171,12 +186,21 @@
                 <td class="hover"><%= staffs.phone %></td>
                 <td class="hover"><%= staffs.email %></td>
                 <td class="hover"><%= staffs.address %></td>
+                <td class="hover">
+                    <% if (staffs.status === 'active') { %>
+                        <span class="status-circle active-circle"></span> Active
+                    <% } else if (staffs.status === 'inactive') { %>
+                        <span class="status-circle inactive-circle"></span> Inactive
+                    <% } else { %>
+                        <%= staffs.status %>
+                    <% } %>
+                </td>
                 <td class="hover"><%= staffs.createdBy %></td>
                 <td class="hover px-6 py-4 whitespace-nowrap">
                     <!-- Add icons with links to your delete, view, and update routes -->
-                    <a href="/edit-staffs/<%= staffs._id %>"><i class="fas fa-edit text-green-500 cursor-pointer"></i></a>
+                    <a href="/edit-staff/<%= staffs._id %>"><i class="fas fa-edit text-green-500 cursor-pointer"></i></a>
                     <a href="#" onclick="deleteStaffs('<%= staffs._id %>')"><i class="fas fa-trash-alt text-red-500 cursor-pointer"></i></a>
-                    <a href="#"><i class="fas fa-eye text-blue-500 cursor-pointer mx-2"></i></a>
+                    <a href="/view-staff/<%= staffs._id %>"><i class="fas fa-eye text-blue-500 cursor-pointer mx-2"></i></a>
                 </td>
                  
             </tr>

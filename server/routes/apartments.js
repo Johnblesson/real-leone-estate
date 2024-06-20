@@ -31,6 +31,7 @@ import { allAdminProperties, apartmentDetail, adminApartmentDetail } from '../re
 import ensureAuthenticated from '../middlewares/auth.js';
 import { isAdmin } from '../middlewares/isAdmin.js';
 import { checkSudoMiddleware } from '../middlewares/sudo.js'
+// import { autoRefreshMiddleware } from '../middlewares/autoRefreshRoute.js';
 import { uploadPhotos } from '../upload/upload.js';
 
 // router.post('/create-apartment', upload.single('photo'), createApartment);

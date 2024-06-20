@@ -8,6 +8,11 @@ const staffsSchema = new mongoose.Schema({
     email: String,
     address: String,
     address2: String,
+    status: {
+        type: String,
+        enum: ['active', 'inactive'],
+        default: 'active',
+    },
     createdBy : String,
     username: String,
     comments : String,

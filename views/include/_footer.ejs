@@ -110,8 +110,15 @@
             </li>
 
             <li>
-              <a href="/update-password/<%= user._id %>" class="footer-link">Change password</a>
+              <a href="/view/<%= user._id %>" class="footer-link">Profile</a>
             </li>
+
+            <!-- <li>
+              <form action="/delete-account" method="POST" onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.');">
+                  <input type="hidden" name="_method" value="DELETE">
+                  <button type="submit" class="footer-link btn-link">Delete Account</button>
+              </form>
+          </li> -->
 
           </ul>
 
@@ -200,7 +207,14 @@
   -->
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-
+  <script>
+    function deleteUserAccount(username) {
+        if (confirm('Are you sure you want to delete this account?')) {
+            // Redirect to the delete route with the storage ID
+            window.location.href = "/delete-account/" + username + "?_method=DELETE";
+        }
+    }
+   </script>
 </body>
 
 </html>

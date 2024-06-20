@@ -502,3 +502,14 @@ export const goBack = async (req, res) => {
   }
 };
 
+export const deleteUserAccount = async (req, res) => {
+  try {
+    const userId = req.user._id;
+      await User.findByIdAndDelete(userId);
+      req.logout(); // Log the user out after deletion
+      res.redirect('/'); // Redirect to homepage or another appropriate page
+  } catch (error) {
+      console.error(error);
+      res.status(500).send("Server error");
+  }
+};

@@ -3,13 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View/Staff</title>
+    <title>View Staff</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .status-circle {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+        }
+        .active-circle {
+            background-color: green;
+        }
+        .inactive-circle {
+            background-color: red;
+        }
+    </style>
 </head>
 <body>
 
 <div class="container mt-5 mx-auto">
-    <div class="d-flex justify-content-between flex-wrap flex-md nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2"><%= staff.staffName %> || <%= staff.position %> || <%= staff.status %></h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group me-2">
@@ -59,7 +74,15 @@
         <li class="list-group-item"> 
             <div class="row">
                 <div class="col" style="max-width: 140px"> <b>Staff Status:</b></div>
-                <div class="col"><%= staff.status %></div>
+                <div class="col">
+                    <% if (staff.status === 'active') { %>
+                        <span class="status-circle active-circle"></span> Active
+                    <% } else if (staff.status === 'inactive') { %>
+                        <span class="status-circle inactive-circle"></span> Inactive
+                    <% } else { %>
+                        <%= staff.status %>
+                    <% } %>
+                </div>
             </div>
         </li>
         <li class="list-group-item"> 
