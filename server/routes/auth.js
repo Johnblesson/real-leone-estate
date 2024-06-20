@@ -8,6 +8,7 @@ import ensureAuthenticated from "../middlewares/auth.js";
 import { isAdmin } from "../middlewares/isAdmin.js";
 import { checkSudoMiddleware } from "../middlewares/sudo.js";
 import cacheMiddleware from "../middlewares/cacheMiddleware.js"
+// import { vpnDetectionMiddleware } from "../middlewares/vpn.js";
 
 //Auth Routes
 router.post("/signup", upload.single("photo"), signUp);
