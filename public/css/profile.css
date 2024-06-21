@@ -3,6 +3,7 @@
 */
 
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
+
 body {
   width: 100%;
   margin: 0;
@@ -145,17 +146,17 @@ a {
 }
 
 .edit {
-    background: #0091ff;
-    color: #fff;
-    border: none;
-    padding: 10px 25px;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-top: 20px;
+  background: #0091ff;
+  color: #fff;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 20px;
 }
 
 .edit:hover {
-    background: #0078e7;
+  background: #0078e7;
 }
 
 .header__wrapper .cols__container .right__col nav button:hover {
@@ -255,8 +256,6 @@ a {
 
 
 
-
-
 /* Property list container */
 .property-list {
   list-style: none;
@@ -269,8 +268,8 @@ a {
 
 /* Property item */
 .property-item {
-  flex: 1 1 300px; /* Adjust the width of each item */
-  max-width: 300px;
+  flex: 1 1 350px; /* Adjust the width of each item */
+  max-width: 350px;
   margin-bottom: 20px;
 }
 
@@ -283,10 +282,10 @@ a {
 }
 
 /* Card banner (image container) */
-/* .card-banner {
+.card-banner {
   position: relative;
   width: 100%;
-  height: 200px;
+  height: 220px;
   overflow: hidden;
   display: flex;
   align-items: center; 
@@ -297,27 +296,7 @@ a {
   max-width: 100%;
   max-height: 100%;
   object-fit: cover;
-} */
-
-.card-banner {
-  position: relative;
-  width: 100%;
-  height: 200px;
-  left: -20px;
-  overflow: hidden;
-  /* display: flex; */
-  align-items: center; /* Center vertically */
-  justify-content: center; /* Center horizontally */
-  border-radius: 5px;
 }
-
-.card-banner img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: cover;
-  margin: 0 auto; /* Center horizontally */
-}
-
 
 /* Card badge */
 .card-badge {
@@ -330,7 +309,7 @@ a {
 
 .card-badge.top-right {
   top: 10px;
-  right: 35px;
+  right: 10px;
   background-color: #ff5a5f; /* Adjust as needed */
 }
 

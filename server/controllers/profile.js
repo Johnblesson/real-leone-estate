@@ -1,4 +1,6 @@
 import User from '../models/auth.js';
+import moment from 'moment';
+import Apartments from '../models/apartments.js';
 
 export const profile = async (req, res) => {
   try {
@@ -165,9 +167,37 @@ export const view = async (req, res) => {
         relativePath = photoPath.replace('public/assets/', '/assets/'); // Remove "public/assets/" prefix and add "/assets/" route prefix
       }
 
+          // Get the authenticated user from the request object
+    const user = req.isAuthenticated() ? req.user : null;
+
+    // Redirect to login if user is not authenticated
+    if (!user) {
+      return res.redirect('/login'); // Redirect to login if user is not authenticated
+    }
+
+    // Get the user ID from the authenticated user
+    const userId = user._id;
+
+    // Find all verified apartments created by the authenticated user
+    const apartments = await Apartments.find({ user: userId, verification: 'verified' }).sort({ sponsored: -1, createdAt: -1 });
+    const role = user.role;
+
+    // Process each apartment to set photoUrl, formattedCreatedAt, and daysAgo
+    apartments.forEach(apartment => {
+      // Ensure photoUrl is set properly
+      apartment.photoUrl = apartment.photo || ''; // Use empty string if no photo is available
+
+      // Format the createdAt date and calculate days ago
+      apartment.formattedCreatedAt = moment(apartment.createdAt).format('DD-MM-YYYY HH:mm');
+      apartment.daysAgo = moment().diff(moment(apartment.createdAt), 'days');
+    });
+
     res.render("view", {
       users,
       relativePath,
+      user,
+      role,
+      apartments,
     });
   } catch (error) {
     console.log(error);

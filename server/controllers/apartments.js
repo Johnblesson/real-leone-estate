@@ -811,6 +811,8 @@ export const searchApartment = async (req, res) => {
     const greeting = getTimeOfDay();
     const user = req.isAuthenticated() ? req.user : null;
 
+    const role = user ? user.role : null; // Get user role if user is authenticated
+
     // Process each apartment to set photoUrl, formattedCreatedAt, and daysAgo
     apartments.forEach(apartment => {
       // Ensure photoUrl is set properly
@@ -826,7 +828,8 @@ export const searchApartment = async (req, res) => {
       apartments,
       locations,
       greeting,
-      user
+      user,
+      role,
     });
   } catch (error) {
     console.error(error);
@@ -865,6 +868,7 @@ export const searchApartmentAdmin = async (req, res) => {
 
     const greeting = getTimeOfDay();
     const user = req.isAuthenticated() ? req.user : null;
+    const role = user ? user.role : null; // Get user role if user is authenticated
 
     // Process each apartment to set photoUrl, formattedCreatedAt, and daysAgo
     apartments.forEach(apartment => {
@@ -889,6 +893,7 @@ export const searchApartmentAdmin = async (req, res) => {
       greeting,
       user,
       sudo,
+      role,
       accountant,
     });
   } catch (error) {
