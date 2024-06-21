@@ -89,6 +89,8 @@ const apartmentSchema = new mongoose.Schema({
         // ref: 'User',
         // required: true,
     },
+    // Reference to the user who created the apartment
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }, 
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
 }, {

@@ -85,9 +85,13 @@
               <p class="footer-list-title">Company</p>
             </li>
 
-            <li>
+            <!-- <li>
               <a href="#" class="footer-link">About</a>
-            </li>
+            </li> -->
+
+            <li>
+              <a href="#" class="footer-link" onclick="redirectToAbout('<%= role %>')">About</a>
+          </li>
 
             <li>
               <a href="#" class="footer-link">Blog</a>
@@ -215,6 +219,16 @@
         }
     }
    </script>
+
+<script>
+  function redirectToAbout(role) {
+      if (role === 'admin') {
+          window.location.href = '/admin-about';
+      } else if (role === 'user') {
+          window.location.href = '/about';
+      }
+  }
+</script>
 </body>
 
 </html>

@@ -23,6 +23,7 @@ export const homeRoute = async (req, res) => {
 
     const greeting = getTimeOfDay();
     const user = req.isAuthenticated() ? req.user : null;
+    const role = user ? user.role : null; // Get user role if user is authenticated
 
      // Process each apartment to set photoUrl, formattedCreatedAt, and daysAgo
     apartments.forEach(apartment => {
@@ -39,6 +40,7 @@ export const homeRoute = async (req, res) => {
       greeting,
       user,
       apts,
+      role,
     });
   } catch (error) {
     console.error(error);
@@ -67,6 +69,7 @@ export const adminHomeRoute = async (req, res) => {
 
     const greeting = getTimeOfDay();
     const user = req.isAuthenticated() ? req.user : null;
+    const role = user ? user.role : null; // Get user role if user is authenticated
 
     // Process each apartment to set photoUrl, formattedCreatedAt, and daysAgo
     apartments.forEach(apartment => {
@@ -88,6 +91,7 @@ export const adminHomeRoute = async (req, res) => {
       apartments,
       greeting,
       user,
+      role,
       apts,
       sudo,
       accountant,
@@ -117,12 +121,13 @@ const getTimeOfDay = () => {
 };
   try {
     const user = req.isAuthenticated() ? req.user : null;
+    const role = user ? user.role : null; // Get user role if user is authenticated
 
      // Determine the time of the day
     const greeting = getTimeOfDay();
 
     // Render the index page with the receptions and latestStorage data
-    res.render('post-apartment', { user, greeting});
+    res.render('post-apartment', { user, greeting, role });
   } catch (error) {
     console.error('Error rendering the page:', error);
     res.status(500).send('Internal Server Error');
@@ -147,6 +152,8 @@ const getTimeOfDay = () => {
 };
   try {
     const user = req.isAuthenticated() ? req.user : null;
+    const role = user ? user.role : null; // Get user role if user is authenticated
+
 
      // Determine the time of the day
     const greeting = getTimeOfDay();
@@ -158,7 +165,7 @@ const getTimeOfDay = () => {
     const accountant = user && user.accountant ? user.accountant : false;
 
     // Render the index page with the receptions and latestStorage data
-    res.render('post-apartment-admin', { user, greeting, sudo, accountant });
+    res.render('post-apartment-admin', { user, greeting, sudo, accountant, role });
   } catch (error) {
     console.error('Error rendering the page:', error);
     res.status(500).send('Internal Server Error');
@@ -185,6 +192,7 @@ export const allAdminProperties = async (req, res) => {
     const apartments = await Apartments.find({ verification: 'verified' }).sort({ sponsored: -1, createdAt: -1 });
     const greeting = getTimeOfDay();
     const user = req.isAuthenticated() ? req.user : null;
+    const role = user ? user.role : null; // Get user role if user is authenticated
 
     // Process each apartment to set photoUrl, formattedCreatedAt, and daysAgo
     apartments.forEach(apartment => {
@@ -209,6 +217,7 @@ export const allAdminProperties = async (req, res) => {
       apts,
       sudo,
       accountant,
+      role,
     });
   } catch (error) {
     console.error(error);
@@ -234,8 +243,9 @@ export const allProperties = async (req, res) => {
     try {
       const apts = await Apartments.findOne({ _id: req.params.id });
       // Find all verified apartments and sort them by sponsored status and createdAt timestamp in descending order
-     const apartments = await Apartments.find({ verification: 'verified' }).sort({ sponsored: -1, createdAt: -1 });
+      const apartments = await Apartments.find({ verification: 'verified' }).sort({ sponsored: -1, createdAt: -1 });
       const user = req.isAuthenticated() ? req.user : null;
+      const role = user ? user.role : null; // Get user role if user is authenticated
 
       const apartment = await Apartments.find();
 
@@ -257,7 +267,7 @@ export const allProperties = async (req, res) => {
       const greeting = getTimeOfDay();
   
       // Render the index page with the receptions and latestStorage data
-      res.render('all-properties', { locals, apartment, greeting, user, apartments });
+      res.render('all-properties', { locals, apartment, greeting, user, apartments, role });
     } catch (error) {
       console.error('Error rendering the page:', error);
       res.status(500).send('Internal Server Error');
@@ -297,12 +307,14 @@ export const about = async (req, res) => {
       }
     });
       const user = req.isAuthenticated() ? req.user : null;
+      const role = user ? user.role : null; // Get user role if user is authenticated
+
   
        // Determine the time of the day
       const greeting = getTimeOfDay();
   
       // Render the index page with the receptions and latestStorage data
-      res.render('about', { locals, user, greeting, apartments });
+      res.render('about', { locals, user, greeting, apartments,role });
     } catch (error) {
       console.error('Error rendering the page:', error);
       res.status(500).send('Internal Server Error');
@@ -331,12 +343,13 @@ export const features = async (req, res) => {
   };
     try {
       const user = req.isAuthenticated() ? req.user : null;
+      const role = user ? user.role : null; // Get user role if user is authenticated
   
        // Determine the time of the day
       const greeting = getTimeOfDay();
   
       // Render the index page with the receptions and latestStorage data
-      res.render('features', { locals, user, greeting});
+      res.render('features', { locals, user, greeting, role });
     } catch (error) {
       console.error('Error rendering the page:', error);
       res.status(500).send('Internal Server Error');
@@ -362,6 +375,7 @@ export const blog = async (req, res) => {
     const apartments = await Apartments.find({ verification: 'verified' });
 
     const user = req.isAuthenticated() ? req.user : null;
+    const role = user ? user.role : null; // Get user role if user is authenticated
 
     // Process each apartment to set photoUrl, formattedCreatedAt, and daysAgo
     apartments.forEach(apartment => {
@@ -375,6 +389,7 @@ export const blog = async (req, res) => {
       apartments,
       greeting,
       user,
+      role
     });
   } catch (error) {
     console.error(error);
@@ -404,12 +419,13 @@ export const service = async (req, res) => {
   };
     try {
       const user = req.isAuthenticated() ? req.user : null;
+      const role = user ? user.role : null; // Get user role if user is authenticated
   
        // Determine the time of the day
       const greeting = getTimeOfDay();
   
       // Render the index page with the receptions and latestStorage data
-      res.render('service', { locals, user, greeting});
+      res.render('service', { locals, user, greeting, role });
     } catch (error) {
       console.error('Error rendering the page:', error);
       res.status(500).send('Internal Server Error');
@@ -497,12 +513,13 @@ const getTimeOfDay = () => {
 };
   try {
     const user = req.isAuthenticated() ? req.user : null;
+    const role = user ? user.role : null; // Get user role if user is authenticated
 
      // Determine the time of the day
     const greeting = getTimeOfDay();
 
     // Render the index page with the receptions and latestStorage data
-    res.render('all-users', { locals, user, greeting});
+    res.render('all-users', { locals, user, greeting, role });
   } catch (error) {
     console.error('Error rendering the page:', error);
     res.status(500).send('Internal Server Error');
@@ -582,6 +599,7 @@ export const apartmentDetail = async (req, res) => {
     const apartments = await Apartments.find({ verification: 'verified' }).sort({ sponsored: -1, createdAt: -1 });
 
     const user = req.isAuthenticated() ? req.user : null;
+    const role = user ? user.role : null; // Get user role if user is authenticated
     const greeting = getTimeOfDay();
 
     // Format the createdAt date and calculate days ago
@@ -592,6 +610,7 @@ export const apartmentDetail = async (req, res) => {
       apartment: updatedApartment,
       apartments, // Ensure apartments are passed to the template
       user,
+      role,
       greeting,
     });
   } catch (error) {
@@ -636,6 +655,7 @@ try {
   const apartments = await Apartments.find({ verification: 'verified' }).sort({ sponsored: -1, createdAt: -1 });
 
   const user = req.isAuthenticated() ? req.user : null;
+  const role = user ? user.role : null; // Get user role if user is authenticated
   const greeting = getTimeOfDay();
 
   // Format the createdAt date and calculate days ago
@@ -654,6 +674,7 @@ try {
     apartments, // Ensure apartments are passed to the template
     user,
     greeting,
+    role,
     sudo,
     accountant,
   });

@@ -25,6 +25,7 @@ export const adminAbout = async (req, res) => {
   };
     try {
       const user = req.isAuthenticated() ? req.user : null;
+      const role = user ? user.role : null; // Get user role if user is authenticated
   
        // Determine the time of the day
       const greeting = getTimeOfDay();
@@ -36,7 +37,7 @@ export const adminAbout = async (req, res) => {
     const accountant = user && user.accountant ? user.accountant : false;
   
       // Render the index page with the receptions and latestStorage data
-      res.render('admin-about', { locals, user, greeting, sudo, accountant });
+      res.render('admin-about', { locals, user, greeting, sudo, accountant, role });
     } catch (error) {
       console.error('Error rendering the page:', error);
       res.status(500).send('Internal Server Error');
@@ -64,6 +65,7 @@ export const adminFeatures = async (req, res) => {
   };
     try {
       const user = req.isAuthenticated() ? req.user : null;
+      const role = user ? user.role : null; // Get user role if user is authenticated
   
        // Determine the time of the day
       const greeting = getTimeOfDay();
@@ -75,7 +77,7 @@ export const adminFeatures = async (req, res) => {
     const accountant = user && user.accountant ? user.accountant : false;
   
       // Render the index page with the receptions and latestStorage data
-      res.render('admin-features', { locals, user, greeting, sudo, accountant });
+      res.render('admin-features', { locals, user, greeting, sudo, accountant, role });
     } catch (error) {
       console.error('Error rendering the page:', error);
       res.status(500).send('Internal Server Error');
@@ -100,6 +102,7 @@ export const adminBlog = async (req, res) => {
     const apartments = await Apartments.find({ verification: 'verified' }).sort({ sponsored: -1, createdAt: -1 });
 
     const user = req.isAuthenticated() ? req.user : null;
+    const role = user ? user.role : null; // Get user role if user is authenticated
 
      // Process each apartment to set photoUrl, formattedCreatedAt, and daysAgo
      apartments.forEach(apartment => {
@@ -118,7 +121,7 @@ export const adminBlog = async (req, res) => {
     const accountant = user && user.accountant ? user.accountant : false;
 
     const greeting = getTimeOfDay();
-    res.render('admin-blog', { greeting, apts, user, apartments, sudo, accountant });
+    res.render('admin-blog', { greeting, apts, user, apartments, sudo, accountant, role });
   } catch (error) {
     console.error('Error rendering the page:', error);
     res.status(500).send('Internal Server Error');
@@ -146,6 +149,7 @@ export const adminService = async (req, res) => {
   };
     try {
       const user = req.isAuthenticated() ? req.user : null;
+      const role = user ? user.role : null; // Get user role if user is authenticated
 
     // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
       const sudo = user && user.sudo ? user.sudo : false;
@@ -157,7 +161,7 @@ export const adminService = async (req, res) => {
     const greeting = getTimeOfDay();
   
     // Render the index page with the receptions and latestStorage data
-      res.render('admin-service', { locals, user, greeting, sudo, accountant });
+      res.render('admin-service', { locals, user, greeting, sudo, accountant, role });
     } catch (error) {
       console.error('Error rendering the page:', error);
       res.status(500).send('Internal Server Error');
@@ -188,9 +192,12 @@ export const termsConditions = async (req, res) => {
 
     const user = req.isAuthenticated() ? req.user : null;
 
+    const role = user ? user.role : null; // Get user role if user is authenticated
+
     res.render("terms-conditions", {
       greeting,
       user,
+      role
     });
   } catch (error) {
     // Handle errors gracefully

@@ -51,6 +51,8 @@ const userSchema = new mongoose.Schema({
     //   privacyPolicy: {
     //     type: Boolean,
     //   },
+    // Reference to apartments created by the user
+    apartments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Apartment' }],
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
 }, {

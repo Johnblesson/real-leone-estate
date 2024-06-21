@@ -31,6 +31,8 @@ export const createApartment = async (req, res) => {
     //   return res.status(404).json({ error: 'User not found' });
     // }
 
+    const userId = req.user._id; // Assuming you have user info in req.user from authentication middleware
+
     const user = await User.find();
 
     const durationSlashes = req.body.duration;
@@ -60,6 +62,7 @@ export const createApartment = async (req, res) => {
       verification: req.body.verification,
       sponsored: req.body.sponsored,
       createdBy: req.body.createdBy,
+      user: userId,
       createdAt: new Date(), // Assuming createdAt and updatedAt are Date objects
       updatedAt: new Date()
     });
@@ -157,6 +160,7 @@ export const apartmentDisplay = async (req, res) => {
 
     const greeting = getTimeOfDay();
     const user = req.isAuthenticated() ? req.user : null;
+    const role = user ? user.role : null; // Get user role if user is authenticated
 
     // Process each apartment to set photoUrl, formattedCreatedAt, and daysAgo
     apartments.forEach(apartment => {
@@ -172,7 +176,8 @@ export const apartmentDisplay = async (req, res) => {
     res.render("all-properties", {
       apartments,
       greeting,
-      user
+      user,
+      role,
     });
   } catch (error) {
     console.error(error);
@@ -469,28 +474,6 @@ export const updateAdminApartments = async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
-
-// Update Admin Apartments record
-export const updateApartments = async (req, res) => {
-  try {
-    const { id } = req.params; // Extract the ID of the record to be updated
-
-    // Find the existing Apartments record by ID and update its fields
-    const updatedApartment = await Apartments.findByIdAndUpdate(id, req.body, { new: true });
-
-    // Check if the Apartments record exists
-    if (!updatedApartment) {
-      return res.status(404).json({ message: 'Apartments record not found' });
-    }
-
-    // Respond with the updated Apartments record
-    res.status(200).render('success/update-apartment', { updatedApartment });
-  } catch (error) {
-    console.error('Error updating Apartments record:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-};
-
 
 // Controller function to get all apartments
 export const properties = async (req, res) => {
