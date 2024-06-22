@@ -1,11 +1,12 @@
 import Apartments from "../models/apartments.js";
 import Application from "../models/apply.js";
+import Staffs from "../models/staffs.js";
 
 // Controller function to create a new application
 export const createApplication = async (req, res) => {
   try {
     // Extracting data from request body
-    const { phone, location, applyAid, username, address, address2, createdBy, comments, assignedStaff } = req.body;
+    const { phone, location, applyAid, username, address, address2, createdBy, comments, assignedStaff, staffInCharge } = req.body;
 
     // Create a new Application object with form data
     const applicationForm = new Application({
@@ -18,6 +19,7 @@ export const createApplication = async (req, res) => {
       createdBy,
       comments,
       assignedStaff,
+      staffInCharge,
       createdAt: new Date(), // Assuming createdAt and updatedAt are Date objects
       updatedAt: new Date()
     });
@@ -70,7 +72,7 @@ export const getAllApplication = async (req, res) => {
   }
 };
 
-// Get
+// Get edit applicaion
 export const editApplication = async (req, res) => {
   const locals = {
     title: "Edit application",
@@ -156,6 +158,8 @@ export const application = async (req, res) => {
     // Check if the user is authenticated
     const user = req.isAuthenticated() ? req.user : null;
 
+    const role = user.role;
+
     // Render the apply page with the necessary data
     res.render('apply', {
       user,
@@ -163,6 +167,7 @@ export const application = async (req, res) => {
       apartment,
       aid: apartmentId,
       location: location,
+      role,
     });
   } catch (error) {
     console.error('Error rendering the page:', error);
@@ -200,6 +205,9 @@ export const adminApplication = async (req, res) => {
     // Check if the user is authenticated
     const user = req.isAuthenticated() ? req.user : null;
 
+    // Get user role if user is authenticated
+    const role = user.role;
+
     // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
     const sudo = user && user.sudo ? user.sudo : false;
 
@@ -215,6 +223,7 @@ export const adminApplication = async (req, res) => {
       location: location,
       sudo,
       accountant,
+      role,
     });
   } catch (error) {
     console.error('Error rendering the page:', error);

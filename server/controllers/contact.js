@@ -89,11 +89,14 @@ export const getContactForm = async (req, res) => {
   
       // Check if the user is authenticated
       const user = req.isAuthenticated() ? req.user : null;
+
+      const role = user.role;
   
       // Render the apply page with the necessary data
       res.render('contact', {
         user,
         greeting,
+        role
       });
     } catch (error) {
       console.error('Error rendering the page:', error);
@@ -124,6 +127,8 @@ export const getAdminContactForm = async (req, res) => {
     // Check if the user is authenticated
     const user = req.isAuthenticated() ? req.user : null;
 
+    const role = user.role;
+
     // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
     const sudo = user && user.sudo ? user.sudo : false;
 
@@ -136,6 +141,7 @@ export const getAdminContactForm = async (req, res) => {
       greeting,
       sudo,
       accountant,
+      role,
     });
   } catch (error) {
     console.error('Error rendering the page:', error);

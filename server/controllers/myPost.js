@@ -84,6 +84,12 @@ export const myPost = async (req, res) => {
   
       const greeting = getTimeOfDay();
       const role = user.role;
+
+      // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+      const sudo = user && user.sudo ? user.sudo : false;
+
+      // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+      const accountant = user && user.accountant ? user.accountant : false;
   
       // Process each apartment to set photoUrl, formattedCreatedAt, and daysAgo
       apartments.forEach(apartment => {
@@ -101,6 +107,8 @@ export const myPost = async (req, res) => {
         greeting,
         user,
         role,
+        sudo,
+        accountant,
       });
     } catch (error) {
       console.error(error);

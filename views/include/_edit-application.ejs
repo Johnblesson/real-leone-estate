@@ -109,7 +109,7 @@
               id="phone"
               value="<%= apply.phone %>"
               class="formbold-form-input"
-              required
+              readonly
             />
           </div>
         </div>
@@ -123,7 +123,7 @@
               id="location"
               value="<%= apply.location %>"
               class="formbold-form-input"
-              required
+              readonly
             />
           </div>
         </div>
@@ -137,7 +137,7 @@
             id="address"
             value="<%= apply.address %>"
             class="formbold-form-input formbold-mb-3"
-            required
+            readonly
           />
           <input
             type="text"
@@ -175,6 +175,7 @@
               name="comments"
               id="comments"
               class="formbold-form-input"
+              readonly
             ><%= apply.comments %></textarea>
           </div>
 

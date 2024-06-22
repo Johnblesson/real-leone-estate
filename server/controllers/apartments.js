@@ -127,16 +127,45 @@ export const updateApartmentById = async (req, res) => {
 };
 
 // Controller function to delete an apartment by ID
+// export const deleteApartmentById = async (req, res) => {
+//   try {
+//     const deletedApartment = await Apartments.findByIdAndDelete(req.params.id);
+//     if (!deletedApartment) {
+//       res.status(404).json({ message: 'Apartment not found' });
+//       return;
+//     }
+//     res.status(200).json({ message: 'Apartment deleted successfully' });
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// };
+
+// export const deleteApartmentById = async (req, res) => {
+//   try {
+//     await Apartments.deleteOne({ _id: req.params.id });
+//     res.render("success/delete-apartment");
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+
 export const deleteApartmentById = async (req, res) => {
+  const apartmentId = req.params.id;
+
+  // Validate the ObjectId
+  if (!mongoose.Types.ObjectId.isValid(apartmentId)) {
+    return res.status(400).send({ error: 'Invalid apartment ID' });
+  }
+
   try {
-    const deletedApartment = await Apartments.findByIdAndDelete(req.params.id);
-    if (!deletedApartment) {
-      res.status(404).json({ message: 'Apartment not found' });
-      return;
+    const result = await Apartments.deleteOne({ _id: apartmentId });
+    if (result.deletedCount === 0) {
+      return res.status(404).send({ error: 'Apartment not found' });
     }
-    res.status(200).json({ message: 'Apartment deleted successfully' });
+    res.render("success/delete-apartment");
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error('Error deleting apartment:', error);
+    res.status(500).send({ error: 'Internal server error' });
   }
 };
 

@@ -30,7 +30,7 @@
   <ul class="property-list has-scrollbar">
     <% apartments.forEach(apt => { %>
       <li class="property-item">
-        <a href="/application-form?aid=<%= apt.aid %>&location=<%= apt.location %>">
+        <a href="/apartment-detail/<%= apt._id %>">
           <div class="property-card">
             <figure class="card-banner">
               <% if (apt.photoUrl) { %>
@@ -63,7 +63,7 @@
                 <strong><%= apt.currency %> <%= apt.price.toLocaleString('en-US', { maximumFractionDigits: 2 }) %></strong><%= apt.duration %> <pre><%= apt.negotiation %></pre>
               </div>
               <h3 class="h3 card-title">
-                <a href="/application-form?aid=<%= apt.aid %>&location=<%= apt.location %>"><%= apt.title %></a>
+                <a href="/apartment-detail/<%= apt._id %>"><%= apt.title %></a>
               </h3>
               <p class="card-text">
                 <%= apt.description %>
@@ -71,9 +71,9 @@
               <ul class="card-list">
                 <li class="card-item">
                   <strong>Apartment ID (AID): AID<%= apt.aid %></strong>
-                  <a href="/application-form?aid=<%= apt.aid %>&location=<%= apt.location %>">
-                    <span>Contact site: Administrator</span>
-                    <span>Apply</span>
+                  <a href="/apartment-detail/<%= apt._id %>">
+                    <span>View Details</span>
+                    <!-- <span>Apply</span> -->
                   </a>
                 </li>
               </ul>

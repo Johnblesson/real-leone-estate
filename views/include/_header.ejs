@@ -27,7 +27,6 @@
 .header-bottom-actions-btn ion-icon {
     margin-bottom: 5px; /* Adjust as needed */
 }
-
 </style>
   <!-- 
     - favicon
@@ -73,7 +72,7 @@
           </li> -->
 
           <li>
-            <a href="#" class="header-top-link">
+            <a href="/view/<%= user._id %>" class="header-top-link">
               <!-- <ion-icon name="location-outline"></ion-icon> -->
 
               <span><%= greeting %>, <%= user ? user.role : '' %> | <%= user ? user.username : '' %></span>
@@ -128,16 +127,21 @@
         </a> -->
 
         <a href="/home" class="logo">
-          <img src="./images/hub.png" alt="Homehub logo">
+          <img src="./images/hub1.png" alt="Homehub logo">
         </a>
         
+        <!-- <a href="/home" class="logo">
+          <img src="./images/hub1.png" alt="Homehub logo">
+          <div class="main">HomeHub</div>
+          <div class="sub">housing agency</div>
+        </a> -->
 
         <nav class="navbar" data-navbar>
 
           <div class="navbar-top">
 
             <a href="#" class="logo">
-              <img src="./images/hub.png" alt="Homeverse logo">
+              <img src="./images/hub1.png" alt="Homeverse logo">
             </a>
 
             <button class="nav-close-btn" data-nav-close-btn aria-label="Close Menu">
@@ -154,7 +158,7 @@
               </li>
 
               <li>
-                <a href="/all-properties" class="navbar-link" data-nav-link>Apartments</a>
+                <a href="/all-properties" class="navbar-link" data-nav-link>Properties</a>
               </li>
 
               <li>
@@ -197,11 +201,10 @@
             <span>Profile</span>
           </a>
 
-          <button class="header-bottom-actions-btn" aria-label="Cart">
-            <ion-icon name="cart-outline"></ion-icon>
-
-            <span>Cart</span>
-          </button>
+          <a href="/all-properties" class="header-bottom-actions-btn" aria-label="Home">
+            <ion-icon name="home-outline"></ion-icon>
+            <span>Properties</span>
+          </a>
 
           <button class="header-bottom-actions-btn" data-nav-open-btn aria-label="Open Menu">
             <ion-icon name="menu-outline"></ion-icon>
