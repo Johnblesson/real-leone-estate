@@ -35,7 +35,7 @@ import {
 import ensureAuthenticated from "../middlewares/auth.js";
 import { isAdmin } from "../middlewares/isAdmin.js";
 import { isAccountant } from "../middlewares/isAccountant.js";
-import { checkSudoMiddleware } from "../middlewares/sudo.js"
+import { checkSudoMiddleware } from '../middlewares/sudo.js';
 
 // Expenses Routes
 router.get("/expenses-form", ensureAuthenticated, isAccountant, isAdmin, expensesForm);
@@ -80,6 +80,5 @@ router.get("/delete-staffs/:id", ensureAuthenticated, isAccountant, isAdmin, che
 // Delete Salaries 
 router.delete("/delete-salaries/:id", ensureAuthenticated, isAccountant, isAdmin, checkSudoMiddleware, deleteSalaries)
 router.get("/delete-salaries/:id", ensureAuthenticated, isAccountant, isAdmin, checkSudoMiddleware, deleteSalaries)
-
 
 export default router;
