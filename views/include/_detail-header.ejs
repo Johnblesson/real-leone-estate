@@ -6,9 +6,6 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Homehub - Find your dream house</title>
-  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> -->
 <style>
   .header-bottom-actions {
     display: flex;
@@ -27,6 +24,8 @@
 .header-bottom-actions-btn ion-icon {
     margin-bottom: 5px; /* Adjust as needed */
 }
+
+
 </style>
   <!-- 
     - favicon
@@ -72,7 +71,7 @@
           </li> -->
 
           <li>
-            <a href="/view/<%= user._id %>" class="header-top-link">
+            <a href="#" class="header-top-link">
               <!-- <ion-icon name="location-outline"></ion-icon> -->
 
               <span><%= greeting %>, <%= user ? user.role : '' %> | <%= user ? user.username : '' %></span>
@@ -82,8 +81,8 @@
         </ul>
 
         <div class="wrapper">
-          <!-- <ul class="header-top-social-list">
-
+          <ul class="header-top-social-list">
+<!-- 
             <li>
               <a href="#" class="header-top-social-link">
                 <ion-icon name="logo-facebook"></ion-icon>
@@ -104,7 +103,7 @@
 
             <li>
               <a href="#" class="header-top-social-link">
-                <ion-icon name="logo-telegram"></ion-icon>
+                <ion-icon name="logo-pinterest"></ion-icon>
               </a>
             </li>
 
@@ -127,21 +126,16 @@
         </a> -->
 
         <a href="/home" class="logo">
-          <img src="/images/hub1.png" alt="Homehub logo">
+          <img src="/images/hub.png" alt="Homehub logo">
         </a>
         
-        <!-- <a href="/home" class="logo">
-          <img src="./images/hub1.png" alt="Homehub logo">
-          <div class="main">HomeHub</div>
-          <div class="sub">housing agency</div>
-        </a> -->
 
         <nav class="navbar" data-navbar>
 
           <div class="navbar-top">
 
             <a href="#" class="logo">
-              <img src="/images/hub1.png" alt="Homeverse logo">
+              <img src="/images/logo.png" alt="Homeverse logo">
             </a>
 
             <button class="nav-close-btn" data-nav-close-btn aria-label="Close Menu">
@@ -158,11 +152,11 @@
               </li>
 
               <li>
-                <a href="/all-properties" class="navbar-link" data-nav-link>Properties</a>
+                <a href="/all-properties" class="navbar-link" data-nav-link>Apartments</a>
               </li>
 
               <li>
-                <a href="/my-post" class="navbar-link" data-nav-link>My Posts</a>
+                <a href="/about" class="navbar-link" data-nav-link>About</a>
               </li>
 
               <li>
@@ -201,6 +195,11 @@
             <span>Profile</span>
           </a>
 
+          <!-- <button class="header-bottom-actions-btn" aria-label="Cart">
+            <ion-icon name="cart-outline"></ion-icon>
+
+            <span>Cart</span>
+          </button> -->
           <a href="/all-properties" class="header-bottom-actions-btn" aria-label="Home">
             <ion-icon name="home-outline"></ion-icon>
             <span>Properties</span>
@@ -218,24 +217,3 @@
     </div>
 
   </header>
-
-<!-- include post-apartment -->
-<%- include('include/_update-profile') %>
-<!-- /include post-apartment -->
-
-  <!-- include style -->
-  <%- include('include/_style') %>
-  <!-- /include style -->
- 
- <!-- include form-style -->
-  <%- include('include/_form-style') %>
-  <!-- /include form-style -->
-
-<!-- include cta -->
-<%- include('include/_cta') %>
-<!-- /include cta -->
-
-
-<!-- include footer -->
-<%- include('include/_footer') %>
-<!-- /include footer -->

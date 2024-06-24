@@ -1,189 +1,158 @@
-<form action="/edit-admin-apartment/<%= apartment._id %>?_method=PATCH" method="POST">
-    <div class="formbold-input-flex">
-    <div>
-      <label for="aid" class="formbold-form-label"> AID: </label>
-      <input
-        type="text"
-        name="aid"
-        id="aid"
-        value="<%= apartment.aid %>"
-        class="formbold-form-input"
-        readonly
-      />
-    </div>
-  </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apartment Detail</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/apt-detail.css">
+</head>
+<body>
+    <div class="property-list has-scrollbar">
+        <div class="property-item">
+            <div class="property-card">
+                <div class="carousel">
+                    <% if (apartment.photoUrls && apartment.photoUrls.length > 0) { %>
+                        <% apartment.photoUrls.forEach((photoUrl, index) => { %>
+                            <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+                                <img src="<%= photoUrl %>" class="carousel-img" alt="Apartment Photo">
+                                <a href="<%= photoUrl %>" download class="download-btn">
+                                    <ion-icon name="download-outline"></ion-icon>
+                                </a>
+                            </div>
+                        <% }) %>
+                    <% } else { %>
+                        <div class="carousel-item active">
+                            <p>No photo available</p>
+                        </div>
+                    <% } %>
+                </div>
+                <div class="thumbnail-container">
+                    <% if (apartment.photoUrls && apartment.photoUrls.length > 0) { %>
+                        <% apartment.photoUrls.forEach((photoUrl, index) => { %>
+                            <img src="<%= photoUrl %>" class="thumbnail <%= index === 0 ? 'active' : '' %>" data-index="<%= index %>" alt="Thumbnail" onclick="openFullImage('<%= photoUrl %>')">
+                        <% }) %>
+                    <% } %>
+                </div>
+                <!-- Dynamic badges indicating availability and status -->
+                <div class="card-badge top-right"><%= apartment.availabilty %></div>
+                <div class="card-badge green top-left"><%= apartment.status %></div>
 
-    <div class="formbold-input-flex">
-      <div>
-        <label for="title" class="formbold-form-label"> Title: </label>
-        <input
-          type="text"
-          name="title"
-          id="title"
-          value="<%= apartment.title %>"
-          class="formbold-form-input"
-        />
-      </div>
+                <div class="card-content">
+                    <!-- Dynamic price -->
+                    <div class="card-price">
+                        <strong><%= apartment.currency %> <%= apartment.price.toLocaleString('en-US', { maximumFractionDigits: 2 }) %></strong><%= apartment.duration %> <p style="font-size: 12px;"><%= apartment.negotiation %></p>
+                    </div> 
+                    <!-- Dynamic title -->
+                    <h3 class="h3 card-title">
+                        <%= apartment.title %>
+                    </h3>
+                    <!-- Dynamic description -->
+                    <p class="card-text">
+                        <%= apartment.description %>
+                    </p>
+                    <!-- Additional details as needed -->
+                    <div class="card-details">
+                        <h3 class="card-title">
+                            Apartment Details
+                        </h3>
+                        <div class="card-text">
+                            <p><strong>Location:</strong> <%= apartment.location %></p>
+                            <p><strong>Bedrooms:</strong> <%= apartment.bedrooms %></p>
+                            <p><strong>Bathrooms:</strong> <%= apartment.bathrooms %></p>
+                            <p><strong>Square Footage:</strong> <%= apartment.squareFootage %> sq ft</p>
+                            <p><strong>Price:</strong> <%= apartment.currency %> <%= apartment.price.toLocaleString('en-US', { maximumFractionDigits: 2 }) %> <%= apartment.duration %></p>
+                            <p><strong>Negotiation:</strong> <%= apartment.negotiation %></p>
+                            <p><strong>Status:</strong> <%= apartment.status %></p>
+                            <p><strong>Availability:</strong> <%= apartment.availabilty %></p>
+                        </div>
+                        <div>
+                        <ul class="card-list">
+                            <!-- Placeholder for square footage -->
+                            <li class="card-item">
+                                <strong>Apartment ID (AID): AID<%= apartment.aid %></strong>
+                                <a href="/application-form?aid=<%= apartment.aid %>&location=<%= apartment.location %>">
+                                    <span>Contact site: Administrator</span>
+                                    <button class="btn1">Apply</button>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    </div>
+                </div>
+                <!-- Links container -->
+                <div class="apartment-links-container">
+                    <p>Before you apply for this apartment, make sure you have read the following:</p>
+                    <a href="/terms-and-conditions">Terms and Conditions</a>
+                    <a href="/services-fee-agreement">Service Fee Agreement</a>
+                    <a href="/privacy-policy">Privacy Policy</a>
+                    <!-- Dynamic user bio -->
+                    <p class="author-title">
+                        Created At: <%= apartment.formattedCreatedAt %> (<%= apartment.daysAgo %> days ago)
+                    </p>
+                </div>
 
-      <div>
-        <label for="typeOfProperty" class="formbold-form-label"> Type of Property: </label>
-        <select id="typeOfProperty" class="formbold-form-input" name="typeOfProperty">
-          <option value="Apartment" <%= apartment.typeOfProperty === 'Apartment' ? 'selected' : '' %>>Apartment</option>
-          <option value="Land" <%= apartment.typeOfProperty === 'Land' ? 'selected' : '' %>>Land</option>
-          <option value="Shop" <%= apartment.typeOfProperty === 'Shop' ? 'selected' : '' %>>Shop</option>
-          <option value="Other" <%= apartment.typeOfProperty === 'Other' ? 'selected' : '' %>>Other</option>
-        </select>
-      </div>
-
-    </div>
-
-    <div class="formbold-input-flex">
-      <div>
-          <label for="price" class="formbold-form-label"> Price: </label>
-          <input
-          type="number"
-          name="price"
-          id="price"
-          value="<%= apartment.price %>"
-          class="formbold-form-input"
-          readonly
-          />
-      </div>
-
-      <div>
-        <label for="status" class="formbold-form-label"> Status: </label>
-        <select id="status" class="formbold-form-input" name="status">
-          <option value="" disabled selected hidden>Select Status</option>
-          <option value="Sell" <%= apartment.status === 'Sell' ? 'selected' : '' %>>Sell</option>
-          <option value="Rent" <%= apartment.status === 'Rent' ? 'selected' : '' %>>Rent</option>
-          <option value="Least" <%= apartment.status === 'Least' ? 'selected' : '' %>>Least</option>
-          <option value="Others" <%= apartment.status === 'Others' ? 'selected' : '' %>>Others</option>
-        </select>
-      </div>
-      
-    </div>
-
-    <div class="formbold-mb-3 formbold-input-wrapp">
-      <label for="phone" class="formbold-form-label"> Phone: </label>
-      <div>
-        <input
-          type="text"
-          name="phone"
-          id="phone"
-          value="<%= apartment.phone %>"
-          class="formbold-form-input"
-        />
-      </div>
-    </div>
-
-    <div class="formbold-mb-3 formbold-input-wrapp">
-      <label for="location" class="formbold-form-label"> Location: </label>
-
-      <div>
-        <select id="area" class="formbold-form-input" name="area">
-          <option value="" disabled selected hidden>Select Area</option>
-          <option value="Western Area Urban" <%= apartment.area === 'Western Area Urban' ? 'selected' : '' %>>Western Area Urban</option>
-          <option value="Western Area Rural" <%= apartment.area === 'Western Area Rural' ? 'selected' : '' %>>Western Area Rural</option>
-          <option value="Others" <%= apartment.area !== 'Western Area Urban' && apartment.area !== 'Western Area Rural' ? 'selected' : '' %>>Others</option>
-        </select>          
-      </select>
-        <input
-          type="text"
-          name="location"
-          id="location"
-          value="<%= apartment.location %>"
-          class="formbold-form-input"
-        />
-      </div>
-    </div>
-
-    <div class="formbold-input-flex">
-      <div>
-        <label for="bedrooms" class="formbold-form-label"> Bedrooms: </label>
-        <input
-          type="number"
-          name="bedrooms"
-          id="bedrooms"
-          value="<%= apartment.bedrooms %>"
-          class="formbold-form-input"
-        />
-      </div>
-
-      <div>
-        <label for="bathrooms" class="formbold-form-label"> Bathrooms: </label>
-        <input
-          type="number"
-          name="bathrooms"
-          id="bathrooms"
-          value="<%= apartment.bathrooms %>"
-          class="formbold-form-input"
-        />
-      </div>
-
+                <div class="card-footer">
+                    <div class="card-author">
+                        <!-- Dynamic user fullname --> 
+                        <!-- <p class="author-name"> Created by: <a href="#"><%= apartment.createdBy %></a></p> -->
+                        <p class="card-item"> Created by: <a href="#"><%= apartment.createdBy %></a></p>
+                    </div>
+                    <div class="card-footer-actions">
+                        <div class="thumbnail-container">
+                            <% if (apartment.photoUrls && apartment.photoUrls.length > 0) { %>
+                                <% apartment.photoUrls.forEach((photoUrl, index) => { %>
+                                    <img src="<%= photoUrl %>" class="thumbnail <%= index === 0 ? 'active' : '' %>" data-index="<%= index %>" alt="Thumbnail" onclick="openFullImage('<%= photoUrl %>')">
+                                <% }) %>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="formbold-mb-3 formbold-input-wrapp">
-      <label for="negotiation" class="formbold-form-label"> Negotiation: </label>
-      <div>
-        <select id="negotiation" class="formbold-form-input" name="negotiation">
-          <option value="" disabled selected hidden>Select Negotiation</option>
-          <option value="Negotiable">Negotiable</option>
-          <option value="Non Negotiable">Non Negotiable</option>
-      </select>
-      </div>
-    </div>
+    <script>
+        // JavaScript for carousel functionality
+        let slideIndex = 0;
+        const carouselItems = document.querySelectorAll('.carousel-item');
+        const thumbnails = document.querySelectorAll('.thumbnail');
 
-    <div class="formbold-input-flex">
-      <div>
-        <label for="avaliablity" class="formbold-form-label"> Availability: </label>
-        <select id="availabilty" class="formbold-form-input" name="availabilty">
-          <option value="" disabled selected hidden>Select Availability</option>
-          <option value="Avaliable">Available</option>
-          <option value="Not Availabile">Not Available</option>
-      </select>
-      </div>
-        <!-- <div>
-          <label for="sponsored" class="formbold-form-label"> Sponsored: </label>
-          <select id="sponsored" class="formbold-form-input" name="sponsored">
-            <option value="" disabled selected hidden>Select Sponsored</option>
-            <option value="false">False</option>
-            <option value="true">True</option>
-        </select>
-        </div> -->
-    </div>
+        function showSlides() {
+            carouselItems.forEach(item => item.style.display = "none");
+            thumbnails.forEach(item => item.classList.remove('active'));
+            slideIndex++;
+            if (slideIndex > carouselItems.length) { slideIndex = 1 }
+            carouselItems[slideIndex - 1].style.display = "block";
+            thumbnails[slideIndex - 1].classList.add('active');
+            setTimeout(showSlides, 2000); // Change image every 2 seconds
+        }
 
-    <div class="formbold-mb-3">
-      <label for="address" class="formbold-form-label"> Address: </label>
+        function showSlide(index) {
+            carouselItems.forEach(item => item.classList.remove('active'));
+            thumbnails.forEach(item => item.classList.remove('active'));
+            carouselItems[index].classList.add('active');
+            thumbnails[index].classList.add('active');
+            slideIndex = index;
+        }
 
-      <input
-        type="text"
-        name="address"
-        id="address"
-        value="<%= apartment.address %>"
-        class="formbold-form-input formbold-mb-3"
-      />
-      <input
-        type="text"
-        name="address2"
-        id="address2"
-        placeholder="Address 2 (Optional)"
-        value="<%= apartment.address2 %>"
-        class="formbold-form-input"
-      />
-    </div> 
+        thumbnails.forEach((thumbnail, index) => {
+            thumbnail.addEventListener('click', () => showSlide(index));
+        });
+
+        showSlides();
+    </script>
+
+    <!-- Ionicons CDN for icons -->
+    <script src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script>
+        function openFullImage(url) {
+            window.open(url, '_blank');
+        }
+    </script>
     
-    <div class="formbold-mb-3">
-      <label for="createdBy" class="formbold-form-label"> Created By: </label>
-
-      <input
-        type="text"
-        name="createdBy"
-        id="createdBy"
-        value="<%= apartment.createdBy %>"
-        class="formbold-form-input formbold-mb-3"
-        readonly
-      />
-    </div>  
-
-    <button class="formbold-btn">Update Apartment</button>
-  </form>
+    <style>
+       
+    </style>
+</body>
+</html>

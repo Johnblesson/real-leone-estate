@@ -181,3 +181,42 @@ transition: background 0.3s;
 .btn1:hover {
 background: #512da8;
 }
+
+
+.carousel {
+    position: relative;
+}
+.download-btn {
+    position: absolute;
+    /* top: 10px; */
+    right: 1px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+.carousel-item {
+    position: relative;
+    display: none;
+}
+.carousel-item.active {
+    display: block;
+}
+.thumbnail-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+.thumbnail {
+    width: 60px;
+    height: 40px;
+    margin: 0 5px;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.3s;
+}
+.thumbnail:hover, .thumbnail.active {
+    opacity: 1;
+}

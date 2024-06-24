@@ -69,7 +69,7 @@
                 <div class="thumbnail-container">
                     <% if (apartment.photoUrls && apartment.photoUrls.length > 0) { %>
                         <% apartment.photoUrls.forEach((photoUrl, index) => { %>
-                            <img src="<%= photoUrl %>" class="thumbnail <%= index === 0 ? 'active' : '' %>" data-index="<%= index %>" alt="Thumbnail" onclick="openFullImage('<%= photoUrl %>')">
+                            <img src="<%= photoUrl %>" class="thumbnail <%= index === 0 ? 'active' : '' %>" data-index="<%= index %>" alt="Thumbnail">
                         <% }) %>
                     <% } %>
                 </div>
@@ -125,26 +125,28 @@
                     <a href="/terms-and-conditions">Terms and Conditions</a>
                     <a href="/services-fee-agreement">Service Fee Agreement</a>
                     <a href="/privacy-policy">Privacy Policy</a>
-                    <!-- Dynamic user bio -->
-                    <p class="author-title">
-                        Created At: <%= apartment.formattedCreatedAt %> (<%= apartment.daysAgo %> days ago)
-                    </p>
                 </div>
 
                 <div class="card-footer">
                     <div class="card-author">
-                        <!-- Dynamic user fullname --> 
-                        <!-- <p class="author-name"> Created by: <a href="#"><%= apartment.createdBy %></a></p> -->
-                        <p class="card-item"> Created by: <a href="#"><%= apartment.createdBy %></a></p>
+                        <!-- Dynamic user fullname -->
+                        <p class="author-name"> Created by: <a href="#"><%= apartment.createdBy %></a></p>
+                        <!-- Dynamic user bio -->
+                        <p class="author-title">
+                            Created At: <%= apartment.formattedCreatedAt %> (<%= apartment.daysAgo %> days ago)
+                        </p>
                     </div>
                     <div class="card-footer-actions">
-                        <div class="thumbnail-container">
-                            <% if (apartment.photoUrls && apartment.photoUrls.length > 0) { %>
-                                <% apartment.photoUrls.forEach((photoUrl, index) => { %>
-                                    <img src="<%= photoUrl %>" class="thumbnail <%= index === 0 ? 'active' : '' %>" data-index="<%= index %>" alt="Thumbnail" onclick="openFullImage('<%= photoUrl %>')">
-                                <% }) %>
-                            <% } %>
-                        </div>
+                        <!-- Action buttons (placeholders) -->
+                        <button class="card-footer-actions-btn">
+                            <ion-icon name="resize-outline"></ion-icon>
+                        </button>
+                        <button class="card-footer-actions-btn">
+                            <ion-icon name="heart-outline"></ion-icon>
+                        </button>
+                        <button class="card-footer-actions-btn">
+                            <ion-icon name="add-circle-outline"></ion-icon>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -184,14 +186,5 @@
 
     <!-- Ionicons CDN for icons -->
     <script src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-    <script>
-        function openFullImage(url) {
-            window.open(url, '_blank');
-        }
-    </script>
-    
-    <style>
-       
-    </style>
 </body>
 </html>
