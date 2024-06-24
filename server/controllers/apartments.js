@@ -660,10 +660,26 @@ export const verifyUpdateApartment = async (req, res) => {
 // View get
 export const viewapartment = async (req, res) => {
   try {
-    const apartment = await Apartments.findOne({ _id: req.params.id });
+     const apartment = await Apartments.findOne({ _id: req.params.id });
+
+    if (!apartment) {
+      return res.status(404).send("Apartment not found");
+    }
+  
+    // Ensure photoUrls is set properly for the current apartment
+    const updatedApartment = {
+      ...apartment._doc,
+      photoUrls: [apartment.photo, apartment.photo1, apartment.photo2].filter(Boolean) // Filter out undefined or empty strings
+    };
+
+      // Format the createdAt date and calculate days ago
+      updatedApartment.formattedCreatedAt = moment(updatedApartment.createdAt).format('DD-MM-YYYY HH:mm');
+      updatedApartment.daysAgo = moment().diff(moment(updatedApartment.createdAt), 'days');
+
 
     res.render("view-apt", {
       apartment,
+      apartment: updatedApartment,
     });
   } catch (error) {
     console.log(error);

@@ -17,15 +17,12 @@ export const myPost = async (req, res) => {
   };
 
   try {
-    // Get the authenticated user from the request object
     const user = req.isAuthenticated() ? req.user : null;
-
-    // Redirect to login if user is not authenticated
+  
     if (!user) {
       return res.redirect('/login'); // Redirect to login if user is not authenticated
     }
 
-    // Get the user ID from the authenticated user
     const userId = user._id;
 
     // Find all verified apartments created by the authenticated user
