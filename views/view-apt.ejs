@@ -55,18 +55,12 @@
 <div class="container mt-5 mx-auto">
     <div class="d-flex justify-content-between flex-wrap flex-md nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2"><%= apartment.aid %> <%= apartment.location %></h1>
-        <!-- <div class="btn-toolbar mb-2 mb-md-0">
-            <div class="btn-group me-2">
-                <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-                <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
-            </div>
-        </div> -->
-        <div class="btn-toolbar mb-2 mb-md-0">
-          <div class="btn-group me-2">
-              <button id="shareBtn" type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-              <button id="exportBtn" type="button" class="btn btn-sm btn-outline-secondary">Export</button>
-          </div>
-      </div>
+      <div class="btn-toolbar mb-2 mb-md-0">
+        <div class="btn-group me-2">
+            <button id="shareBtn" type="button" onclick="window.print()" class="btn btn-sm btn-outline-secondary">Share as PDF</button>
+            <button id="exportBtn" type="button" onclick="window.print()" class="btn btn-sm btn-outline-secondary">Export as PDF</button>
+        </div>
+    </div>
         <div class="thumbnail-container">
           <% if (apartment.photoUrls && apartment.photoUrls.length > 0) { %>
               <% apartment.photoUrls.forEach((photoUrl, index) => { %>
@@ -228,6 +222,6 @@
 </script>
  <!-- Include html2pdf.js library -->
  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
- <script src="/js/pdf.js"></script>
+ <!-- <script src="/js/pdf.js"></script> -->
 </body>
 </html>
