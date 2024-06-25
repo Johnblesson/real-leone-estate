@@ -11,7 +11,6 @@ const applySchema = new mongoose.Schema({
     comments : String,
     assignedStaff: String,
     staffInCharge: String,
-    apartments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Apartment' }],
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
 }, {
