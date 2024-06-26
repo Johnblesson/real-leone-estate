@@ -1,6 +1,7 @@
 import Apartments from '../models/apartments.js';
 import User from '../models/auth.js';
 import moment from 'moment';
+import mongoose from 'mongoose';
 
 // Controller function to create a new apartment
 export const createApartment = async (req, res) => {
