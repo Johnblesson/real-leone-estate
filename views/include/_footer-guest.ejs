@@ -14,7 +14,9 @@
           </a>
 
           <p class="section-text">
-            Lorem Ipsum is simply dummy text of the and typesetting industry. Lorem Ipsum is dummy text of the printing.
+            Our mission is to simplify the real estate experience by 
+            providing a comprehensive, user-friendly platform that 
+            caters to all your property needs.
           </p>
 
           <ul class="contact-list">
@@ -83,49 +85,56 @@
               <p class="footer-list-title">Company</p>
             </li>
 
-            <li>
+            <!-- <li>
               <a href="#" class="footer-link">About</a>
-            </li>
+            </li> -->
 
             <li>
-              <a href="#" class="footer-link">Blog</a>
-            </li>
+              <a href="/login" class="footer-link">About</a>
+          </li>
 
             <li>
+              <a href="/blog" class="footer-link">Blog</a>
+            </li>
+
+            <!-- <li>
               <a href="#" class="footer-link">All Products</a>
-            </li>
+            </li> -->
 
-            <li>
+           <!-- <li>
               <a href="#" class="footer-link">Locations Map</a>
-            </li>
+            </li> -->
 
-            <li>
+            <!-- <li>
               <a href="#" class="footer-link">FAQ</a>
+            </li> -->
+
+            <li>
+              <a href="/login" class="footer-link">Contact us</a>
             </li>
 
             <li>
-              <a href="#" class="footer-link">Contact us</a>
+              <a href="/login" class="footer-link">Profile</a>
             </li>
+
+            <!-- <li>
+              <form action="/delete-account" method="POST" onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.');">
+                  <input type="hidden" name="_method" value="DELETE">
+                  <button type="submit" class="footer-link btn-link">Delete Account</button>
+              </form>
+          </li> -->
 
           </ul>
 
           <ul class="footer-list">
 
-            <li>
+           <li>
               <p class="footer-list-title">Services</p>
             </li>
 
-            <li>
+           <!-- <li>
               <a href="#" class="footer-link">Order tracking</a>
-            </li>
-
-            <li>
-              <a href="#" class="footer-link">My account</a>
-            </li>
-
-            <li>
-              <a href="/services-fee-agreement" class="footer-link">Service Fee Agreement</a>
-            </li>
+            </li> -->
 
             <li>
               <a href="/registration-process-statement" class="footer-link">Registration Process Statement</a>
@@ -133,6 +142,10 @@
 
             <li>
               <a href="/terms-and-conditions" class="footer-link">Terms & Conditions</a>
+            </li>
+
+            <li>
+              <a href="/services-fee-agreement" class="footer-link">Service Fee Agreement</a>
             </li>
 
             <li>
@@ -152,23 +165,23 @@
             </li>
 
             <li>
-              <a href="#" class="footer-link">My account</a>
+              <a href="/login" class="footer-link">Change password</a>
             </li>
 
-            <li>
+            <!-- <li>
               <a href="#" class="footer-link">Wish List</a>
-            </li>
+            </li> -->
 
-            <li>
+            <!-- <li>
               <a href="#" class="footer-link">Order tracking</a>
-            </li>
+            </li> -->
 
             <li>
               <a href="#" class="footer-link">FAQ</a>
             </li>
 
             <li>
-              <a href="#" class="footer-link">Contact us</a>
+              <a href="/login" class="footer-link">Contact us</a>
             </li>
 
           </ul>
@@ -181,9 +194,7 @@
     <div class="footer-bottom">
       <div class="container">
 
-        <p class="copyright">
-          &copy; 2024 <a href="#">Homehub</a>. All Rights Reserved || Logged in as <a href="#">Guest</a> || <a href="/logout">Logout</a>
-        </p>
+        <p class="copyright"> Web Application &copy; 2024 <a href="#">Homehub</a>. All Rights Reserved || Logged in as <a href="#"><%= user ? user.role : '' %> </a> - <%= user ? user.fullname : '' %> || <a href="/logout">Logout</a></p>
 
       </div>
     </div>
@@ -200,7 +211,24 @@
   -->
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script>
+    function deleteUserAccount(username) {
+        if (confirm('Are you sure you want to delete this account?')) {
+            // Redirect to the delete route with the storage ID
+            window.location.href = "/delete-account/" + username + "?_method=DELETE";
+        }
+    }
+   </script>
 
+<script>
+  function redirectToAbout(role) {
+      if (role === 'admin') {
+          window.location.href = '/admin-about';
+      } else if (role === 'user') {
+          window.location.href = '/about';
+      }
+  }
+</script>
 </body>
 
 </html>
