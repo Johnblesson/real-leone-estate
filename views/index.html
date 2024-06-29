@@ -1,158 +1,137 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apartment Detail</title>
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/apt-detail.css">
-</head>
-<body>
-    <div class="property-list has-scrollbar">
-        <div class="property-item">
-            <div class="property-card">
-                <div class="carousel">
-                    <% if (apartment.photoUrls && apartment.photoUrls.length > 0) { %>
-                        <% apartment.photoUrls.forEach((photoUrl, index) => { %>
-                            <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
-                                <img src="<%= photoUrl %>" class="carousel-img" alt="Apartment Photo">
-                                <a href="<%= photoUrl %>" download class="download-btn">
-                                    <ion-icon name="download-outline"></ion-icon>
-                                </a>
-                            </div>
-                        <% }) %>
-                    <% } else { %>
-                        <div class="carousel-item active">
-                            <p>No photo available</p>
-                        </div>
-                    <% } %>
-                </div>
-                <div class="thumbnail-container">
-                    <% if (apartment.photoUrls && apartment.photoUrls.length > 0) { %>
-                        <% apartment.photoUrls.forEach((photoUrl, index) => { %>
-                            <img src="<%= photoUrl %>" class="thumbnail <%= index === 0 ? 'active' : '' %>" data-index="<%= index %>" alt="Thumbnail" onclick="openFullImage('<%= photoUrl %>')">
-                        <% }) %>
-                    <% } %>
-                </div>
-                <!-- Dynamic badges indicating availability and status -->
-                <div class="card-badge top-right"><%= apartment.availabilty %></div>
-                <div class="card-badge green top-left"><%= apartment.status %></div>
+<link rel="stylesheet" href="./css/faq.css">
+<script src="./js/faq.js" defer></script>
 
-                <div class="card-content">
-                    <!-- Dynamic price -->
-                    <div class="card-price">
-                        <strong><%= apartment.currency %> <%= apartment.price.toLocaleString('en-US', { maximumFractionDigits: 2 }) %></strong><%= apartment.duration %> <p style="font-size: 12px;"><%= apartment.negotiation %></p>
-                    </div> 
-                    <!-- Dynamic title -->
-                    <h3 class="h3 card-title">
-                        <%= apartment.title %>
-                    </h3>
-                    <!-- Dynamic description -->
-                    <p class="card-text">
-                        <%= apartment.description %>
-                    </p>
-                    <!-- Additional details as needed -->
-                    <div class="card-details">
-                        <h3 class="card-title">
-                            Apartment Details
-                        </h3>
-                        <div class="card-text">
-                            <p><strong>Location:</strong> <%= apartment.location %></p>
-                            <p><strong>Bedrooms:</strong> <%= apartment.bedrooms %></p>
-                            <p><strong>Bathrooms:</strong> <%= apartment.bathrooms %></p>
-                            <p><strong>Square Footage:</strong> <%= apartment.squareFootage %> sq ft</p>
-                            <p><strong>Price:</strong> <%= apartment.currency %> <%= apartment.price.toLocaleString('en-US', { maximumFractionDigits: 2 }) %> <%= apartment.duration %></p>
-                            <p><strong>Negotiation:</strong> <%= apartment.negotiation %></p>
-                            <p><strong>Status:</strong> <%= apartment.status %></p>
-                            <p><strong>Availability:</strong> <%= apartment.availabilty %></p>
-                        </div>
-                        <div>
-                        <ul class="card-list">
-                            <!-- Placeholder for square footage -->
-                            <li class="card-item">
-                                <strong>Apartment ID (AID): AID<%= apartment.aid %></strong>
-                                <a href="/application-form?aid=<%= apartment.aid %>&location=<%= apartment.location %>">
-                                    <span>Contact site: Administrator</span>
-                                    <button class="btn1">Apply</button>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    </div>
-                </div>
-                <!-- Links container -->
-                <div class="apartment-links-container">
-                    <p>Before you apply for this apartment, make sure you have read the following:</p>
-                    <a href="/terms-and-conditions">Terms and Conditions</a>
-                    <a href="/services-fee-agreement">Service Fee Agreement</a>
-                    <a href="/privacy-policy">Privacy Policy</a>
-                    <!-- Dynamic user bio -->
-                    <p class="author-title">
-                        Created At: <%= apartment.formattedCreatedAt %> (<%= apartment.daysAgo %> days ago)
-                    </p>
-                </div>
+    <h1>Frequently Asked Questions</h1>
+    <div class="faq-container">
+      <div class="faq active">
+        <h3 class="faq-title">
+          What is the purpose of the church finder application?
+        </h3>
 
-                <div class="card-footer">
-                    <div class="card-author">
-                        <!-- Dynamic user fullname --> 
-                        <!-- <p class="author-name"> Created by: <a href="#"><%= apartment.createdBy %></a></p> -->
-                        <p class="card-item"> Created by: <a href="#"><%= apartment.createdBy %></a></p>
-                    </div>
-                    <div class="card-footer-actions">
-                        <div class="thumbnail-container">
-                            <% if (apartment.photoUrls && apartment.photoUrls.length > 0) { %>
-                                <% apartment.photoUrls.forEach((photoUrl, index) => { %>
-                                    <img src="<%= photoUrl %>" class="thumbnail <%= index === 0 ? 'active' : '' %>" data-index="<%= index %>" alt="Thumbnail" onclick="openFullImage('<%= photoUrl %>')">
-                                <% }) %>
-                            <% } %>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <p class="faq-text">
+          The church finder application is designed to help users easily locate and connect with churches in their area, making it simple to discover worship services, events, and community gatherings.
+        </p>
+
+        <button class="faq-toggle">
+          <i class="fas fa-chevron-down"></i>
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="faq">
+        <h3 class="faq-title">
+          How do I search for churches using the application?
+        </h3>
+        <p class="faq-text">
+          To find churches, simply enter your location or use your device's GPS to detect your current position. The application will then display a list of nearby churches along with details about each one.
+        </p>
+        <button class="faq-toggle">
+          <i class="fas fa-chevron-down"></i>
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      
+      <div class="faq">
+        <h3 class="faq-title">
+          Can I filter search results based on denomination or specific criteria?
+        </h3>
+        <p class="faq-text">
+          Yes, the application allows you to filter search results based on denomination, service times, size, and other criteria, ensuring that you find a church that aligns with your preferences.
+        </p>
+        <button class="faq-toggle">
+          <i class="fas fa-chevron-down"></i>
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      
+      <div class="faq">
+        <h3 class="faq-title">
+          Is the application available for both iOS and Android devices?
+        </h3>
+        <p class="faq-text">
+          No, the church finder application is not available for both iOS and Android devices. But you can access on any dervice via the URL.
+        </p>
+        <button class="faq-toggle">
+          <i class="fas fa-chevron-down"></i>
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      
+      <div class="faq">
+        <h3 class="faq-title">
+          How frequently is the information about churches updated?
+        </h3>
+        <p class="faq-text">
+          The application regularly updates its database to provide accurate and up-to-date information about churches, including service schedules, contact details, and special events.
+        </p>
+        <button class="faq-toggle">
+          <i class="fas fa-chevron-down"></i>
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    
+
+    <div class="faq">
+      <h3 class="faq-title">
+        Can I get directions to a church using the application?
+      </h3>
+      <p class="faq-text">
+        Absolutely! Once you've selected a church, the application provides you with detailed directions and a map to help you easily navigate to your chosen place of worship.
+      </p>
+      <button class="faq-toggle">
+        <i class="fas fa-chevron-down"></i>
+        <i class="fas fa-times"></i>
+      </button>
     </div>
 
-    <script>
-        // JavaScript for carousel functionality
-        let slideIndex = 0;
-        const carouselItems = document.querySelectorAll('.carousel-item');
-        const thumbnails = document.querySelectorAll('.thumbnail');
+    <div class="faq">
+      <h3 class="faq-title">
+        Is the church finder application free to use?
+      </h3>
+      <p class="faq-text">
+        Yes, the basic features of the church finder application are available for free. However, there may be optional premium features or subscriptions for enhanced functionality.
+      </p>
+      <button class="faq-toggle">
+        <i class="fas fa-chevron-down"></i>
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
 
-        function showSlides() {
-            carouselItems.forEach(item => item.style.display = "none");
-            thumbnails.forEach(item => item.classList.remove('active'));
-            slideIndex++;
-            if (slideIndex > carouselItems.length) { slideIndex = 1 }
-            carouselItems[slideIndex - 1].style.display = "block";
-            thumbnails[slideIndex - 1].classList.add('active');
-            setTimeout(showSlides, 2000); // Change image every 2 seconds
-        }
+    <div class="faq">
+      <h3 class="faq-title">
+        What if I have feedback or encounter an issue with the application?
+      </h3>
+      <p class="faq-text">
+        We welcome your feedback! If you have suggestions, questions, or encounter any issues while using the application, please reach out to our support team through the provided contact channels.
+      <button class="faq-toggle">
+        <i class="fas fa-chevron-down"></i>
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
 
-        function showSlide(index) {
-            carouselItems.forEach(item => item.classList.remove('active'));
-            thumbnails.forEach(item => item.classList.remove('active'));
-            carouselItems[index].classList.add('active');
-            thumbnails[index].classList.add('active');
-            slideIndex = index;
-        }
+    <div class="faq">
+      <h3 class="faq-title">
+        How can churches be added or updated in the application?
+      </h3>
+      <p class="faq-text">
+        Churches can be added or updated by the application administrators. 
+      </p>
+      <button class="faq-toggle">
+        <i class="fas fa-chevron-down"></i>
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
 
-        thumbnails.forEach((thumbnail, index) => {
-            thumbnail.addEventListener('click', () => showSlide(index));
-        });
-
-        showSlides();
-    </script>
-
-    <!-- Ionicons CDN for icons -->
-    <script src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-    <script>
-        function openFullImage(url) {
-            window.open(url, '_blank');
-        }
-    </script>
-    
-    <style>
-       
-    </style>
-</body>
-</html>
+    <div class="faq">
+      <h3 class="faq-title">
+        Is my personal information shared with churches when I use the application?
+      </h3>
+      <p class="faq-text">
+        No, your personal information is not shared with churches when you use the application. Your privacy and data security are important to us. We only provide the necessary information to help you connect with the churches you choose. 
+      </p>
+      <button class="faq-toggle">
+        <i class="fas fa-chevron-down"></i>
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
