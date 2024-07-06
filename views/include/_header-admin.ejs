@@ -61,9 +61,9 @@
             <a href="/administrator" class="header-top-link">
               <ion-icon name=""></ion-icon>
 
-              <span><%= greeting %> Administrator | <%= user ? user.username : '' %>
+              <span><%= greeting %> Administrator <%= user ? user.username : '' %>
                 <% if (sudo) { %>
-                  <p>(Owner)</p>
+                  <p>(Creator/ CEO)</p>
               <% } else { %>
                   <p></p> <!-- Empty paragraph -->
               <% } %>
