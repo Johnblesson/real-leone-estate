@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All users</title>
+    <title>All admin user</title>
   <link rel="stylesheet" href="./css/users.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
@@ -98,7 +98,7 @@
   </style>
 <body>
 
-    <h2>All Users</h2>
+    <h2>Admins/ Users</h2>
     <div class="table-wrapper">
         <table class="fl-table">
             <thead>
@@ -108,9 +108,9 @@
                 <th>Phone No.</th>
                 <th>Email</th>
                 <th>Role</th>
-                <!-- <th>Sudo</th>
+                <th>Sudo</th>
                 <th>G. Manager</th>
-                <th>Accountant</th> -->
+                <th>Accountant</th>
                 <th>Status</th>
                 <th>Actions</th> <!-- New column for actions -->
             </tr>
@@ -123,6 +123,9 @@
                 <td class="hover"><%= user.phone %></td>
                 <td class="hover"><%= user.email %></td>
                 <td class="hover <%= user.role === 'admin' ? 'role-pink-bg' : (user.role === 'user' ? 'role-green-bg' : '') %>"><%= user.role %></td>
+                <td class="hover"><%= user.sudo %></td>
+                <td class="hover"><%= user.manager %></td>
+                <td class="hover"><%= user.accountant %></td>
                 <td class="hover <%= user.status === 'active' ? 'status-green-bg' : (user.status === 'inactive' ? 'status-red-bg' : '') %>">
                     <% if (user.status === 'active') { %>
                         <span class="status-circle active-circle"></span> Active

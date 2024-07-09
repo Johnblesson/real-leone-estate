@@ -150,9 +150,6 @@ export const accDashboard = async (req, res) => {
         // Determine the time of the day
         const greeting = getTimeOfDay();
 
-        // Check if the user is authenticated
-        const user = req.isAuthenticated() ? req.user : null;
-
         // Call the function to sum all transactions amount
         const totalAmount = await sumTransactionsAmount();
         const totalPercent = await sumTotalPercentAmount();
@@ -165,9 +162,23 @@ export const accDashboard = async (req, res) => {
         // Calculate total amount of expenses
         const totalExpensesAmount = calculateTotalAmount(allExpenses);
 
+        const user = req.isAuthenticated() ? req.user : null;
+
+        // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+        const sudo = user && user.sudo ? user.sudo : false;
+
+        // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+        const accountant = user && user.accountant ? user.accountant : false;
+
+        // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+        const manager = user && user.manager ? user.manager : false;
+
         // Render the apply page with the necessary data
         res.render('acc-dashboard', {
             user,
+            accountant,
+            sudo,
+            manager,
             greeting,
             totalExpensesAmount,
             usersCount,

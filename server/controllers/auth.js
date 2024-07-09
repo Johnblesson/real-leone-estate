@@ -62,6 +62,7 @@ export const signUp = async (req, res) => {
           status: req.body.status,
           sudo: req.body.sudo,
           accountant: req.body.accountant,
+          manager: req.body.manager,
           // termsConditions: req.body.termsConditions,
           // serviceFee: req.body.serviceFee,
           // privacyPolicy: req.body.privacyPolicy,
@@ -253,6 +254,67 @@ const getTimeOfDay = () => {
   ]);
   
     res.render('all-users', { 
+      data: users, 
+      locals,
+      user,
+      greeting,
+      currentPage: page, 
+      totalPages: totalPages,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('An error occurred while fetching users.');
+  }
+};
+
+// Get All Users Controller
+export const allAdminUser = async (req, res) => {
+
+  const locals = {
+    title: "All Users",
+    description: "This is the all users page.",
+  };
+
+   // Function to determine the time of the day
+const getTimeOfDay = () => {
+  const currentHour = new Date().getHours();
+
+  if (currentHour >= 5 && currentHour < 12) {
+    return 'Good Morning';
+  } else if (currentHour >= 12 && currentHour < 18) {
+    return 'Good Afternoon';
+  } else {
+    return 'Good Evening';
+  }
+};
+
+  try {
+   // Determine the time of the day
+   const greeting = getTimeOfDay();
+
+    const page = parseInt(req.query.page) || 1; // Get the requested page number from the query parameter
+    const limit = 15; // Number of entries per page
+    const skip = (page - 1) * limit;
+
+    // Fetch all storage data
+    // const allStorage = await User.find().skip(skip).limit(limit);
+    const totalEntries = await User.countDocuments();
+
+    const totalPages = Math.ceil(totalEntries / limit);
+
+    const user = req.isAuthenticated() ? req.user : null;
+
+    // Fetch all users from the database
+    // const users = await User.find({}, '-password'); // Exclude password field from the response
+    const users = await User.aggregate([
+      // Stage 1: Exclude password field from the response
+      { $project: { password: 0 } },
+      // Stage 2: Skip and limit
+      { $skip: skip },
+      { $limit: limit }
+  ]);
+  
+    res.render('all-users-sudo', { 
       data: users, 
       locals,
       user,

@@ -3,7 +3,7 @@ const router = Router();
 
 import { about, service, features, blog, allProperties, getPostApartment, getPostApartmentAdmin, listedProperties, allusers, guestPage, faq } from "../render/render.js";
 import { adminAbout, adminFeatures, adminService, adminBlog, termsConditions, registrationProcessStatement } from "../render/admin.js";
-import { getAllUsers } from "../controllers/auth.js"
+import { getAllUsers, allAdminUser } from "../controllers/auth.js"
 import ensureAuthenticated from "../middlewares/auth.js";
 import { isAdmin } from "../middlewares/isAdmin.js";
 import { isAccountant } from "../middlewares/isAccountant.js";
@@ -35,6 +35,9 @@ router.get('/create-apartment-admin', cacheMiddleware, ensureAuthenticated, isAd
 router.get('/listed-properties', listedProperties)
 
 router.get('/all-users', isAdmin, cacheMiddleware, ensureAuthenticated, getAllUsers)
+
+router.get('/all-admin-user', isAdmin, isAccountant, cacheMiddleware, ensureAuthenticated, allAdminUser)
+
 
 // Post apartments success message
 router.get('/admin-apartment-success', cacheMiddleware, (req, res) => {

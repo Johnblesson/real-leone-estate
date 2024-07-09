@@ -24,6 +24,19 @@
         a:hover{
           color: #ffffff;
         }
+        .header-left {
+          display: flex;
+          align-items: center;
+        }
+
+        .user-fullname {
+        font-size: 18px;
+        margin-right: 10px; /* Adjust as needed */
+      }
+      .user-role {
+        font-size: 18px;
+        color: grey; /* Optional: change the color as needed */
+      }
       </style>
   </head>
   <body>
@@ -35,9 +48,30 @@
           <span class="material-icons-outlined">menu</span>
         </div>
         <div class="header-left">
-          <span class="material-icons-outlined">search</span>
+          <span class="material-icons-outlined">person</span>
+          <p class="user-fullname"><%= user ? user.fullname : '' %></p>
+          <% if (sudo) { %>
+            <p class="user-role">(CEO)</p>
+          <% } else { %>
+            <p></p> <!-- Empty paragraph -->
+          <% } %>
+          
+         <% if (accountant) { %>
+            <p class="user-role">(Accountant)</p>
+          <% } else { %>
+            <p></p> <!-- Empty paragraph -->
+          <% } %>
+
+          <% if (manager) { %>
+            <p class="user-role">(General Manager)</p>
+          <% } else { %>
+              <p></p> <!-- Empty paragraph -->
+          <% } %>
         </div>
         <div class="header-right">
+          <span class="material-icons-outlined"><a href="#" class="header-top-social-link">
+            <img src="./images/sl.png" alt="Sierra Leone" style="width: 20px; height: 20px; border-radius: 50%;">
+          </a></span>
           <span class="material-icons-outlined">notifications</span>
           <span class="material-icons-outlined"><a href="/all-messages">chat</a></span>
           <span class="material-icons-outlined"><a href="/admin-home">account_circle</a></span>
@@ -72,8 +106,8 @@
             </a>
           </li>
           <li class="sidebar-list-item">
-            <a href="/all-users" target="_blank">
-              <span class="material-icons-outlined">groups</span> Users
+            <a href="/all-admin-user" target="_blank">
+              <span class="material-icons-outlined">groups</span> Administrative
             </a>
           </li>
           <li class="sidebar-list-item">

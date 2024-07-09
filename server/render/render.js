@@ -87,6 +87,9 @@ export const adminHomeRoute = async (req, res) => {
     // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
     const accountant = user && user.accountant ? user.accountant : false;
 
+    // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+    const manager = user && user.manager ? user.manager : false;
+
     res.render("index-admin", {
       apartments,
       greeting,
@@ -95,6 +98,7 @@ export const adminHomeRoute = async (req, res) => {
       apts,
       sudo,
       accountant,
+      manager,
     });
   } catch (error) {
     console.error(error);
@@ -474,6 +478,12 @@ const getTimeOfDay = () => {
      // Determine the time of the day
     const greeting = getTimeOfDay();
 
+        // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+        const sudo = user && user.sudo ? user.sudo : false;
+
+        // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+        const accountant = user && user.accountant ? user.accountant : false;
+
     // Render the index page with the receptions and latestStorage data
     res.render('admin-dashboard', 
     { 
@@ -484,6 +494,8 @@ const getTimeOfDay = () => {
       latestApartment, 
       currentPage: page, 
       totalPages: totalPages,
+      sudo,
+      accountant,
     });
   } catch (error) {
     console.error('Error rendering the page:', error);

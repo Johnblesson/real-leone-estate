@@ -4,7 +4,7 @@ export const isAccountant = (req, res, next) => {
       // Assuming you have a user object attached to the request after authentication
       const user = req.user;
   
-      if (user && (user.accountant === true || user.sudo === true)) {
+      if (user && (user.accountant === true || user.sudo === true || user.manager === true)) {
           next();
       } else {
           // User does not have ACCOUNTANT or SUDO role, send a forbidden response

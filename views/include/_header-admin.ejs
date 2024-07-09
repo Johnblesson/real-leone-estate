@@ -62,16 +62,23 @@
               <ion-icon name=""></ion-icon>
 
               <span><%= greeting %> Administrator <%= user ? user.username : '' %>
-                <% if (sudo) { %>
+              <% if (sudo) { %>
                   <p>(Owner)</p>
               <% } else { %>
                   <p></p> <!-- Empty paragraph -->
               <% } %>
+
               <% if (accountant) { %>
                 <p>(Accountant)</p>
-            <% } else { %>
-                <p></p> <!-- Empty paragraph -->
-            <% } %>
+              <% } else { %>
+                  <p></p> <!-- Empty paragraph -->
+              <% } %>
+
+              <% if (manager) { %>
+                <p>(General Manager)</p>
+              <% } else { %>
+                  <p></p> <!-- Empty paragraph -->
+              <% } %>
               </span>
             </a>
           </li>
@@ -81,7 +88,14 @@
         <div class="wrapper">
           <ul class="header-top-social-list">
 
-            <li>
+             <!-- Add Sierra Leone Flag -->
+             <li>
+              <a href="#" class="header-top-social-link">
+                <img src="./images/sl.png" alt="Sierra Leone" style="width: 20px; height: 20px; border-radius: 50%;">
+              </a>
+            </li>
+
+            <!-- <li>
               <a href="#" class="header-top-social-link">
                 <ion-icon name="logo-facebook"></ion-icon>
               </a>
@@ -114,7 +128,7 @@
           <a href="#" class="header-top-social-link">
               <ion-icon name="logo-pinterest"></ion-icon>
           </a>
-      </li>
+      </li> -->
 
           </ul>
 
