@@ -35,9 +35,12 @@ export const adminAbout = async (req, res) => {
 
      // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
     const accountant = user && user.accountant ? user.accountant : false;
+
+      // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+      const manager = user && user.manager ? user.manager : false;
   
       // Render the index page with the receptions and latestStorage data
-      res.render('admin-about', { locals, user, greeting, sudo, accountant, role });
+      res.render('admin-about', { locals, user, greeting, sudo, accountant, role, manager });
     } catch (error) {
       console.error('Error rendering the page:', error);
       res.status(500).send('Internal Server Error');
@@ -75,9 +78,12 @@ export const adminFeatures = async (req, res) => {
 
      // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
     const accountant = user && user.accountant ? user.accountant : false;
+
+      // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+      const manager = user && user.manager ? user.manager : false;
   
       // Render the index page with the receptions and latestStorage data
-      res.render('admin-features', { locals, user, greeting, sudo, accountant, role });
+      res.render('admin-features', { locals, user, greeting, sudo, accountant, role, manager });
     } catch (error) {
       console.error('Error rendering the page:', error);
       res.status(500).send('Internal Server Error');
@@ -120,8 +126,11 @@ export const adminBlog = async (req, res) => {
     // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
     const accountant = user && user.accountant ? user.accountant : false;
 
+      // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+      const manager = user && user.manager ? user.manager : false;
+
     const greeting = getTimeOfDay();
-    res.render('admin-blog', { greeting, apts, user, apartments, sudo, accountant, role });
+    res.render('admin-blog', { greeting, apts, user, apartments, sudo, accountant, role, manager });
   } catch (error) {
     console.error('Error rendering the page:', error);
     res.status(500).send('Internal Server Error');
@@ -156,12 +165,15 @@ export const adminService = async (req, res) => {
 
     // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
     const accountant = user && user.accountant ? user.accountant : false;
+
+      // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+      const manager = user && user.manager ? user.manager : false;
   
     // Determine the time of the day
     const greeting = getTimeOfDay();
   
     // Render the index page with the receptions and latestStorage data
-      res.render('admin-service', { locals, user, greeting, sudo, accountant, role });
+      res.render('admin-service', { locals, user, greeting, sudo, accountant, role, manager });
     } catch (error) {
       console.error('Error rendering the page:', error);
       res.status(500).send('Internal Server Error');

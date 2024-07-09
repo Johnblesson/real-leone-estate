@@ -357,11 +357,22 @@ export const edituser = async (req, res) => {
 
     const user = req.isAuthenticated() ? req.user : null;
 
+    // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+    const sudo = user && user.sudo ? user.sudo : false;
+
+    // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+    const manager = user && user.manager ? user.manager : false;
+     
+    const accountant = user && user.accountant ? user.accountant : false;
+
     res.render("edit-user", {
       locals,
       users,
       greeting,
       user,
+      sudo,
+      manager,
+      accountant,
     });
   } catch (error) {
     // Handle errors gracefully

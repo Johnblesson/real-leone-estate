@@ -214,6 +214,9 @@ export const allAdminProperties = async (req, res) => {
     // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
     const accountant = user && user.accountant ? user.accountant : false;
 
+      // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+      const manager = user && user.manager ? user.manager : false;
+
     res.render("all-admin-properties", {
       apartments,
       greeting,
@@ -222,6 +225,7 @@ export const allAdminProperties = async (req, res) => {
       sudo,
       accountant,
       role,
+      manager,
     });
   } catch (error) {
     console.error(error);
@@ -484,6 +488,9 @@ const getTimeOfDay = () => {
         // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
         const accountant = user && user.accountant ? user.accountant : false;
 
+        // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+        const manager = user && user.manager ? user.manager : false;
+
     // Render the index page with the receptions and latestStorage data
     res.render('admin-dashboard', 
     { 
@@ -496,6 +503,7 @@ const getTimeOfDay = () => {
       totalPages: totalPages,
       sudo,
       accountant,
+      manager,
     });
   } catch (error) {
     console.error('Error rendering the page:', error);
@@ -509,7 +517,7 @@ export const allusers = async (req, res) => {
   const locals = {
     title: "Home Page",
     description: "This is the home page of the System.",
-  };
+  }
 
   // Function to determine the time of the day
 const getTimeOfDay = () => {
@@ -681,6 +689,9 @@ try {
   // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
   const accountant = user && user.accountant ? user.accountant : false;
 
+  // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+  const manager = user && user.manager ? user.manager : false;
+
   res.render("apartment-detail-admin", {
     apartment: updatedApartment,
     apartments, // Ensure apartments are passed to the template
@@ -689,6 +700,7 @@ try {
     role,
     sudo,
     accountant,
+    manager,
   });
 } catch (error) {
   console.error(error);

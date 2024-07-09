@@ -32,7 +32,25 @@
             <a href="#" class="header-top-link">
               <ion-icon name=""></ion-icon>
 
-              <span><%= greeting %> Administrator | <%= user ? user.username : '' %></span>
+              <span><%= greeting %> Administrator <%= user ? user.username : '' %>
+                <% if (sudo) { %>
+                  <p>(Owner)</p>
+              <% } else { %>
+                  <p></p> <!-- Empty paragraph -->
+              <% } %>
+
+              <% if (accountant) { %>
+                <p>(Accountant)</p>
+              <% } else { %>
+                  <p></p> <!-- Empty paragraph -->
+              <% } %>
+
+              <% if (manager) { %>
+                <p>(General Manager)</p>
+              <% } else { %>
+                  <p></p> <!-- Empty paragraph -->
+              <% } %>
+              </span>
             </a>
           </li>
 

@@ -103,11 +103,22 @@ export const editApplication = async (req, res) => {
 
     const user = req.isAuthenticated() ? req.user : null;
 
+     // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+    const sudo = user && user.sudo ? user.sudo : false;
+
+    // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+    const manager = user && user.manager ? user.manager : false;
+
+    const accountant = user && user.accountant ? user.accountant : false;
+
     res.render("edit-application", {
       locals,
       apply,
       greeting,
       user,
+      sudo,
+      manager,
+      accountant,
       staffNames,
     });
   } catch (error) {
@@ -168,6 +179,7 @@ export const application = async (req, res) => {
       aid: apartmentId,
       location: location,
       role,
+      manager,
     });
   } catch (error) {
     console.error('Error rendering the page:', error);
@@ -214,6 +226,9 @@ export const adminApplication = async (req, res) => {
     // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
     const accountant = user && user.accountant ? user.accountant : false;
 
+     // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+     const manager = user && user.manager ? user.manager : false;
+
     // Render the apply page with the necessary data
     res.render('apply-admin', {
       user,
@@ -224,6 +239,7 @@ export const adminApplication = async (req, res) => {
       sudo,
       accountant,
       role,
+      manager,
     });
   } catch (error) {
     console.error('Error rendering the page:', error);

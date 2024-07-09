@@ -473,11 +473,22 @@ export const admineditapartment = async (req, res) => {
 
      const user = req.isAuthenticated() ? req.user : null;
 
+         // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+         const sudo = user && user.sudo ? user.sudo : false;
+
+         // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+         const manager = user && user.manager ? user.manager : false;
+     
+         const accountant = user && user.accountant ? user.accountant : false;
+
     res.render("update-admin-apartment", {
       locals,
       apartment,
       greeting,
       user,
+      manager,
+      sudo,
+      accountant,
     });
   } catch (error) {
     console.log(error);
@@ -550,11 +561,18 @@ export const adminEditApartments = async (req, res) => {
 
     const user = req.isAuthenticated() ? req.user : null;
 
+    const accountant = user && user.accountant ? user.accountant : false;
+
+    // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+    const manager = user && user.manager ? user.manager : false;
+
     res.render("update-admin-apartment", {
       locals,
       apartment,
       greeting,
       user,
+      manager,
+      accountant,
     });
   } catch (error) {
     // Handle errors gracefully
@@ -600,11 +618,15 @@ export const adminVerifyApartment = async (req, res) => {
     // Check if the user is authenticated and get their ID
     const user = req.isAuthenticated() ? req.user : null;
 
+    // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+    const manager = user && user.manager ? user.manager : false;
+
     // Render the all-properties view template with the apartments data
     res.render("verify-apartment", {
       apartments,
       greeting,
       user,
+      manager,
       users,
       currentPage: page, 
       totalPages: totalPages,
@@ -731,11 +753,22 @@ export const editSponsorship = async (req, res) => {
 
      const user = req.isAuthenticated() ? req.user : null;
 
+    // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+    const sudo = user && user.sudo ? user.sudo : false;
+
+    // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+    const manager = user && user.manager ? user.manager : false;
+
+    const accountant = user && user.accountant ? user.accountant : false;
+
     res.render("sponsorship-form", {
       locals,
       apartment,
       greeting,
       user,
+      sudo, 
+      accountant,
+      manager
     });
   } catch (error) {
     console.log(error);
@@ -814,11 +847,22 @@ export const editAvaliabilty = async (req, res) => {
 
      const user = req.isAuthenticated() ? req.user : null;
 
+    // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+    const sudo = user && user.sudo ? user.sudo : false;
+
+    // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+    const manager = user && user.manager ? user.manager : false;
+
+    const accountant = user && user.accountant ? user.accountant : false;
+
     res.render("avaliability-form", {
       locals,
       apartment,
       greeting,
       user,
+      sudo,
+      accountant,
+      manager
     });
   } catch (error) {
     console.log(error);
@@ -859,6 +903,9 @@ export const searchApartment = async (req, res) => {
 
     const role = user ? user.role : null; // Get user role if user is authenticated
 
+    // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+    const manager = user && user.manager ? user.manager : false;
+
     // Process each apartment to set photoUrl, formattedCreatedAt, and daysAgo
     apartments.forEach(apartment => {
       // Ensure photoUrl is set properly
@@ -876,6 +923,7 @@ export const searchApartment = async (req, res) => {
       greeting,
       user,
       role,
+      manager,
     });
   } catch (error) {
     console.error(error);
@@ -932,6 +980,8 @@ export const searchApartmentAdmin = async (req, res) => {
       // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
     const accountant = user && user.accountant ? user.accountant : false;
 
+    const manager = user && user.manager ? user.manager : false;
+
     // Render the search view template with the apartments and locations data
     res.render("search-admin", {
       apartments,
@@ -941,6 +991,7 @@ export const searchApartmentAdmin = async (req, res) => {
       sudo,
       role,
       accountant,
+      manager,
     });
   } catch (error) {
     console.error(error);
