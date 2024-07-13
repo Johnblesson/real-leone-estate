@@ -8,8 +8,8 @@ import { isAdmin } from "../middlewares/isAdmin.js";
 import cacheMiddleware from "../middlewares/cacheMiddleware.js"
 
 // Home Page Route
-router.get("/home", ensureAuthenticated, homeRoute);
-router.get("/admin-home", ensureAuthenticated, isAdmin, adminHomeRoute);
+router.get("/home", ensureAuthenticated, cacheMiddleware, homeRoute);
+router.get("/admin-home", ensureAuthenticated, isAdmin, cacheMiddleware, adminHomeRoute);
 
 // My Post Route
 router.get("/my-post", ensureAuthenticated, cacheMiddleware, myPost);

@@ -296,6 +296,7 @@ export const editstaff = async (req, res) => {
     // Fetch additional user permissions or roles
     const sudo = user && user.sudo ? user.sudo : false;
     const accountant = user && user.accountant ? user.accountant : false;
+    const role = user.role;
 
     // Render the edit-staff template with retrieved data
     res.render("edit-staff", {
@@ -303,6 +304,7 @@ export const editstaff = async (req, res) => {
       greeting,
       user,
       sudo,
+      role,
       accountant
     });
   } catch (error) {

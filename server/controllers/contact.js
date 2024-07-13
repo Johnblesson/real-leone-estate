@@ -135,6 +135,9 @@ export const getAdminContactForm = async (req, res) => {
     // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
     const accountant = user && user.accountant ? user.accountant : false;
 
+    // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+    const manager = user && user.manager ? user.manager : false;
+
     // Render the apply page with the necessary data
     res.render('contact-admin', {
       user,
@@ -142,6 +145,7 @@ export const getAdminContactForm = async (req, res) => {
       sudo,
       accountant,
       role,
+      manager,
     });
   } catch (error) {
     console.error('Error rendering the page:', error);

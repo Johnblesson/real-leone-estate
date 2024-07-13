@@ -50,7 +50,7 @@
         </div>
         <div class="header-left">
           <span class="material-icons-outlined">person</span>
-          <p class="user-fullname"><%= user ? user.fullname : '' %></p>
+          <p class="user-fullname"><a href="/view/<%= user._id %>"><%= user ? user.fullname : '' %></a></p>
           <% if (sudo) { %>
             <p class="user-role">(CEO)</p>
           <% } else { %>

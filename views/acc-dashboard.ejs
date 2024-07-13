@@ -49,7 +49,7 @@
         </div>
         <div class="header-left">
           <span class="material-icons-outlined">person</span>
-          <p class="user-fullname"><%= user ? user.fullname : '' %></p>
+          <p class="user-fullname"><a href="/view/<%= user._id %>"><%= user ? user.fullname : '' %></a></p>
           <% if (sudo) { %>
             <p class="user-role">(CEO)</p>
           <% } else { %>
@@ -74,7 +74,7 @@
           </a></span>
           <span class="material-icons-outlined">notifications</span>
           <span class="material-icons-outlined"><a href="/all-messages">chat</a></span>
-          <span class="material-icons-outlined"><a href="/admin-home">account_circle</a></span>
+          <span class="material-icons-outlined"><a href="/view/<%= user._id %>">account_circle</a></span>
           <span class="material-icons-outlined"><a href="/logout">logout</a></span>
         </div>
       </header>

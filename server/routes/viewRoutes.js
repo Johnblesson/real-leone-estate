@@ -20,13 +20,13 @@ router.get("/sell-properties", cacheMiddleware, ensureAuthenticated, );
 
 router.get("/rent-properties", cacheMiddleware, ensureAuthenticated, );
 
-router.get("/about", cacheMiddleware, ensureAuthenticated, about);
+router.get("/about", cacheMiddleware, cacheMiddleware, about);
 
-router.get("/features", cacheMiddleware, ensureAuthenticated, features);
+router.get("/features", cacheMiddleware, cacheMiddleware, features);
 
-router.get("/service", cacheMiddleware, ensureAuthenticated, service);
+router.get("/service", cacheMiddleware, cacheMiddleware, service);
 
-router.get("/blog", cacheMiddleware, ensureAuthenticated, blog);
+router.get("/blog", cacheMiddleware, cacheMiddleware, blog);
 
 router.get('/create-apartment', cacheMiddleware, ensureAuthenticated, getPostApartment)
 
@@ -52,7 +52,7 @@ router.get("/services-fee-agreement", cacheMiddleware, (req, res) => {
     res.render("service-fee-agreement")
 })
 
-router.get("/privacy-policy", cacheMiddleware, (req, res) => {
+router.get("/privacy-policy",  cacheMiddleware, (req, res) => {
     res.render("privacy-policy")
 })
 
@@ -65,21 +65,21 @@ router.get("/admin-service", cacheMiddleware, ensureAuthenticated, adminService)
 
 router.get("/admin-blog", cacheMiddleware, ensureAuthenticated, adminBlog);
 
-router.get("/terms-and-conditions", termsConditions)
+router.get("/terms-and-conditions", cacheMiddleware, termsConditions)
 
-router.get("/registration-process-statement", registrationProcessStatement)
-
-router.get("/faq", cacheMiddleware, ensureAuthenticated, isAdmin, checkSudoMiddleware, faq)
+router.get("/registration-process-statement", cacheMiddleware, registrationProcessStatement)
+ 
+router.get("/faq", cacheMiddleware, ensureAuthenticated, faq)
 
 router.get("/signup", cacheMiddleware, (req, res) => {
     res.render("signup")    
 });
 
-router.get("/user-apartment-success", cacheMiddleware, (req, res) => {
+router.get("/user-apartment-success", ensureAuthenticated, cacheMiddleware, (req, res) => {
     res.render("success/user-apartment")    
 });
 
-router.get("/admin-apartment-success", cacheMiddleware, (req, res) => {
+router.get("/admin-apartment-success", ensureAuthenticated, cacheMiddleware, (req, res) => {
     res.render("success/admin-apartment")    
 });
 
