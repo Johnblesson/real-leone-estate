@@ -61,34 +61,6 @@ export const profile = async (req, res) => {
     }
   };
 
-  
-  // // View user's profile GET REQUEST
-  // export const updateprofile = async (req, res) => {
-  //   try {
-  //     const users = await User.findOne({ _id: req.params.id });
-      
-  //     // Ensure photoUrl is set properly for each user
-  //    users.forEach(user => {
-  //     if (!user.photo) {
-  //       user.photoUrl = ''; // Initialize an empty string if no photo is available
-  //     } else {
-  //       user.photoUrl = user.photo; // Set photoUrl to the value of photo
-  //     }
-  //   });
-  
-  //     const locals = {
-  //       title: "User Profile",
-  //       description: "This is the user profile page.",
-  //     };
-  
-  //     res.render("update-profile", {
-  //       locals,
-  //       users, // Pass the transformed users data to the EJS template
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
    // View user's profile GET REQUEST
    export const updateadminprofile = async (req, res) => {

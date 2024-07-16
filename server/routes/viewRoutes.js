@@ -1,7 +1,7 @@
 import { Router } from "express";
 const router = Router();
 
-import { about, service, features, blog, allProperties, getPostApartment, getPostApartmentAdmin, listedProperties, allusers, guestPage, faq } from "../render/render.js";
+import { about, service, features, blog, allProperties, getPostApartment, getPostApartmentAdmin, listedProperties, allusers, guestPage, faq, faqAdmin } from "../render/render.js";
 import { adminAbout, adminFeatures, adminService, adminBlog, termsConditions, registrationProcessStatement } from "../render/admin.js";
 import { getAllUsers, allAdminUser } from "../controllers/auth.js"
 import ensureAuthenticated from "../middlewares/auth.js";
@@ -70,6 +70,8 @@ router.get("/terms-and-conditions", cacheMiddleware, termsConditions)
 router.get("/registration-process-statement", cacheMiddleware, registrationProcessStatement)
  
 router.get("/faq", cacheMiddleware, ensureAuthenticated, faq)
+
+router.get("/faq-admin", cacheMiddleware, ensureAuthenticated, isAdmin, faqAdmin)
 
 router.get("/signup", cacheMiddleware, (req, res) => {
     res.render("signup")    
