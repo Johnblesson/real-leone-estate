@@ -168,8 +168,11 @@ const getTimeOfDay = () => {
     // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
     const accountant = user && user.accountant ? user.accountant : false;
 
+     // Fetch user data from the session or request object (assuming req.user is set by the authentication middleware)
+     const manager = user && user.manager ? user.manager : false;
+
     // Render the index page with the receptions and latestStorage data
-    res.render('post-apartment-admin', { user, greeting, sudo, accountant, role });
+    res.render('post-apartment-admin', { user, greeting, sudo, accountant, role, manager });
   } catch (error) {
     console.error('Error rendering the page:', error);
     res.status(500).send('Internal Server Error');

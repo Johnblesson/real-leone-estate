@@ -127,28 +127,6 @@ export const updateApartmentById = async (req, res) => {
   }
 };
 
-// Controller function to delete an apartment by ID
-// export const deleteApartmentById = async (req, res) => {
-//   try {
-//     const deletedApartment = await Apartments.findByIdAndDelete(req.params.id);
-//     if (!deletedApartment) {
-//       res.status(404).json({ message: 'Apartment not found' });
-//       return;
-//     }
-//     res.status(200).json({ message: 'Apartment deleted successfully' });
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// };
-
-// export const deleteApartmentById = async (req, res) => {
-//   try {
-//     await Apartments.deleteOne({ _id: req.params.id });
-//     res.render("success/delete-apartment");
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
 
 export const deleteApartmentById = async (req, res) => {
   const apartmentId = req.params.id;
