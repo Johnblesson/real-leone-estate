@@ -106,9 +106,7 @@ export const adminHomeRoute = async (req, res) => {
   }
 };
 
-
-
-  // Post Apartment
+// Post Apartment
 export const getPostApartment = async (req, res) => {
  
   // Function to determine the time of the day
