@@ -30,7 +30,7 @@
                 <img src="./images/hub.png" alt="Homehub logo">
             </a> -->
             <form action="/signup" method="post" enctype="multipart/form-data">
-                <h1>Create Account</h1>
+                <h1>Create your account</h1>
                 <pre style="text-align: center; font: 0.6em sans-serif;">Check out the<a href="/registration-process-statement"> Registration Statement Process</a></pre>
                 
                 <!-- Display error message if exists -->
@@ -48,7 +48,7 @@
                 </div>
                 <input type="file" name="photo" accept="image/*">
 
-                <div>
+                <!-- <div>
                     <input type="checkbox" id="terms" name="termsConditions" required>
                     <label for="terms">I agree to the <a href="/terms-and-conditions">Terms and Conditions</a></label>
                 </div>
@@ -61,11 +61,17 @@
                 <div>
                     <input type="checkbox" id="privacy_policy" name="privacy_policy" required>
                     <label for="privacy_policy">I agree to the <a href="#">Privacy Policy</a></label>
-                </div>
+                </div> -->
 
                 <button type="submit">Sign Up</button>
                 <p>Already have an account? <a href="/login">Login</a></p>
             </form>
+            <p style="text-align: center; font: 0.6em sans-serif;">
+                By clicking 'Submit' above, you acknowledge that you have read and agree to Homehub Agency's 
+                <a href="/terms-and-conditions">Terms and Conditions</a>, 
+                <a href="/services-fee-agreement">Service Fee Agreement</a> 
+                and <a href="/privacy-policy">Privacy Policy</a>.
+            </p>
         </div>
     </div>
 
